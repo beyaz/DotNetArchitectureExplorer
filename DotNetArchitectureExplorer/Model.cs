@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Xml.Linq;
 using Mono.Cecil;
 
@@ -10,6 +7,12 @@ namespace DotNetArchitectureExplorer;
 [DebuggerDisplay("{" + nameof(Value) + "}")]
 public class Node
 {
+    #region Static Fields
+
+    static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
+
+    #endregion
+
     readonly TypeDefinition _typeDefinition;
 
     bool IsBaseMethod
@@ -25,11 +28,8 @@ public class Node
         }
     }
 
-    #region Static Fields
-    static string ns = "http://schemas.microsoft.com/vs/2009/dgml";
-    #endregion
-
     #region Constructors
+
     public Node(string value = null)
     {
         Id    = Guid.NewGuid();
@@ -58,14 +58,17 @@ public class Node
         {
             Value = methodDefinition.Name;
         }
+
         if (IsBaseMethod)
         {
             Value = "base." + Value;
         }
     }
+
     #endregion
 
     #region Public Properties
+
     public Guid Id { get; }
 
     public bool IsProperty
@@ -83,14 +86,16 @@ public class Node
 
     public bool IsField => FieldReference != null;
 
-    public MethodDefinition MethodDefinition =>  MethodReference?.Resolve();
+    public MethodDefinition MethodDefinition => MethodReference?.Resolve();
 
     public MethodReference MethodReference { get; }
     public FieldReference FieldReference { get; }
     public string Value { get; }
+
     #endregion
 
     #region Public Methods
+
     public override bool Equals(object obj)
     {
         var node = obj as Node;
@@ -111,6 +116,7 @@ public class Node
             element.Add(new XAttribute("StrokeDashArray", "5,5"));
             element.Add(new XAttribute("Background", "#f2f4f7"));
         }
+
         if (IsField)
         {
             element.Add(new XAttribute("StrokeDashArray", "5,5"));
@@ -119,6 +125,7 @@ public class Node
 
         return element;
     }
+
     #endregion
 }
 
@@ -126,27 +133,24 @@ public class Node
 public class Vertex
 {
     #region Static Fields
-    static string ns = "http://schemas.microsoft.com/vs/2009/dgml";
+
+    static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
+
     #endregion
 
     #region Constructors
+
     public Vertex(Node source, Node target, VertexType vertexType = VertexType.None)
     {
         Source     = source;
         Target     = target;
         VertexType = vertexType;
     }
-    #endregion
 
-    #region Public Properties
-    public Node Source { get; set; }
-
-    public Node Target { get; set; }
-
-    public VertexType VertexType { get; set; }
     #endregion
 
     #region Public Methods
+
     public XElement ToDgml()
     {
         var element = new XElement(XName.Get("Link", ns), new XAttribute("Source", Source.Id), new XAttribute("Target", Target.Id));
@@ -158,6 +162,17 @@ public class Vertex
 
         return element;
     }
+
+    #endregion
+
+    #region Public Properties
+
+    public Node Source { get; set; }
+
+    public Node Target { get; set; }
+
+    public VertexType VertexType { get; set; }
+
     #endregion
 }
 
@@ -172,6 +187,7 @@ public enum VertexType
 static class Extensions2
 {
     #region Public Methods
+
     public static IEnumerable<Node> ConnectedNodes(this BinaryDecisionTree bdt)
     {
         return bdt.Vertices.SelectMany(v => new[]
@@ -182,12 +198,14 @@ static class Extensions2
             .Distinct()
             .ToList();
     }
+
     #endregion
 }
 
 public class BinaryDecisionTree
 {
     #region Constructors
+
     static BinaryDecisionTree()
     {
         EntryNode = new Node("Entry");
@@ -197,7 +215,7 @@ public class BinaryDecisionTree
     {
         var node = new Node(value);
         Add(node);
-        Add(new Vertex(EntryNode, node, VertexType.None));
+        Add(new Vertex(EntryNode, node));
     }
 
     internal BinaryDecisionTree()
@@ -205,17 +223,21 @@ public class BinaryDecisionTree
         Nodes    = new List<Node>();
         Vertices = new List<Vertex>();
     }
+
     #endregion
 
     #region Public Properties
-    public static Node EntryNode { get; private set; }
 
-    public List<Node> Nodes { get; private set; }
+    public static Node EntryNode { get; }
 
-    public List<Vertex> Vertices { get; private set; }
+    public List<Node> Nodes { get; }
+
+    public List<Vertex> Vertices { get; }
+
     #endregion
 
     #region Public Methods
+
     public void Add(params Node[] node)
     {
         Nodes.AddRange(node);
@@ -235,16 +257,20 @@ public class BinaryDecisionTree
     {
         Vertices.Remove(vertex);
     }
+
     #endregion
 }
 
 public static class DgmlHelper
 {
     #region Static Fields
-    static string ns = "http://schemas.microsoft.com/vs/2009/dgml";
+
+    static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
+
     #endregion
 
     #region Public Methods
+
     public static XElement ToDgml(this BinaryDecisionTree bdt)
     {
         var nodes =
@@ -255,9 +281,11 @@ public static class DgmlHelper
             select v.ToDgml();
         return CreateGraph(nodes, links);
     }
+
     #endregion
 
     #region Methods
+
     static XElement CreateGraph(IEnumerable<XElement> nodes, IEnumerable<XElement> links)
     {
         var xElement = new XElement(XName.Get("DirectedGraph", ns));
@@ -269,5 +297,6 @@ public static class DgmlHelper
         xElement.Add(xElement3);
         return xElement;
     }
+
     #endregion
 }

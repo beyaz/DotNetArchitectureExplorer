@@ -43,8 +43,7 @@ class GraphCreator
         {
             foreach (var instruction in method.Body.Instructions)
             {
-                var mr = instruction.Operand as MethodReference;
-                if (mr != null)
+                if (instruction.Operand is MethodReference mr)
                 {
                     var md = instruction.Operand as MethodDefinition;
                     if (mr.IsGenericInstance)
@@ -67,8 +66,7 @@ class GraphCreator
                     }
                 }
 
-                var fr = instruction.Operand as FieldDefinition;
-                if (fr != null)
+                if (instruction.Operand is FieldDefinition fr)
                 {
                     if (fr.Name?.EndsWith(">k__BackingField") == true)
                     {

@@ -4,7 +4,6 @@ namespace DotNetArchitectureExplorer;
 
 static class Extensions
 {
-
     /// <summary>
     ///     Removes value from start of str
     /// </summary>
@@ -41,7 +40,6 @@ static class Extensions
             }
         }
     }
-
 
     public static TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, Func<TypeDefinition, bool> action)
     {
