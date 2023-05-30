@@ -7,10 +7,10 @@ var assemblyFilePath = @"C:\github\ReactWithDotNet\ReactWithDotNet\bin\Debug\net
 
 // var fullTypeName = "ReactWithDotNet.ElementSerializer";
 
-var fullTypeName = "ReactWithDotNet.Mixin";
+var fullTypeName = "ReactWithDotNet.ElementSerializer";
 
 var (exception, dgmlContent) = CreateMethodCallGraph(assemblyFilePath, fullTypeName);
 if (exception is null)
 {
-    File.WriteAllText(@"C:\github\DotNetArchitectureExplorer\DotNetArchitectureExplorer\Sample.dgml", dgmlContent);
+    File.WriteAllText($@"C:\github\DotNetArchitectureExplorer\DotNetArchitectureExplorer\{fullTypeName}.dgml", dgmlContent);
 }
