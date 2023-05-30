@@ -4,6 +4,8 @@ namespace DotNetArchitectureExplorer;
 
 static class Extensions
 {
+    public static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
+    
     public static (string exception, string dgmlContent) CreateMethodCallGraph(string assemblyFilePath, string fullTypeName)
     {
         var (exception, assemblyDefinition) = ReadAssemblyDefinition(assemblyFilePath);

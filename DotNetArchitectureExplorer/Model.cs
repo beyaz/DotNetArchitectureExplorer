@@ -7,8 +7,6 @@ namespace DotNetArchitectureExplorer;
 [DebuggerDisplay("{" + nameof(Value) + "}")]
 public sealed class Node
 {
-    static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
-
     readonly TypeDefinition _typeDefinition;
 
     
@@ -112,7 +110,7 @@ public sealed class Node
 [DebuggerDisplay("{Source.Value} -{VertexType}-> {Target.Value}")]
 public class Vertex
 {
-    static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
+    
 
     public Vertex(Node source, Node target, VertexType vertexType = VertexType.None)
     {
@@ -121,11 +119,11 @@ public class Vertex
         VertexType = vertexType;
     }
 
-    public Node Source { get; set; }
+    public Node Source { get;  }
 
-    public Node Target { get; set; }
+    public Node Target { get;  }
 
-    public VertexType VertexType { get; set; }
+    public VertexType VertexType { get; }
 
     public XElement ToDgml()
     {
@@ -201,7 +199,6 @@ public class BinaryDecisionTree
 
 public static class DgmlHelper
 {
-    static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
 
     public static XElement ToDgml(this BinaryDecisionTree bdt)
     {
