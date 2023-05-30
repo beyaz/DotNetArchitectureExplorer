@@ -5,7 +5,9 @@
 
 var assemblyFilePath = @"C:\github\ReactWithDotNet\ReactWithDotNet\bin\Debug\net6.0\ReactWithDotNet.dll";
 
-var fullTypeName = "ReactWithDotNet.ElementSerializer";
+// var fullTypeName = "ReactWithDotNet.ElementSerializer";
+
+var fullTypeName = "ReactWithDotNet.Mixin";
 
 var (exception, dgmlContent) = CreateMethodCallGraph(assemblyFilePath, fullTypeName);
 if (exception is null)

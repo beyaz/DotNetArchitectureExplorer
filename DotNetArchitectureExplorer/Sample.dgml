@@ -1,18 +1,56 @@
 <DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Label="CreateMethodCallGraph" Id="4a23e7b3-3876-44ed-894d-3b47198746d2" />
-    <Node Label="ReadAssemblyDefinition" Id="b1b51c9c-38a0-4757-bf7a-e68045c4b00d" />
-    <Node Label="base.ToString" Id="3dcb8940-d832-448a-982e-42339c3a740c" />
-    <Node Label="FindType" Id="bbb2cdd0-406f-4d3c-8267-f74e099b881c" />
-    <Node Label="Try" Id="8e03668f-c229-4b19-b786-44ca379bbf3b" />
-    <Node Label="RemoveFromStart" Id="16b7bc0d-d395-4439-a626-892d68d6adb7" />
-    <Node Label="RemoveFromStart" Id="d4114cbf-c3d2-4563-b2ee-0b867bb500b1" />
+    <Node Label="ConvertStyleToCssClass" Id="31b385c6-7a76-4c4e-bd0c-3b492c52105c" />
+    <Node Label="CalculatePseudos" Id="1df11345-b7a0-45eb-9b20-ec50b4ba1df4" />
+    <Node Label="base.ToString" Id="4d28c892-bbcf-4047-bf7e-9d4b3fa52139" />
+    <Node Label="&lt;ConvertStyleToCssClass&gt;g__calculateMediaQueries|7_0" Id="b7eb32b0-a3c2-4f30-ba60-612a311b71be" />
+    <Node Label="GetReactComponentTypeInfo" Id="c6d3ee7f-acb5-43b1-bd5d-c17ed606416f" />
+    <Node Label="base.GetType" Id="dea284d5-c624-467d-85ee-6d197c4f448b" />
+    <Node Label="GetStylePropertyValueOfHtmlElementForSerialize" Id="a4cf51f1-2b47-470b-94a3-485869f124d8" />
+    <Node Label="NotExportableObject" Id="9a8a6d2a-f797-409e-ba15-b143b0baed2f" StrokeDashArray="5,5" Background="#90B9F5" />
+    <Node Label="GetTypeFullNameOfState" Id="39c576b6-7753-4381-83fb-f1eb8f32b2a5" />
+    <Node Label="HandlerMethodShouldBelongToReactComponent" Id="2adc9dd4-c637-4f8e-ae79-ab6db8424c99" />
+    <Node Label="HasComponentDidMountMethod" Id="44e8708a-79c1-4d02-a85a-1f511f437b0d" />
+    <Node Label="ConvertReactEventsToTaskForEventBus" Id="444da36d-245d-4182-96d5-e9349e93e56f" />
+    <Node Label="GetTypeInfo" Id="2ad391e3-c135-4eb1-8ea6-a01e905c5b11" />
+    <Node Label="&lt;ConvertReactEventsToTaskForEventBus&gt;g__convertToTask|24_0" Id="86848cb1-4eb5-4965-add8-3167fa05c583" />
+    <Node Label="ConvertToNode" Id="01f0ca34-6c49-48ea-ae98-3e348210ec5e" />
+    <Node Label="FatalError" Id="960c3757-9868-4463-8560-216f2480961b" />
+    <Node Label="TypeInfoMap" Id="c6b7c4d2-6a77-46f6-ad87-a5f06b12ab3f" StrokeDashArray="5,5" Background="#90B9F5" />
+    <Node Label="ToFastAccess" Id="63c16913-fd33-4c91-8ef7-9e4d70d3131e" />
+    <Node Label="OpenChildren" Id="ec47aaba-4a80-4074-bb58-72f46559e452" />
+    <Node Label="&lt;ToFastAccess&gt;g__getTransformValueInServerSideTransformFunction|33_0" Id="d00bc529-e6eb-4c7e-b9f8-221dbac8b6b7" />
+    <Node Label=".cctor" Id="fe6f87d4-0d62-4f44-b207-f3140313ba35" />
+    <Node Label="&lt;GetPropertyValue&gt;g__getTargetValueFromExpression|10_1" Id="fa6fe7b4-1df5-4b53-bbb1-5b5efa2baff5" />
+    <Node Label="HandlerMethodShouldBelongToReactComponent" Id="8fdff047-c7d5-4074-b76f-60d190679bea" />
   </Nodes>
   <Links>
-    <Link Source="4a23e7b3-3876-44ed-894d-3b47198746d2" Target="b1b51c9c-38a0-4757-bf7a-e68045c4b00d" />
-    <Link Source="4a23e7b3-3876-44ed-894d-3b47198746d2" Target="3dcb8940-d832-448a-982e-42339c3a740c" />
-    <Link Source="4a23e7b3-3876-44ed-894d-3b47198746d2" Target="bbb2cdd0-406f-4d3c-8267-f74e099b881c" />
-    <Link Source="b1b51c9c-38a0-4757-bf7a-e68045c4b00d" Target="8e03668f-c229-4b19-b786-44ca379bbf3b" />
-    <Link Source="16b7bc0d-d395-4439-a626-892d68d6adb7" Target="d4114cbf-c3d2-4563-b2ee-0b867bb500b1" />
+    <Link Source="31b385c6-7a76-4c4e-bd0c-3b492c52105c" Target="1df11345-b7a0-45eb-9b20-ec50b4ba1df4" />
+    <Link Source="31b385c6-7a76-4c4e-bd0c-3b492c52105c" Target="4d28c892-bbcf-4047-bf7e-9d4b3fa52139" />
+    <Link Source="31b385c6-7a76-4c4e-bd0c-3b492c52105c" Target="b7eb32b0-a3c2-4f30-ba60-612a311b71be" />
+    <Link Source="c6d3ee7f-acb5-43b1-bd5d-c17ed606416f" Target="dea284d5-c624-467d-85ee-6d197c4f448b" />
+    <Link Source="a4cf51f1-2b47-470b-94a3-485869f124d8" Target="31b385c6-7a76-4c4e-bd0c-3b492c52105c" />
+    <Link Source="a4cf51f1-2b47-470b-94a3-485869f124d8" Target="9a8a6d2a-f797-409e-ba15-b143b0baed2f" />
+    <Link Source="a4cf51f1-2b47-470b-94a3-485869f124d8" Target="1df11345-b7a0-45eb-9b20-ec50b4ba1df4" />
+    <Link Source="a4cf51f1-2b47-470b-94a3-485869f124d8" Target="9a8a6d2a-f797-409e-ba15-b143b0baed2f" />
+    <Link Source="39c576b6-7753-4381-83fb-f1eb8f32b2a5" Target="dea284d5-c624-467d-85ee-6d197c4f448b" />
+    <Link Source="2adc9dd4-c637-4f8e-ae79-ab6db8424c99" Target="dea284d5-c624-467d-85ee-6d197c4f448b" />
+    <Link Source="44e8708a-79c1-4d02-a85a-1f511f437b0d" Target="dea284d5-c624-467d-85ee-6d197c4f448b" />
+    <Link Source="444da36d-245d-4182-96d5-e9349e93e56f" Target="dea284d5-c624-467d-85ee-6d197c4f448b" />
+    <Link Source="444da36d-245d-4182-96d5-e9349e93e56f" Target="2ad391e3-c135-4eb1-8ea6-a01e905c5b11" />
+    <Link Source="444da36d-245d-4182-96d5-e9349e93e56f" Target="86848cb1-4eb5-4965-add8-3167fa05c583" />
+    <Link Source="01f0ca34-6c49-48ea-ae98-3e348210ec5e" Target="960c3757-9868-4463-8560-216f2480961b" />
+    <Link Source="2ad391e3-c135-4eb1-8ea6-a01e905c5b11" Target="c6b7c4d2-6a77-46f6-ad87-a5f06b12ab3f" />
+    <Link Source="2ad391e3-c135-4eb1-8ea6-a01e905c5b11" Target="63c16913-fd33-4c91-8ef7-9e4d70d3131e" />
+    <Link Source="2ad391e3-c135-4eb1-8ea6-a01e905c5b11" Target="63c16913-fd33-4c91-8ef7-9e4d70d3131e" />
+    <Link Source="2ad391e3-c135-4eb1-8ea6-a01e905c5b11" Target="63c16913-fd33-4c91-8ef7-9e4d70d3131e" />
+    <Link Source="2ad391e3-c135-4eb1-8ea6-a01e905c5b11" Target="c6b7c4d2-6a77-46f6-ad87-a5f06b12ab3f" />
+    <Link Source="ec47aaba-4a80-4074-bb58-72f46559e452" Target="01f0ca34-6c49-48ea-ae98-3e348210ec5e" />
+    <Link Source="63c16913-fd33-4c91-8ef7-9e4d70d3131e" Target="d00bc529-e6eb-4c7e-b9f8-221dbac8b6b7" />
+    <Link Source="fe6f87d4-0d62-4f44-b207-f3140313ba35" Target="9a8a6d2a-f797-409e-ba15-b143b0baed2f" />
+    <Link Source="fe6f87d4-0d62-4f44-b207-f3140313ba35" Target="c6b7c4d2-6a77-46f6-ad87-a5f06b12ab3f" />
+    <Link Source="fa6fe7b4-1df5-4b53-bbb1-5b5efa2baff5" Target="4d28c892-bbcf-4047-bf7e-9d4b3fa52139" />
+    <Link Source="fa6fe7b4-1df5-4b53-bbb1-5b5efa2baff5" Target="8fdff047-c7d5-4074-b76f-60d190679bea" />
+    <Link Source="86848cb1-4eb5-4965-add8-3167fa05c583" Target="dea284d5-c624-467d-85ee-6d197c4f448b" />
   </Links>
 </DirectedGraph>
