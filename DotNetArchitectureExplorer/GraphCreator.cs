@@ -58,11 +58,11 @@ class GraphCreator
 
                         if (md != null && md.IsGetter)
                         {
-                            dgml.Add(new Link{ Source = source, Target = target, VertexType = VertexType.ReadProperty });
+                            dgml.Add(new Link{ Source = source, Target = target, LinkType = LinkType.ReadProperty });
                             continue;
                         }
                         
-                        dgml.Add(new Link { Source = source, Target = target, VertexType = VertexType.None });
+                        dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.None });
                     }
                 }
 
@@ -79,11 +79,11 @@ class GraphCreator
 
                         if (instruction.OpCode.Code == Code.Ldfld)
                         {
-                            dgml.Add(new Link { Source = source, Target = target, VertexType = VertexType.ReadProperty });
+                            dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.ReadProperty });
                             continue;
                         }
 
-                        dgml.Add(new Link { Source = source, Target = target, VertexType = VertexType.None });
+                        dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.None });
                     }
                 }
 

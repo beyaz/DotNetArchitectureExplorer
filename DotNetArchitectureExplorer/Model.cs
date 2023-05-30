@@ -107,17 +107,17 @@ public sealed class Node
     }
 }
 
-[DebuggerDisplay("{Source.Value} -{VertexType}-> {Target.Value}")]
+[DebuggerDisplay("{Source.Value} -{LinkType}-> {Target.Value}")]
 public sealed record Link
 {
     public Node Source { get; init; }
 
     public Node Target { get; init; }
 
-    public VertexType VertexType { get; init; }
+    public LinkType LinkType { get; init; }
 }
 
-public enum VertexType
+public enum LinkType
 {
     None,
     ReadProperty,

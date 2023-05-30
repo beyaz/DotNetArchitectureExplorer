@@ -11,7 +11,7 @@ static class Extensions
     {
         var element = new XElement(XName.Get("Link", ns), new XAttribute("Source", link.Source.Id), new XAttribute("Target", link.Target.Id));
 
-        if (link.VertexType == VertexType.ReadProperty)
+        if (link.LinkType == LinkType.ReadProperty)
         {
             element.Add(new XAttribute("StrokeDashArray", "5,5"));
         }
