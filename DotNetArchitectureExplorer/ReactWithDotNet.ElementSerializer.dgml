@@ -1,59 +1,56 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="03c707be-1e72-46d9-b391-6376a3072ca0" Bounds="1104.59666666667,111.92,88.1533333333334,25.96" Label="ToFastAccess" />
-    <Node Id="0f9a1585-f9be-49f3-9b1c-43d080228230" Bounds="7.105427357601E-15,279.8,103.01,25.96" Label="ConvertToNode" />
-    <Node Id="134c781f-951b-4bd5-841a-468e2fceb6b9" Bounds="277.198333333333,111.92,142.95,25.96" Label="ConvertStyleToCssClass" />
-    <Node Id="14e13e13-9814-4a7f-ae12-5e53d5e3bf98" Bounds="981.618333333333,55.96,84.11,25.96" Label="GetTypeInfo" />
-    <Node Id="19d534b3-bd7c-4fc4-ad8d-867a0ef5b1c6" Bounds="1127.91166666667,55.96,281.523333333333,25.96" Label="HandlerMethodShouldBelongToReactComponent" />
-    <Node Id="1c748286-69c2-4fe9-a634-25bf690bab24" Bounds="1223.43833333333,111.92,90.47,25.96" Label="base.GetType" />
-    <Node Id="1cf596ae-d8b6-438b-bb42-e8f43584d1f3" Bounds="573.54,167.88,90.2666666666667,25.96" Label="base.ToString" />
-    <Node Id="2ed240aa-0f4e-4d62-b906-f3d85c54a98e" Bounds="693.911666666666,167.88,281.523333333333,25.96" Label="HandlerMethodShouldBelongToReactComponent" />
-    <Node Id="3679708a-3615-4b0a-bcd2-4dc27f7d60b3" Bounds="900.673333333333,55.96,50,25.96" Label=".cctor" />
-    <Node Id="385e7720-8f7f-4a63-8561-22edd2651c0d" Bounds="16.3766666666667,335.76,70.2566666666667,25.96" Label="FatalError" />
-    <Node Id="4dd26ea3-4079-43af-80b3-45b727215e69" Bounds="984.971666666666,0,223.403333333333,25.96" Label="ConvertReactEventsToTaskForEventBus" />
-    <Node Id="51927233-97d1-4c55-b19d-fac5c1b95cdd" Background="#FF90B9F5" Bounds="817.068333333333,111.92,131.21,25.96" Label="NotExportableObject" StrokeDashArray="5 5" />
-    <Node Id="5801b6b4-23c7-4c7b-a628-de41c5ecab75" Bounds="1646.48833333333,55.9599999999999,198.37,25.96" Label="HasComponentDidMountMethod" />
-    <Node Id="599b215c-6122-486f-9b01-fa72ca242db3" Bounds="451.011666666666,111.92,335.323333333333,25.96" Label="&lt;GetPropertyValue&gt;g__getTargetValueFromExpression|10_1" />
-    <Node Id="799e3b51-8e93-438a-b608-d692f5102a43" Bounds="4.75166666666666,223.84,93.5066666666667,25.96" Label="OpenChildren" />
-    <Node Id="82946ff1-4823-497a-b030-7db9c61ec171" Background="#FF90B9F5" Bounds="978.938333333333,111.92,89.4699999999999,25.96" Label="TypeInfoMap" StrokeDashArray="5 5" />
-    <Node Id="846205a8-d2bf-4b2b-9ae8-11b7abeca503" Bounds="2058.68,55.9599999999999,357.986666666667,25.96" Label="&lt;ConvertReactEventsToTaskForEventBus&gt;g__convertToTask|24_0" />
-    <Node Id="8adec9bf-b787-45cf-bd26-f8229cae4968" Bounds="83.5716666666667,167.88,112.203333333333,25.96" Label="CalculatePseudos" />
-    <Node Id="96d9bff8-d53f-42fb-b057-1b1ff1f8a9df" Bounds="0,55.9600000000002,279.346666666667,25.96" Label="GetStylePropertyValueOfHtmlElementForSerialize" />
-    <Node Id="b4af6d33-4439-4a70-bd4d-44b1714c3cde" Bounds="226.108333333333,167.88,317.13,25.96" Label="&lt;ConvertStyleToCssClass&gt;g__calculateMediaQueries|7_0" />
-    <Node Id="d07569e2-54e8-4c87-8e47-456778e8735b" Bounds="1875.27,55.9599999999999,152.806666666667,25.96" Label="GetTypeFullNameOfState" />
-    <Node Id="e36794bf-0b7e-402e-9b5d-68232418213d" Bounds="1005.80666666667,167.88,411.733333333333,25.96" Label="&lt;ToFastAccess&gt;g__getTransformValueInServerSideTransformFunction|33_0" />
-    <Node Id="fd897ce8-d637-4a67-8616-ee7a5286fb66" Bounds="1439.80666666667,55.96,175.733333333333,25.96" Label="GetReactComponentTypeInfo" />
+    <Node Label="ConvertStyleToCssClass" Id="1b4b53c2-c636-4216-8af3-911690c0a40c" />
+    <Node Label="CalculatePseudos" Id="3c950412-2ac4-4323-b64f-b05a011981bf" />
+    <Node Label="base.ToString" Id="4a5d65f4-ad0d-4cbb-be36-af2171a1266a" />
+    <Node Label="&lt;ConvertStyleToCssClass&gt;g__calculateMediaQueries|7_0" Id="d166f7da-2b5b-4b4e-83e7-0869944d48c7" />
+    <Node Label="GetReactComponentTypeInfo" Id="eb268344-10e8-4591-96bb-f35f8530656a" />
+    <Node Label="base.GetType" Id="b61388b0-bd74-4001-bb84-918c84e4effb" />
+    <Node Label="GetStylePropertyValueOfHtmlElementForSerialize" Id="be636daf-ebdf-47f5-adaa-bc6a6ff18912" />
+    <Node Label="NotExportableObject" Id="a09dcbbd-6c64-420b-b62d-ceb0d933e7f9" StrokeDashArray="5,5" Background="#90B9F5" />
+    <Node Label="GetTypeFullNameOfState" Id="1cebe650-bfcd-49d5-8138-9d37214b25e6" />
+    <Node Label="HandlerMethodShouldBelongToReactComponent" Id="acf7d5b8-b4a7-463c-9de8-2a25197f2f80" />
+    <Node Label="HasComponentDidMountMethod" Id="0360220f-9590-4403-9486-be7c18706946" />
+    <Node Label="ConvertReactEventsToTaskForEventBus" Id="1dd3691e-64ce-4148-ac86-e18a74074174" />
+    <Node Label="GetTypeInfo" Id="11821fb8-e50e-46d7-a69c-80e29060bc2e" />
+    <Node Label="&lt;ConvertReactEventsToTaskForEventBus&gt;g__convertToTask|24_0" Id="259ea949-d2d5-4c0c-8cbf-c5848faef904" />
+    <Node Label="ConvertToNode" Id="8a805496-646d-455c-871e-1e5ea4eff7f6" />
+    <Node Label="FatalError" Id="e8c5314f-a41d-43a2-aa54-f0a8e74e3750" />
+    <Node Label="TypeInfoMap" Id="f749d22d-fed5-46f3-9bad-b0a695394ac1" StrokeDashArray="5,5" Background="#90B9F5" />
+    <Node Label="ToFastAccess" Id="f0b6d860-16dc-4606-8af4-0de26ed8a124" />
+    <Node Label="OpenChildren" Id="f9f0c8c6-74b2-4ab1-99b9-15ec124a1bea" />
+    <Node Label="&lt;ToFastAccess&gt;g__getTransformValueInServerSideTransformFunction|33_0" Id="9c1310e5-8d18-48a4-9404-2a3119d17628" />
+    <Node Label=".cctor" Id="3178fedd-6e3d-4652-ac9d-19930888f698" />
+    <Node Label="&lt;GetPropertyValue&gt;g__getTargetValueFromExpression|10_1" Id="10b26504-64ad-425c-af57-d4f71c580f73" />
+    <Node Label="HandlerMethodShouldBelongToReactComponent" Id="2edfede0-a4c5-415c-bb6d-24e07f6f7f52" />
   </Nodes>
   <Links>
-    <Link Source="03c707be-1e72-46d9-b391-6376a3072ca0" Target="e36794bf-0b7e-402e-9b5d-68232418213d" Bounds="1163.28625488281,137.880004882813,27.0452880859375,24.0231018066406" />
-    <Link Source="0f9a1585-f9be-49f3-9b1c-43d080228230" Target="385e7720-8f7f-4a63-8561-22edd2651c0d" Bounds="51.5050010681152,305.760009765625,0,21" />
-    <Link Source="134c781f-951b-4bd5-841a-468e2fceb6b9" Target="1cf596ae-d8b6-438b-bb42-e8f43584d1f3" Bounds="411.300201416016,137.880004882813,153.427093505859,31.7991790771484" />
-    <Link Source="134c781f-951b-4bd5-841a-468e2fceb6b9" Target="8adec9bf-b787-45cf-bd26-f8229cae4968" Bounds="196.844940185547,137.880004882813,103.350555419922,27.6722259521484" />
-    <Link Source="134c781f-951b-4bd5-841a-468e2fceb6b9" Target="b4af6d33-4439-4a70-bd4d-44b1714c3cde" Bounds="357.023590087891,137.880004882813,14.4302062988281,22.4309692382813" />
-    <Link Source="14e13e13-9814-4a7f-ae12-5e53d5e3bf98" Target="03c707be-1e72-46d9-b391-6376a3072ca0" Bounds="1052.66723632813,81.9199981689453,58.7977294921875,26.3225784301758" />
-    <Link Source="14e13e13-9814-4a7f-ae12-5e53d5e3bf98" Target="82946ff1-4823-497a-b030-7db9c61ec171" Bounds="1023.67333984375,81.9199981689453,0,21" />
-    <Link Source="19d534b3-bd7c-4fc4-ad8d-867a0ef5b1c6" Target="1c748286-69c2-4fe9-a634-25bf690bab24" Bounds="1268.67333984375,81.9199981689453,0,21" />
-    <Link Source="3679708a-3615-4b0a-bcd2-4dc27f7d60b3" Target="51927233-97d1-4c55-b19d-fac5c1b95cdd" Bounds="898.130920410156,81.9199981689453,17.5684814453125,22.8635406494141" />
-    <Link Source="3679708a-3615-4b0a-bcd2-4dc27f7d60b3" Target="82946ff1-4823-497a-b030-7db9c61ec171" Bounds="948.291748046875,81.8555679321289,44.8347778320313,25.6015853881836" />
-    <Link Source="4dd26ea3-4079-43af-80b3-45b727215e69" Target="14e13e13-9814-4a7f-ae12-5e53d5e3bf98" Bounds="1047.74853515625,25.9599990844727,31.9923095703125,24.524528503418" />
-    <Link Source="4dd26ea3-4079-43af-80b3-45b727215e69" Target="1c748286-69c2-4fe9-a634-25bf690bab24" Bounds="1096.67333984375,25.9599990844727,118.853881835938,84.5997009277344" />
-    <Link Source="4dd26ea3-4079-43af-80b3-45b727215e69" Target="846205a8-d2bf-4b2b-9ae8-11b7abeca503" Bounds="1208.375,17.5665073394775,856.553466796875,37.8515186309814" />
-    <Link Source="5801b6b4-23c7-4c7b-a628-de41c5ecab75" Target="1c748286-69c2-4fe9-a634-25bf690bab24" Bounds="1322.84704589844,80.5216827392578,324.104614257813,38.0228424072266" />
-    <Link Source="599b215c-6122-486f-9b01-fa72ca242db3" Target="1cf596ae-d8b6-438b-bb42-e8f43584d1f3" Bounds="618.67333984375,137.880004882813,0,21" />
-    <Link Source="599b215c-6122-486f-9b01-fa72ca242db3" Target="2ed240aa-0f4e-4d62-b906-f3d85c54a98e" Bounds="668.774841308594,137.880004882813,107.084655761719,27.7428436279297" />
-    <Link Source="799e3b51-8e93-438a-b608-d692f5102a43" Target="0f9a1585-f9be-49f3-9b1c-43d080228230" Bounds="51.5050010681152,249.800003051758,0,20.9999847412109" />
-    <Link Source="846205a8-d2bf-4b2b-9ae8-11b7abeca503" Target="1c748286-69c2-4fe9-a634-25bf690bab24" Bounds="1322.89587402344,81.782844543457,737.887329101563,40.2568817138672" />
-    <Link Source="96d9bff8-d53f-42fb-b057-1b1ff1f8a9df" Target="134c781f-951b-4bd5-841a-468e2fceb6b9" Bounds="188.151168823242,81.9199981689453,103.350570678711,27.672233581543" />
-    <Link Source="96d9bff8-d53f-42fb-b057-1b1ff1f8a9df" Target="51927233-97d1-4c55-b19d-fac5c1b95cdd" Bounds="279.3466796875,76.5456314086914,531.280456542969,34.2599563598633" />
-    <Link Source="96d9bff8-d53f-42fb-b057-1b1ff1f8a9df" Target="8adec9bf-b787-45cf-bd26-f8229cae4968" Bounds="139.67333984375,81.9199981689453,0,76.9600067138672" />
-    <Link Source="d07569e2-54e8-4c87-8e47-456778e8735b" Target="1c748286-69c2-4fe9-a634-25bf690bab24" Bounds="1322.89013671875,81.6731109619141,554.188110351563,39.7736434936523" />
-    <Link Source="fd897ce8-d637-4a67-8616-ee7a5286fb66" Target="1c748286-69c2-4fe9-a634-25bf690bab24" Bounds="1322.70532226563,81.9199981689453,144.892578125,31.3057479858398" />
+    <Link Source="1b4b53c2-c636-4216-8af3-911690c0a40c" Target="3c950412-2ac4-4323-b64f-b05a011981bf" />
+    <Link Source="1b4b53c2-c636-4216-8af3-911690c0a40c" Target="4a5d65f4-ad0d-4cbb-be36-af2171a1266a" />
+    <Link Source="1b4b53c2-c636-4216-8af3-911690c0a40c" Target="d166f7da-2b5b-4b4e-83e7-0869944d48c7" />
+    <Link Source="eb268344-10e8-4591-96bb-f35f8530656a" Target="b61388b0-bd74-4001-bb84-918c84e4effb" />
+    <Link Source="be636daf-ebdf-47f5-adaa-bc6a6ff18912" Target="1b4b53c2-c636-4216-8af3-911690c0a40c" />
+    <Link Source="be636daf-ebdf-47f5-adaa-bc6a6ff18912" Target="a09dcbbd-6c64-420b-b62d-ceb0d933e7f9" />
+    <Link Source="be636daf-ebdf-47f5-adaa-bc6a6ff18912" Target="3c950412-2ac4-4323-b64f-b05a011981bf" />
+    <Link Source="be636daf-ebdf-47f5-adaa-bc6a6ff18912" Target="a09dcbbd-6c64-420b-b62d-ceb0d933e7f9" />
+    <Link Source="1cebe650-bfcd-49d5-8138-9d37214b25e6" Target="b61388b0-bd74-4001-bb84-918c84e4effb" />
+    <Link Source="acf7d5b8-b4a7-463c-9de8-2a25197f2f80" Target="b61388b0-bd74-4001-bb84-918c84e4effb" />
+    <Link Source="0360220f-9590-4403-9486-be7c18706946" Target="b61388b0-bd74-4001-bb84-918c84e4effb" />
+    <Link Source="1dd3691e-64ce-4148-ac86-e18a74074174" Target="b61388b0-bd74-4001-bb84-918c84e4effb" />
+    <Link Source="1dd3691e-64ce-4148-ac86-e18a74074174" Target="11821fb8-e50e-46d7-a69c-80e29060bc2e" />
+    <Link Source="1dd3691e-64ce-4148-ac86-e18a74074174" Target="259ea949-d2d5-4c0c-8cbf-c5848faef904" />
+    <Link Source="8a805496-646d-455c-871e-1e5ea4eff7f6" Target="e8c5314f-a41d-43a2-aa54-f0a8e74e3750" />
+    <Link Source="11821fb8-e50e-46d7-a69c-80e29060bc2e" Target="f749d22d-fed5-46f3-9bad-b0a695394ac1" />
+    <Link Source="11821fb8-e50e-46d7-a69c-80e29060bc2e" Target="f0b6d860-16dc-4606-8af4-0de26ed8a124" />
+    <Link Source="11821fb8-e50e-46d7-a69c-80e29060bc2e" Target="f0b6d860-16dc-4606-8af4-0de26ed8a124" />
+    <Link Source="11821fb8-e50e-46d7-a69c-80e29060bc2e" Target="f0b6d860-16dc-4606-8af4-0de26ed8a124" />
+    <Link Source="11821fb8-e50e-46d7-a69c-80e29060bc2e" Target="f749d22d-fed5-46f3-9bad-b0a695394ac1" />
+    <Link Source="f9f0c8c6-74b2-4ab1-99b9-15ec124a1bea" Target="8a805496-646d-455c-871e-1e5ea4eff7f6" />
+    <Link Source="f0b6d860-16dc-4606-8af4-0de26ed8a124" Target="9c1310e5-8d18-48a4-9404-2a3119d17628" />
+    <Link Source="3178fedd-6e3d-4652-ac9d-19930888f698" Target="a09dcbbd-6c64-420b-b62d-ceb0d933e7f9" />
+    <Link Source="3178fedd-6e3d-4652-ac9d-19930888f698" Target="f749d22d-fed5-46f3-9bad-b0a695394ac1" />
+    <Link Source="10b26504-64ad-425c-af57-d4f71c580f73" Target="4a5d65f4-ad0d-4cbb-be36-af2171a1266a" />
+    <Link Source="10b26504-64ad-425c-af57-d4f71c580f73" Target="2edfede0-a4c5-415c-bb6d-24e07f6f7f52" />
+    <Link Source="259ea949-d2d5-4c0c-8cbf-c5848faef904" Target="b61388b0-bd74-4001-bb84-918c84e4effb" />
   </Links>
-  <Properties>
-    <Property Id="Background" Label="Background" Description="The background color" DataType="System.Windows.Media.Brush" />
-    <Property Id="Bounds" DataType="System.Windows.Rect" />
-    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
-    <Property Id="StrokeDashArray" DataType="System.Windows.Media.DoubleCollection" />
-  </Properties>
 </DirectedGraph>

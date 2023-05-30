@@ -5,42 +5,19 @@ using Mono.Cecil;
 namespace DotNetArchitectureExplorer;
 
 [DebuggerDisplay("{" + nameof(Value) + "}")]
-public class Node
+public sealed class Node
 {
-    #region Static Fields
-
     static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
-
-    #endregion
 
     readonly TypeDefinition _typeDefinition;
 
-    bool IsBaseMethod
-    {
-        get
-        {
-            if (MethodDefinition != null)
-            {
-                return _typeDefinition != MethodDefinition.DeclaringType;
-            }
-
-            return _typeDefinition == FieldReference?.DeclaringType;
-        }
-    }
-
-    #region Constructors
-
-    public Node(string value = null)
-    {
-        Id    = Guid.NewGuid();
-        Value = value;
-    }
+    
 
     public Node(FieldReference fieldReference, TypeDefinition typeDefinition)
     {
         _typeDefinition = typeDefinition;
         FieldReference  = fieldReference;
-        Id              = Guid.NewGuid();
+        Id              = fieldReference.FullName;
         Value           = fieldReference.Name;
     }
 
@@ -49,7 +26,7 @@ public class Node
         _typeDefinition = typeDefinition;
         MethodReference = methodDefinition;
 
-        Id = Guid.NewGuid();
+        Id = methodDefinition.FullName;
         if (IsProperty)
         {
             Value = methodDefinition.Name.RemoveFromStart("set_").RemoveFromStart("get_");
@@ -65,11 +42,20 @@ public class Node
         }
     }
 
-    #endregion
+    bool IsBaseMethod
+    {
+        get
+        {
+            if (MethodDefinition != null)
+            {
+                return _typeDefinition != MethodDefinition.DeclaringType;
+            }
 
-    #region Public Properties
+            return _typeDefinition == FieldReference?.DeclaringType;
+        }
+    }
 
-    public Guid Id { get; }
+    public string Id { get; }
 
     public bool IsProperty
     {
@@ -91,10 +77,6 @@ public class Node
     public MethodReference MethodReference { get; }
     public FieldReference FieldReference { get; }
     public string Value { get; }
-
-    #endregion
-
-    #region Public Methods
 
     public override bool Equals(object obj)
     {
@@ -125,20 +107,12 @@ public class Node
 
         return element;
     }
-
-    #endregion
 }
 
 [DebuggerDisplay("{Source.Value} -{VertexType}-> {Target.Value}")]
 public class Vertex
 {
-    #region Static Fields
-
     static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
-
-    #endregion
-
-    #region Constructors
 
     public Vertex(Node source, Node target, VertexType vertexType = VertexType.None)
     {
@@ -147,9 +121,11 @@ public class Vertex
         VertexType = vertexType;
     }
 
-    #endregion
+    public Node Source { get; set; }
 
-    #region Public Methods
+    public Node Target { get; set; }
+
+    public VertexType VertexType { get; set; }
 
     public XElement ToDgml()
     {
@@ -162,18 +138,6 @@ public class Vertex
 
         return element;
     }
-
-    #endregion
-
-    #region Public Properties
-
-    public Node Source { get; set; }
-
-    public Node Target { get; set; }
-
-    public VertexType VertexType { get; set; }
-
-    #endregion
 }
 
 public enum VertexType
@@ -186,8 +150,6 @@ public enum VertexType
 
 static class Extensions2
 {
-    #region Public Methods
-
     public static IEnumerable<Node> ConnectedNodes(this BinaryDecisionTree bdt)
     {
         return bdt.Vertices.SelectMany(v => new[]
@@ -198,25 +160,12 @@ static class Extensions2
             .Distinct()
             .ToList();
     }
-
-    #endregion
 }
 
 public class BinaryDecisionTree
 {
-    #region Constructors
-
-    static BinaryDecisionTree()
-    {
-        EntryNode = new Node("Entry");
-    }
-
-    public BinaryDecisionTree(string value) : this()
-    {
-        var node = new Node(value);
-        Add(node);
-        Add(new Vertex(EntryNode, node));
-    }
+    
+    
 
     internal BinaryDecisionTree()
     {
@@ -224,19 +173,10 @@ public class BinaryDecisionTree
         Vertices = new List<Vertex>();
     }
 
-    #endregion
-
-    #region Public Properties
-
-    public static Node EntryNode { get; }
 
     public List<Node> Nodes { get; }
 
     public List<Vertex> Vertices { get; }
-
-    #endregion
-
-    #region Public Methods
 
     public void Add(params Node[] node)
     {
@@ -257,19 +197,11 @@ public class BinaryDecisionTree
     {
         Vertices.Remove(vertex);
     }
-
-    #endregion
 }
 
 public static class DgmlHelper
 {
-    #region Static Fields
-
     static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
-
-    #endregion
-
-    #region Public Methods
 
     public static XElement ToDgml(this BinaryDecisionTree bdt)
     {
@@ -282,10 +214,6 @@ public static class DgmlHelper
         return CreateGraph(nodes, links);
     }
 
-    #endregion
-
-    #region Methods
-
     static XElement CreateGraph(IEnumerable<XElement> nodes, IEnumerable<XElement> links)
     {
         var xElement = new XElement(XName.Get("DirectedGraph", ns));
@@ -297,6 +225,4 @@ public static class DgmlHelper
         xElement.Add(xElement3);
         return xElement;
     }
-
-    #endregion
 }
