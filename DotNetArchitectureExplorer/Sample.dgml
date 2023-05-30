@@ -1,0 +1,18 @@
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Label="CreateMethodCallGraph" Id="4a23e7b3-3876-44ed-894d-3b47198746d2" />
+    <Node Label="ReadAssemblyDefinition" Id="b1b51c9c-38a0-4757-bf7a-e68045c4b00d" />
+    <Node Label="base.ToString" Id="3dcb8940-d832-448a-982e-42339c3a740c" />
+    <Node Label="FindType" Id="bbb2cdd0-406f-4d3c-8267-f74e099b881c" />
+    <Node Label="Try" Id="8e03668f-c229-4b19-b786-44ca379bbf3b" />
+    <Node Label="RemoveFromStart" Id="16b7bc0d-d395-4439-a626-892d68d6adb7" />
+    <Node Label="RemoveFromStart" Id="d4114cbf-c3d2-4563-b2ee-0b867bb500b1" />
+  </Nodes>
+  <Links>
+    <Link Source="4a23e7b3-3876-44ed-894d-3b47198746d2" Target="b1b51c9c-38a0-4757-bf7a-e68045c4b00d" />
+    <Link Source="4a23e7b3-3876-44ed-894d-3b47198746d2" Target="3dcb8940-d832-448a-982e-42339c3a740c" />
+    <Link Source="4a23e7b3-3876-44ed-894d-3b47198746d2" Target="bbb2cdd0-406f-4d3c-8267-f74e099b881c" />
+    <Link Source="b1b51c9c-38a0-4757-bf7a-e68045c4b00d" Target="8e03668f-c229-4b19-b786-44ca379bbf3b" />
+    <Link Source="16b7bc0d-d395-4439-a626-892d68d6adb7" Target="d4114cbf-c3d2-4563-b2ee-0b867bb500b1" />
+  </Links>
+</DirectedGraph>
