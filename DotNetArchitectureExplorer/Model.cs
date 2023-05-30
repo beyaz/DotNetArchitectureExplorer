@@ -108,11 +108,9 @@ public sealed class Node
 }
 
 [DebuggerDisplay("{Source.Value} -{VertexType}-> {Target.Value}")]
-public class Vertex
+public class Link
 {
-    
-
-    public Vertex(Node source, Node target, VertexType vertexType = VertexType.None)
+    public Link(Node source, Node target, VertexType vertexType = VertexType.None)
     {
         Source     = source;
         Target     = target;
@@ -168,20 +166,20 @@ public class BinaryDecisionTree
     internal BinaryDecisionTree()
     {
         Nodes    = new List<Node>();
-        Vertices = new List<Vertex>();
+        Vertices = new List<Link>();
     }
 
 
     public List<Node> Nodes { get; }
 
-    public List<Vertex> Vertices { get; }
+    public List<Link> Vertices { get; }
 
     public void Add(params Node[] node)
     {
         Nodes.AddRange(node);
     }
 
-    public void Add(params Vertex[] vertex)
+    public void Add(params Link[] vertex)
     {
         Vertices.AddRange(vertex);
     }
@@ -191,9 +189,9 @@ public class BinaryDecisionTree
         Nodes.Remove(node);
     }
 
-    public void Remove(Vertex vertex)
+    public void Remove(Link link)
     {
-        Vertices.Remove(vertex);
+        Vertices.Remove(link);
     }
 }
 
