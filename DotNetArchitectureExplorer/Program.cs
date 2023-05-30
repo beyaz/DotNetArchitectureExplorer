@@ -1,2 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+
+
+using DotNetArchitectureExplorer;
+
+Handler.CreateMethodCallGraph(@"C:\github\DotNetArchitectureExplorer\DotNetArchitectureExplorer\bin\Debug\net6.0\DotNetArchitectureExplorer.dll", "DotNetArchitectureExplorer.Extensions");
