@@ -20,31 +20,27 @@ class GraphCreator
             nodeCache[method.FullName] = new Node(method,definition);
         }
 
-        Func<MethodReference, Node> fromNodeCache = mr =>
+        Node FromNodeCache(MethodReference mr)
         {
             if (nodeCache.ContainsKey(mr.FullName))
             {
                 return nodeCache[mr.FullName];
             }
 
-            nodeCache[mr.FullName] = new Node(mr, definition)
-            {
-                    
-            };
+            nodeCache[mr.FullName] = new Node(mr, definition);
             return nodeCache[mr.FullName];
-        };
+        }
 
-
-        Func<FieldReference, Node> fromNodeCacheField = fr =>
+        Node FromNodeCacheField(FieldReference fr)
         {
             if (nodeCache.ContainsKey(fr.FullName))
             {
                 return nodeCache[fr.FullName];
             }
 
-            nodeCache[fr.FullName] = new Node(fr,definition);
+            nodeCache[fr.FullName] = new Node(fr, definition);
             return nodeCache[fr.FullName];
-        };
+        }
 
         foreach (var method in definition.Methods.Where(m => m.HasBody))
         {
@@ -61,8 +57,8 @@ class GraphCreator
 
                     if (mr.DeclaringType == definition || IsInheritedFrom(definition, mr.DeclaringType))
                     {
-                        var source = fromNodeCache(method);
-                        var target = fromNodeCache(mr);
+                        var source = FromNodeCache(method);
+                        var target = FromNodeCache(mr);
 
                         if (md != null && md.IsGetter)
                         {
@@ -83,8 +79,8 @@ class GraphCreator
                     }
                     if (fr.DeclaringType == definition || IsInheritedFrom(definition, fr.DeclaringType))
                     {
-                        var source = fromNodeCache(method);
-                        var target = fromNodeCacheField(fr);
+                        var source = FromNodeCache(method);
+                        var target = FromNodeCacheField(fr);
 
                         if (instruction.OpCode.Code == Code.Ldfld)
                         {
