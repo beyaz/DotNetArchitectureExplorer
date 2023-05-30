@@ -108,22 +108,13 @@ public sealed class Node
 }
 
 [DebuggerDisplay("{Source.Value} -{VertexType}-> {Target.Value}")]
-public class Link
+public sealed record Link
 {
-    public Link(Node source, Node target, VertexType vertexType = VertexType.None)
-    {
-        Source     = source;
-        Target     = target;
-        VertexType = vertexType;
-    }
-
     public Node Source { get; init; }
 
     public Node Target { get; init; }
 
     public VertexType VertexType { get; init; }
-
-   
 }
 
 public enum VertexType
