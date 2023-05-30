@@ -155,25 +155,14 @@ public class BinaryDecisionTree
 
     public List<Link> Vertices { get; }
 
-    public void Add(params Node[] node)
-    {
-        Nodes.AddRange(node);
-    }
+    
 
     public void Add(params Link[] vertex)
     {
         Vertices.AddRange(vertex);
     }
 
-    public void Remove(Node node)
-    {
-        Nodes.Remove(node);
-    }
-
-    public void Remove(Link link)
-    {
-        Vertices.Remove(link);
-    }
+    
 }
 
 public static class DgmlHelper
