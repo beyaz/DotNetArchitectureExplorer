@@ -123,17 +123,7 @@ public class Link
 
     public VertexType VertexType { get; }
 
-    public XElement ToDgml()
-    {
-        var element = new XElement(XName.Get("Link", ns), new XAttribute("Source", Source.Id), new XAttribute("Target", Target.Id));
-
-        if (VertexType == VertexType.ReadProperty)
-        {
-            element.Add(new XAttribute("StrokeDashArray", "5,5"));
-        }
-
-        return element;
-    }
+   
 }
 
 public enum VertexType

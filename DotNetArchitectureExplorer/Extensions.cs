@@ -1,10 +1,23 @@
-﻿using Mono.Cecil;
+﻿using System.Xml.Linq;
+using Mono.Cecil;
 
 namespace DotNetArchitectureExplorer;
 
 static class Extensions
 {
     public static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
+
+    public static XElement ToDgml(this Link link)
+    {
+        var element = new XElement(XName.Get("Link", ns), new XAttribute("Source", link.Source.Id), new XAttribute("Target", link.Target.Id));
+
+        if (link.VertexType == VertexType.ReadProperty)
+        {
+            element.Add(new XAttribute("StrokeDashArray", "5,5"));
+        }
+
+        return element;
+    }
     
     public static (string exception, string dgmlContent) CreateMethodCallGraph(string assemblyFilePath, string fullTypeName)
     {
