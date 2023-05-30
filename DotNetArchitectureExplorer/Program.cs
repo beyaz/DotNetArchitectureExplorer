@@ -3,4 +3,8 @@ var assemblyFilePath = @"C:\github\DotNetArchitectureExplorer\DotNetArchitecture
 
 var fullTypeName = "DotNetArchitectureExplorer.Extensions";
 
-CreateMethodCallGraph(assemblyFilePath, fullTypeName);
+var (exception, dgmlContent) = CreateMethodCallGraph(assemblyFilePath, fullTypeName);
+if (exception is null)
+{
+    File.WriteAllText(@"C:\github\DotNetArchitectureExplorer\DotNetArchitectureExplorer\Sample.dgml", dgmlContent);
+}
