@@ -4,6 +4,41 @@ namespace DotNetArchitectureExplorer;
 
 static class Extensions
 {
+    public static (string exception, string dgmlContent) CreateMethodCallGraph(string assemblyFilePath, string fullTypeName)
+    {
+        var (exception, assemblyDefinition) = ReadAssemblyDefinition(assemblyFilePath);
+        if (exception is not null)
+        {
+            return (exception.ToString(), default);
+        }
+
+        var (isFound, typeDefinition) = FindType(assemblyDefinition, fullTypeName);
+        if (!isFound)
+        {
+            return ($"Type not found. type: {fullTypeName}", default);
+        }
+
+        var dgml = new GraphCreator().CreateGraph(typeDefinition);
+
+        return (default, dgml);
+    }
+
+    public static (bool isFound, TypeDefinition typeDefinition) FindType(AssemblyDefinition assemblyDefinition, string fullTypeName)
+    {
+        foreach (var moduleDefinition in assemblyDefinition.Modules)
+        {
+            foreach (var typeDefinition in moduleDefinition.Types)
+            {
+                if (typeDefinition.FullName == fullTypeName)
+                {
+                    return (isFound: true, typeDefinition);
+                }
+            }
+        }
+
+        return default;
+    }
+
     public static (BadImageFormatException exception, AssemblyDefinition assemblyDefinition) ReadAssemblyDefinition(string filePath)
     {
         return Try<BadImageFormatException, AssemblyDefinition>(() =>
