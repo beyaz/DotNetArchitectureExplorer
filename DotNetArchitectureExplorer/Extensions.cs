@@ -4,6 +4,42 @@ namespace DotNetArchitectureExplorer;
 
 static class Extensions
 {
+    public static (BadImageFormatException exception, AssemblyDefinition assemblyDefinition) ReadAssemblyDefinition(string filePath)
+    {
+        return Try<BadImageFormatException, AssemblyDefinition>(() =>
+        {
+            var resolver = new DefaultAssemblyResolver();
+
+            resolver.AddSearchDirectory(Path.GetDirectoryName(filePath));
+
+            return AssemblyDefinition.ReadAssembly(filePath, new ReaderParameters { AssemblyResolver = resolver });
+        });
+    }
+
+    public static (Exception exception, T value) Try<T>(Func<T> func)
+    {
+        try
+        {
+            return (default, func());
+        }
+        catch (Exception exception)
+        {
+            return (exception, default);
+        }
+    }
+
+    public static (TException exception, T value) Try<TException, T>(Func<T> func) where TException : Exception
+    {
+        try
+        {
+            return (default, func());
+        }
+        catch (TException exception)
+        {
+            return (exception, default);
+        }
+    }
+
     /// <summary>
     ///     Removes value from start of str
     /// </summary>

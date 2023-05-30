@@ -74,7 +74,7 @@ static class Handler
     //                    {
     //                        return list.First();
     //                    }
-    //                }
+    //                } 
     //                catch (BadImageFormatException)
     //                {
     //                }
