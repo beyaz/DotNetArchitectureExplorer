@@ -22,9 +22,9 @@ class GraphCreator
 
         Node FromNodeCache(MethodReference mr)
         {
-            if (nodeCache.ContainsKey(mr.FullName))
+            if (nodeCache.TryGetValue(mr.FullName, out var cache))
             {
-                return nodeCache[mr.FullName];
+                return cache;
             }
 
             nodeCache[mr.FullName] = new Node(mr, definition);
@@ -33,9 +33,9 @@ class GraphCreator
 
         Node FromNodeCacheField(FieldReference fr)
         {
-            if (nodeCache.ContainsKey(fr.FullName))
+            if (nodeCache.TryGetValue(fr.FullName, out var field))
             {
-                return nodeCache[fr.FullName];
+                return field;
             }
 
             nodeCache[fr.FullName] = new Node(fr, definition);
