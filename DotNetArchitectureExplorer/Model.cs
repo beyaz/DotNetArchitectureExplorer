@@ -117,11 +117,11 @@ public class Link
         VertexType = vertexType;
     }
 
-    public Node Source { get;  }
+    public Node Source { get; init; }
 
-    public Node Target { get;  }
+    public Node Target { get; init; }
 
-    public VertexType VertexType { get; }
+    public VertexType VertexType { get; init; }
 
    
 }
