@@ -4,41 +4,15 @@ using Mono.Cecil;
 
 namespace DotNetArchitectureExplorer;
 
-[DebuggerDisplay("{" + nameof(Value) + "}")]
+[DebuggerDisplay("{" + nameof(Label) + "}")]
 public sealed class Node
 {
-    readonly TypeDefinition _typeDefinition;
+    public string Id { get; init; }
+    public string Label { get; init; }
+
 
     
-
-    public Node(FieldReference fieldReference, TypeDefinition typeDefinition)
-    {
-        _typeDefinition = typeDefinition;
-        FieldReference  = fieldReference;
-        Id              = fieldReference.FullName;
-        Value           = fieldReference.Name;
-    }
-
-    public Node(MethodReference methodDefinition, TypeDefinition typeDefinition)
-    {
-        _typeDefinition = typeDefinition;
-        MethodReference = methodDefinition;
-
-        Id = methodDefinition.FullName;
-        if (IsProperty)
-        {
-            Value = methodDefinition.Name.RemoveFromStart("set_").RemoveFromStart("get_");
-        }
-        else
-        {
-            Value = methodDefinition.Name;
-        }
-
-        if (IsBaseMethod)
-        {
-            Value = "base." + Value;
-        }
-    }
+    readonly TypeDefinition _typeDefinition;
 
     bool IsBaseMethod
     {
@@ -53,7 +27,6 @@ public sealed class Node
         }
     }
 
-    public string Id { get; }
 
     public bool IsProperty
     {
@@ -74,7 +47,41 @@ public sealed class Node
 
     public MethodReference MethodReference { get; }
     public FieldReference FieldReference { get; }
-    public string Value { get; }
+
+
+
+    public Node(FieldReference fieldReference, TypeDefinition typeDefinition)
+    {
+        _typeDefinition = typeDefinition;
+        
+        FieldReference  = fieldReference;
+        Id              = fieldReference.FullName;
+        Label           = fieldReference.Name;
+    }
+
+    public Node(MethodReference methodDefinition, TypeDefinition typeDefinition)
+    {
+        _typeDefinition = typeDefinition;
+        MethodReference = methodDefinition;
+
+        Id = methodDefinition.FullName;
+        if (IsProperty)
+        {
+            Label = methodDefinition.Name.RemoveFromStart("set_").RemoveFromStart("get_");
+        }
+        else
+        {
+            Label = methodDefinition.Name;
+        }
+
+        if (IsBaseMethod)
+        {
+            Label = "base." + Label;
+        }
+    }
+
+    
+    
 
     public override bool Equals(object obj)
     {
@@ -89,7 +96,7 @@ public sealed class Node
 
     public XElement ToDgml()
     {
-        var element = new XElement(XName.Get("Node", ns), new XAttribute("Label", Value), new XAttribute("Id", Id));
+        var element = new XElement(XName.Get("Node", ns), new XAttribute("Label", Label), new XAttribute("Id", Id));
 
         if (IsProperty)
         {
@@ -107,7 +114,7 @@ public sealed class Node
     }
 }
 
-[DebuggerDisplay("{Source.Value} -{LinkType}-> {Target.Value}")]
+[DebuggerDisplay("{Source.Label} -{LinkType}-> {Target.Label}")]
 public sealed record Link
 {
     public Node Source { get; init; }
