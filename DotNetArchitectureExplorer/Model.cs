@@ -34,9 +34,9 @@ public class BinaryDecisionTree
 
     
 
-    public void Add(params Link[] vertex)
+    public void Add(Link vertex)
     {
-        Links.AddRange(vertex);
+        Links.Add(vertex);
     }
 
     
