@@ -39,7 +39,7 @@ public static class DgmlHelper
     public static XElement ToDgml(this BinaryDecisionTree bdt)
     {
         var nodes =
-            from n in ConnectedNodes(bdt)
+            from n in ConnectedNodes(bdt.Links)
             select n.ToDgml();
         
         var links =
@@ -60,9 +60,9 @@ public static class DgmlHelper
             return xElement;
         }
 
-        static IEnumerable<Node> ConnectedNodes(BinaryDecisionTree bdt)
+        static IEnumerable<Node> ConnectedNodes(IReadOnlyList<Link> links)
         {
-            return bdt.Links.SelectMany(v => new[]
+            return links.SelectMany(v => new[]
                 {
                     v.Source,
                     v.Target
