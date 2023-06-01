@@ -7,9 +7,10 @@ static class Extensions
 {
     public static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
 
-
-    public static XElement ToDirectedGraphElement(this IReadOnlyList<Link> links)
+    public static XElement ToDirectedGraphElement(this DirectedGraph directedGraph)
     {
+        var links = directedGraph.Links;
+
         var nodeElements =
             from n in ConnectedNodes(links)
             select n.ToDgml();
@@ -43,7 +44,7 @@ static class Extensions
                 .ToList();
         }
     }
-    
+
     public static XElement ToDgml(this Link link)
     {
         var element = new XElement(XName.Get("Link", ns), new XAttribute("Source", link.Source.Id), new XAttribute("Target", link.Target.Id));
@@ -63,7 +64,7 @@ static class Extensions
             Id              = fieldReference.FullName,
             Label           = fieldReference.Name,
             StrokeDashArray = "5,5",
-            Background = "#c9cbce"
+            Background      = "#c9cbce"
         };
     }
 
@@ -73,7 +74,7 @@ static class Extensions
         var Label = methodReference.Name;
 
         var methodDefinition = methodReference.Resolve();
-        
+
         if (methodDefinition.IsSetter || methodDefinition.IsGetter)
         {
             Label = methodDefinition.Name.RemoveFromStart("set_").RemoveFromStart("get_");
@@ -85,20 +86,14 @@ static class Extensions
                 StrokeDashArray = "5,5",
                 Background      = "#f2f4f7"
             };
-            
         }
-        
 
-       
-        
-        
         return new Node
         {
-            Id              = Id,
-            Label           = Label
+            Id    = Id,
+            Label = Label
         };
     }
-
 
     public static XElement ToDgml(this Node node)
     {
