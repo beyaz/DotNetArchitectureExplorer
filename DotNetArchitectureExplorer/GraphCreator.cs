@@ -89,7 +89,7 @@ class GraphCreator
             }
         }
 
-        return dgml.ToDgml().ToString();
+        return dgml.Links.ToDirectedGraphElement().ToString();
     }
 
     static bool IsInheritedFrom(TypeReference derived, TypeReference baseTypeReference)
