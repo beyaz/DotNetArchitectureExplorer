@@ -9,7 +9,7 @@ class GraphCreator
     {
         var nodeCache = new Dictionary<string, Node>();
 
-        var dgml = new BinaryDecisionTree();
+        var dgml = new DirectedGraph();
 
         foreach (var method in definition.Methods)
         {
