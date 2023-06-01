@@ -189,7 +189,7 @@ static class Extensions
         return default;
     }
 
-    public static Node CreateMethodNode(MethodReference methodReference, TypeDefinition typeDefinition)
+    public static Node CreateMethodNode(MethodReference methodReference, TypeDefinition callerMethodDeclaringTypeDefinition)
     {
         var id = methodReference.FullName;
 
