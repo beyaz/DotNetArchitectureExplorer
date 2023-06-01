@@ -7,7 +7,7 @@
     <Node Label="GetReactComponentTypeInfo" Id="System.String ReactWithDotNet.ElementSerializer::GetReactComponentTypeInfo(System.Object)" />
     <Node Label="base.GetType" Id="System.Type System.Object::GetType()" />
     <Node Label="GetStylePropertyValueOfHtmlElementForSerialize" Id="ReactWithDotNet.ElementSerializer/ValueExportInfo`1&lt;System.Object&gt; ReactWithDotNet.ElementSerializer::GetStylePropertyValueOfHtmlElementForSerialize(System.Object,ReactWithDotNet.Style,ReactWithDotNet.ElementSerializerContext)" />
-    <Node Label="NotExportableObject" Id="ReactWithDotNet.ElementSerializer/ValueExportInfo`1&lt;System.Object&gt; ReactWithDotNet.ElementSerializer::NotExportableObject" StrokeDashArray="5,5" Background="#90B9F5" />
+    <Node Label="NotExportableObject" Id="ReactWithDotNet.ElementSerializer/ValueExportInfo`1&lt;System.Object&gt; ReactWithDotNet.ElementSerializer::NotExportableObject" StrokeDashArray="57,5,7,7" Background="red" />
     <Node Label="GetTypeFullNameOfState" Id="System.String ReactWithDotNet.ElementSerializer::GetTypeFullNameOfState(System.Object)" />
     <Node Label="HandlerMethodShouldBelongToReactComponent" Id="System.Exception ReactWithDotNet.ElementSerializer::HandlerMethodShouldBelongToReactComponent(System.Reflection.PropertyInfo,System.Object)" />
     <Node Label="HasComponentDidMountMethod" Id="System.Boolean ReactWithDotNet.ElementSerializer::HasComponentDidMountMethod(System.Object)" />

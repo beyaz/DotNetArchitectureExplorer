@@ -10,8 +10,10 @@ public sealed class Node
     public string Id { get; init; }
     public string Label { get; init; }
 
+    public string StrokeDashArray { get; set; }
+    public string Background { get; set; }
 
-    
+
     readonly TypeDefinition _typeDefinition;
 
     bool IsBaseMethod
@@ -85,8 +87,7 @@ public sealed class Node
 
     public override bool Equals(object obj)
     {
-        var node = obj as Node;
-        return node != null && node.GetHashCode() == GetHashCode();
+        return obj is Node node && node.GetHashCode() == GetHashCode();
     }
 
     public override int GetHashCode()
@@ -94,6 +95,8 @@ public sealed class Node
         return Id.GetHashCode();
     }
 
+   
+    
     public XElement ToDgml()
     {
         var element = new XElement(XName.Get("Node", ns), new XAttribute("Label", Label), new XAttribute("Id", Id));
@@ -114,23 +117,7 @@ public sealed class Node
     }
 }
 
-[DebuggerDisplay("{Source.Label} -{LinkType}-> {Target.Label}")]
-public sealed record Link
-{
-    public Node Source { get; init; }
 
-    public Node Target { get; init; }
-
-    public LinkType LinkType { get; init; }
-}
-
-public enum LinkType
-{
-    None,
-    ReadProperty,
-    True,
-    False
-}
 
 static class Extensions2
 {

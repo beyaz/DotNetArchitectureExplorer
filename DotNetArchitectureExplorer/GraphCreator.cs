@@ -5,7 +5,6 @@ namespace DotNetArchitectureExplorer;
 
 class GraphCreator
 {
-    #region Public Methods
     public string CreateGraph(TypeDefinition definition)
     {
         var nodeCache = new Dictionary<string, Node>();
@@ -93,9 +92,6 @@ class GraphCreator
 
         return dgml.ToDgml().ToString();
     }
-    #endregion
-
-    #region Methods
     static bool IsInheritedFrom(TypeReference derived, TypeReference baseTypeReference)
     {
         if (derived == null)
@@ -135,5 +131,4 @@ class GraphCreator
 
         return IsInheritedFrom(definition.BaseType, baseTypeReference);
     }
-    #endregion
 }
