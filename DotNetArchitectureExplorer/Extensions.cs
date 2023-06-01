@@ -23,14 +23,17 @@ static class Extensions
 
         static XElement CreateGraph(IEnumerable<XElement> nodes, IEnumerable<XElement> links)
         {
-            var xElement = new XElement(XName.Get("DirectedGraph", ns));
-            var xElement2 = new XElement(XName.Get("Nodes", ns));
-            var xElement3 = new XElement(XName.Get("Links", ns));
-            xElement2.Add(nodes.Cast<object>().ToArray());
-            xElement3.Add(links.Cast<object>().ToArray());
-            xElement.Add(xElement2);
-            xElement.Add(xElement3);
-            return xElement;
+            var root = new XElement(XName.Get("DirectedGraph", ns));
+            var rootForNodes = new XElement(XName.Get("Nodes", ns));
+            var rootForLinks = new XElement(XName.Get("Links", ns));
+            
+            rootForNodes.Add(nodes.Cast<object>().ToArray());
+            rootForLinks.Add(links.Cast<object>().ToArray());
+            
+            root.Add(rootForNodes);
+            root.Add(rootForLinks);
+            
+            return root;
         }
 
         static IEnumerable<Node> ConnectedNodes(IReadOnlyList<Link> links)
