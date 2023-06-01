@@ -70,6 +70,9 @@ public sealed class Node
         if (IsProperty)
         {
             Label = methodDefinition.Name.RemoveFromStart("set_").RemoveFromStart("get_");
+
+            StrokeDashArray = "5,5";
+            Background      = "#f2f4f7";
         }
         else
         {
@@ -79,6 +82,11 @@ public sealed class Node
         if (IsBaseMethod)
         {
             Label = "base." + Label;
+        }
+
+        if (IsField)
+        {
+            Background = "#c9cbce";
         }
     }
 
@@ -110,7 +118,7 @@ public sealed class Node
         if (IsField)
         {
             element.Add(new XAttribute("StrokeDashArray", "5,5"));
-            element.Add(new XAttribute("Background", "#90B9F5"));
+            element.Add(new XAttribute("Background", "#c9cbce"));
         }
 
         return element;
