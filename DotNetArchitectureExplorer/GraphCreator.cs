@@ -55,7 +55,7 @@ class GraphCreator
                         var source = FromNodeCache(method);
                         var target = FromNodeCache(mr);
 
-                        if (md != null && md.IsGetter)
+                        if (md is { IsGetter: true })
                         {
                             dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.ReadProperty });
                             continue;
