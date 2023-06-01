@@ -50,6 +50,11 @@ class GraphCreator
                         mr = ((GenericInstanceMethod)mr).ElementMethod;
                     }
 
+                    if (mr.DeclaringType.FullName == "System.Object")
+                    {
+                        continue;
+                    }
+                    
                     if (mr.DeclaringType == definition || IsInheritedFrom(definition, mr.DeclaringType))
                     {
                         var source = FromNodeCache(method);
