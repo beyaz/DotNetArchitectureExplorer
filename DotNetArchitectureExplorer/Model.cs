@@ -2,10 +2,6 @@
 
 namespace DotNetArchitectureExplorer;
 
-static class Extensions2
-{
-   
-}
 
 public class BinaryDecisionTree
 {
