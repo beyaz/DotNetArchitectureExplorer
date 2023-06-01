@@ -6,7 +6,7 @@ static class Extensions2
 {
     public static IEnumerable<Node> ConnectedNodes(this BinaryDecisionTree bdt)
     {
-        return bdt.Vertices.SelectMany(v => new[]
+        return bdt.Links.SelectMany(v => new[]
             {
                 v.Source,
                 v.Target
@@ -24,19 +24,19 @@ public class BinaryDecisionTree
     internal BinaryDecisionTree()
     {
     
-        Vertices = new List<Link>();
+        Links = new List<Link>();
     }
 
 
   
 
-    public List<Link> Vertices { get; }
+    public List<Link> Links { get; }
 
     
 
     public void Add(params Link[] vertex)
     {
-        Vertices.AddRange(vertex);
+        Links.AddRange(vertex);
     }
 
     
@@ -51,7 +51,7 @@ public static class DgmlHelper
             from n in bdt.ConnectedNodes()
             select n.ToDgml();
         var links =
-            from v in bdt.Vertices
+            from v in bdt.Links
             select v.ToDgml();
         return CreateGraph(nodes, links);
     }
