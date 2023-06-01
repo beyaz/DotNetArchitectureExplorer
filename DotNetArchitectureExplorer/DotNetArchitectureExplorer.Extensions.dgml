@@ -5,6 +5,8 @@
     <Node Label="&lt;ToDirectedGraphElement&gt;g__CreateGraph|1_2" Id="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__CreateGraph|1_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" />
     <Node Label="ToDgml" Id="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDgml(DotNetArchitectureExplorer.Link)" />
     <Node Label="ns" Id="System.String DotNetArchitectureExplorer.Extensions::ns" StrokeDashArray="5,5" Background="#c9cbce" />
+    <Node Label="IsLocalFunction" Id="System.Boolean DotNetArchitectureExplorer.Extensions::IsLocalFunction(Mono.Cecil.MethodReference)" />
+    <Node Label="TryGetLocalFunctionName" Id="System.String DotNetArchitectureExplorer.Extensions::TryGetLocalFunctionName(Mono.Cecil.MethodReference)" />
     <Node Label="CreateMethodNode" Id="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Extensions::CreateMethodNode(Mono.Cecil.MethodReference,Mono.Cecil.TypeDefinition)" />
     <Node Label="RemoveFromStart" Id="System.String DotNetArchitectureExplorer.Extensions::RemoveFromStart(System.String,System.String)" />
     <Node Label="ToDgml" Id="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDgml(DotNetArchitectureExplorer.Node)" />
@@ -15,11 +17,15 @@
     <Node Label="Try" Id="System.ValueTuple`2&lt;TException,T&gt; DotNetArchitectureExplorer.Extensions::Try(System.Func`1&lt;T&gt;)" />
     <Node Label="RemoveFromStart" Id="System.String DotNetArchitectureExplorer.Extensions::RemoveFromStart(System.String,System.String,System.StringComparison)" />
     <Node Label=".cctor" Id="System.Void DotNetArchitectureExplorer.Extensions::.cctor()" />
+    <Node Label="&lt;ToDirectedGraphElement&gt;g__Aloha|1_4" Id="System.Void DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__Aloha|1_4()" />
+    <Node Label="&lt;ToDirectedGraphElement&gt;g__Aloha2|1_5" Id="System.Void DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__Aloha2|1_5()" />
   </Nodes>
   <Links>
     <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDirectedGraphElement(DotNetArchitectureExplorer.DirectedGraph)" Target="System.Collections.Generic.IEnumerable`1&lt;DotNetArchitectureExplorer.Node&gt; DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__ConnectedNodes|1_3(System.Collections.Generic.IReadOnlyList`1&lt;DotNetArchitectureExplorer.Link&gt;)" />
     <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDirectedGraphElement(DotNetArchitectureExplorer.DirectedGraph)" Target="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__CreateGraph|1_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" />
     <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDgml(DotNetArchitectureExplorer.Link)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
+    <Link Source="System.Boolean DotNetArchitectureExplorer.Extensions::IsLocalFunction(Mono.Cecil.MethodReference)" Target="System.String DotNetArchitectureExplorer.Extensions::TryGetLocalFunctionName(Mono.Cecil.MethodReference)" />
+    <Link Source="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Extensions::CreateMethodNode(Mono.Cecil.MethodReference,Mono.Cecil.TypeDefinition)" Target="System.Boolean DotNetArchitectureExplorer.Extensions::IsLocalFunction(Mono.Cecil.MethodReference)" />
     <Link Source="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Extensions::CreateMethodNode(Mono.Cecil.MethodReference,Mono.Cecil.TypeDefinition)" Target="System.String DotNetArchitectureExplorer.Extensions::RemoveFromStart(System.String,System.String)" />
     <Link Source="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Extensions::CreateMethodNode(Mono.Cecil.MethodReference,Mono.Cecil.TypeDefinition)" Target="System.String DotNetArchitectureExplorer.Extensions::RemoveFromStart(System.String,System.String)" />
     <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDgml(DotNetArchitectureExplorer.Node)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
@@ -29,8 +35,11 @@
     <Link Source="System.ValueTuple`2&lt;System.BadImageFormatException,Mono.Cecil.AssemblyDefinition&gt; DotNetArchitectureExplorer.Extensions::ReadAssemblyDefinition(System.String)" Target="System.ValueTuple`2&lt;TException,T&gt; DotNetArchitectureExplorer.Extensions::Try(System.Func`1&lt;T&gt;)" />
     <Link Source="System.String DotNetArchitectureExplorer.Extensions::RemoveFromStart(System.String,System.String)" Target="System.String DotNetArchitectureExplorer.Extensions::RemoveFromStart(System.String,System.String,System.StringComparison)" />
     <Link Source="System.Void DotNetArchitectureExplorer.Extensions::.cctor()" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
+    <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__CreateGraph|1_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Target="System.Void DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__Aloha|1_4()" />
     <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__CreateGraph|1_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
     <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__CreateGraph|1_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
     <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__CreateGraph|1_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
+    <Link Source="System.Void DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__Aloha|1_4()" Target="System.Void DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__Aloha2|1_5()" />
+    <Link Source="System.Void DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__Aloha2|1_5()" Target="System.String System.Object::ToString()" />
   </Links>
 </DirectedGraph>
