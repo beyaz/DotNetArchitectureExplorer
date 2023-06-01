@@ -11,6 +11,9 @@ public sealed class Node
     public string Background { get; init; }
     public string StrokeDashArray { get; init; }
 
+    public string Icon { get; init; }
+    
+
     public override bool Equals(object obj)
     {
         return obj is Node node && node.GetHashCode() == GetHashCode();

@@ -154,6 +154,10 @@ static class Extensions
         return element;
     }
 
+    static string IconField => Path.Combine("img", "field.png");
+    static string IconMethod => Path.Combine("img", "method.png");
+    static string IconClass => Path.Combine("img", "class.png");
+    
     public static Node CreateFieldNode(FieldReference fieldReference, TypeDefinition typeDefinition)
     {
         return new Node
@@ -161,7 +165,8 @@ static class Extensions
             Id              = fieldReference.FullName,
             Label           = fieldReference.Name,
             StrokeDashArray = "5,5",
-            Background      = "#c9cbce"
+            Background      = "#c9cbce",
+            Icon = IconField
         };
     }
 
@@ -212,14 +217,16 @@ static class Extensions
                 Id              = id,
                 Label           = label,
                 StrokeDashArray = "5,5",
-                Background      = "#f2f4f7"
+                Background      = "#f2f4f7",
+                Icon = IconField
             };
         }
 
         return new Node
         {
             Id    = id,
-            Label = label
+            Label = label,
+            Icon  = IconMethod
         };
     }
 
@@ -235,6 +242,11 @@ static class Extensions
         if (node.Background is not null)
         {
             element.Add(new XAttribute(nameof(node.Background), node.Background));
+        }
+
+        if (node.Icon is not null)
+        {
+            element.Add(new XAttribute(nameof(node.Icon), node.Icon));
         }
 
         return element;
