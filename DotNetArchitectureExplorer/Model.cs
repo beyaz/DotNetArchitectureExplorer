@@ -38,12 +38,14 @@ public static class DgmlHelper
 
     public static XElement ToDgml(this BinaryDecisionTree bdt)
     {
+        IReadOnlyList<Link> links = bdt.Links;
+        
         var nodeElements =
-            from n in ConnectedNodes(bdt.Links)
+            from n in ConnectedNodes(links)
             select n.ToDgml();
         
         var linkElements =
-            from v in bdt.Links
+            from v in links
             select v.ToDgml();
         
         return CreateGraph(nodeElements, linkElements);
