@@ -59,6 +59,8 @@ public sealed class Node
         FieldReference  = fieldReference;
         Id              = fieldReference.FullName;
         Label           = fieldReference.Name;
+
+        Background = "#c9cbce";
     }
 
     public Node(MethodReference methodDefinition, TypeDefinition typeDefinition)
@@ -105,24 +107,7 @@ public sealed class Node
 
    
     
-    public XElement ToDgml()
-    {
-        var element = new XElement(XName.Get("Node", ns), new XAttribute("Label", Label), new XAttribute("Id", Id));
-
-        if (IsProperty)
-        {
-            element.Add(new XAttribute("StrokeDashArray", "5,5"));
-            element.Add(new XAttribute("Background", "#f2f4f7"));
-        }
-
-        if (IsField)
-        {
-            element.Add(new XAttribute("StrokeDashArray", "5,5"));
-            element.Add(new XAttribute("Background", "#c9cbce"));
-        }
-
-        return element;
-    }
+  
 }
 
 

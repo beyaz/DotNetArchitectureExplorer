@@ -18,7 +18,24 @@ static class Extensions
 
         return element;
     }
-    
+
+    public static XElement ToDgml(this Node node)
+    {
+        var element = new XElement(XName.Get("Node", ns), new XAttribute("Label", node.Label), new XAttribute("Id", node.Id));
+
+        if (node.StrokeDashArray is not null)
+        {
+            element.Add(new XAttribute(nameof(node.StrokeDashArray), node.StrokeDashArray));
+        }
+
+        if (node.Background is not null)
+        {
+            element.Add(new XAttribute(nameof(node.Background), node.Background));
+        }
+
+        return element;
+    }
+
     public static (string exception, string dgmlContent) CreateMethodCallGraph(string assemblyFilePath, string fullTypeName)
     {
         var (exception, assemblyDefinition) = ReadAssemblyDefinition(assemblyFilePath);
