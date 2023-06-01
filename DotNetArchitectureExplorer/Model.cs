@@ -23,12 +23,12 @@ public class BinaryDecisionTree
 
     internal BinaryDecisionTree()
     {
-        Nodes    = new List<Node>();
+    
         Vertices = new List<Link>();
     }
 
 
-    public List<Node> Nodes { get; }
+  
 
     public List<Link> Vertices { get; }
 
