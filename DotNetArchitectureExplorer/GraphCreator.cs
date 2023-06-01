@@ -13,7 +13,7 @@ class GraphCreator
 
         foreach (var method in definition.Methods)
         {
-            nodeCache[method.FullName] = new Node(method,definition);
+            nodeCache[method.FullName] = CreateMethodNode(method, definition);
         }
 
         Node FromNodeCache(MethodReference mr)
@@ -23,7 +23,7 @@ class GraphCreator
                 return cache;
             }
 
-            nodeCache[mr.FullName] = new Node(mr, definition);
+            nodeCache[mr.FullName] = CreateMethodNode(mr, definition);
             return nodeCache[mr.FullName];
         }
 
@@ -34,7 +34,7 @@ class GraphCreator
                 return field;
             }
 
-            nodeCache[fr.FullName] = new Node(fr, definition);
+            nodeCache[fr.FullName] = CreateFieldNode(fr, definition);
             return nodeCache[fr.FullName];
         }
 
@@ -47,7 +47,7 @@ class GraphCreator
                     var md = instruction.Operand as MethodDefinition;
                     if (mr.IsGenericInstance)
                     {
-                        mr = ((GenericInstanceMethod) mr).ElementMethod;
+                        mr = ((GenericInstanceMethod)mr).ElementMethod;
                     }
 
                     if (mr.DeclaringType == definition || IsInheritedFrom(definition, mr.DeclaringType))
@@ -57,10 +57,10 @@ class GraphCreator
 
                         if (md != null && md.IsGetter)
                         {
-                            dgml.Add(new Link{ Source = source, Target = target, LinkType = LinkType.ReadProperty });
+                            dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.ReadProperty });
                             continue;
                         }
-                        
+
                         dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.None });
                     }
                 }
@@ -71,6 +71,7 @@ class GraphCreator
                     {
                         continue;
                     }
+
                     if (fr.DeclaringType == definition || IsInheritedFrom(definition, fr.DeclaringType))
                     {
                         var source = FromNodeCache(method);
@@ -85,19 +86,19 @@ class GraphCreator
                         dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.None });
                     }
                 }
-
-
             }
         }
 
         return dgml.ToDgml().ToString();
     }
+
     static bool IsInheritedFrom(TypeReference derived, TypeReference baseTypeReference)
     {
         if (derived == null)
         {
             return false;
         }
+
         if (derived == baseTypeReference)
         {
             return true;

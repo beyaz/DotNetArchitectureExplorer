@@ -19,6 +19,50 @@ static class Extensions
         return element;
     }
 
+    public static Node CreateFieldNode(FieldReference fieldReference, TypeDefinition typeDefinition)
+    {
+        return new Node
+        {
+            Id              = fieldReference.FullName,
+            Label           = fieldReference.Name,
+            StrokeDashArray = "5,5",
+            Background = "#c9cbce"
+        };
+    }
+
+    public static Node CreateMethodNode(MethodReference methodReference, TypeDefinition typeDefinition)
+    {
+        var Id = methodReference.FullName;
+        var Label = methodReference.Name;
+
+        var methodDefinition = methodReference.Resolve();
+        
+        if (methodDefinition.IsSetter || methodDefinition.IsGetter)
+        {
+            Label = methodDefinition.Name.RemoveFromStart("set_").RemoveFromStart("get_");
+
+            return new Node
+            {
+                Id              = Id,
+                Label           = Label,
+                StrokeDashArray = "5,5",
+                Background      = "#f2f4f7"
+            };
+            
+        }
+        
+
+       
+        
+        
+        return new Node
+        {
+            Id              = Id,
+            Label           = Label
+        };
+    }
+
+
     public static XElement ToDgml(this Node node)
     {
         var element = new XElement(XName.Get("Node", ns), new XAttribute("Label", node.Label), new XAttribute("Id", node.Id));
