@@ -24,6 +24,7 @@ class GraphCreator
             }
 
             nodeCache[mr.FullName] = CreateMethodNode(mr, definition);
+            
             return nodeCache[mr.FullName];
         }
 
