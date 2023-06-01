@@ -23,30 +23,17 @@ static class Extensions
 
         static XElement CreateGraph(IEnumerable<XElement> nodes, IEnumerable<XElement> links)
         {
-            Aloha();
-            
             var root = new XElement(XName.Get("DirectedGraph", ns));
             var rootForNodes = new XElement(XName.Get("Nodes", ns));
             var rootForLinks = new XElement(XName.Get("Links", ns));
-            
+
             rootForNodes.Add(nodes.Cast<object>().ToArray());
             rootForLinks.Add(links.Cast<object>().ToArray());
-            
+
             root.Add(rootForNodes);
             root.Add(rootForLinks);
-            
+
             return root;
-
-
-            static void Aloha()
-            {
-                Aloha2();
-
-                static void Aloha2()
-                {
-                    "hh".ToString();
-                }
-            }
         }
 
         static IEnumerable<Node> ConnectedNodes(IReadOnlyList<Link> links)
@@ -94,10 +81,10 @@ static class Extensions
             var i = methodName.IndexOf(">g__", StringComparison.OrdinalIgnoreCase);
             if (i > 0)
             {
-                var j = methodName.LastIndexOf('|', i);
+                var j = methodName.IndexOf('|', i);
                 if (j > 0)
                 {
-                    var localFunctionName = methodName.Substring(i + ">g__".Length, j - i + ">g__".Length);
+                    var localFunctionName = methodName.Substring(i + ">g__".Length, j - (i + ">g__".Length));
                     var parentMethodName = methodName.Substring(1, i - 1);
 
                     return (true, parentMethodName, localFunctionName);
@@ -108,11 +95,10 @@ static class Extensions
         return default;
     }
 
-   
-
     public static Node CreateMethodNode(MethodReference methodReference, TypeDefinition typeDefinition)
     {
-        var Id = methodReference.FullName;
+        var id = methodReference.FullName;
+
         var label = methodReference.Name;
 
         var (isLocalFunction, parentMethodName, localFunctionName) = methodReference.TryGetLocalFunctionName();
@@ -123,13 +109,13 @@ static class Extensions
 
         var methodDefinition = methodReference.Resolve();
 
-        if (methodDefinition.IsSetter || methodDefinition.IsGetter)
+        if (methodDefinition?.IsSetter == true || methodDefinition?.IsGetter == true)
         {
             label = methodDefinition.Name.RemoveFromStart("set_").RemoveFromStart("get_");
 
             return new Node
             {
-                Id              = Id,
+                Id              = id,
                 Label           = label,
                 StrokeDashArray = "5,5",
                 Background      = "#f2f4f7"
@@ -138,7 +124,7 @@ static class Extensions
 
         return new Node
         {
-            Id    = Id,
+            Id    = id,
             Label = label
         };
     }
