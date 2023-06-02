@@ -6,19 +6,19 @@ namespace DotNetArchitectureExplorer;
 
 static class Extensions
 {
-    public static string CreateGraph(TypeDefinition definition)
+    public static string CreateGraph(TypeDefinition currentTypeDefinition)
     {
         var nodeCache = new Dictionary<string, Node>();
 
         var dgml = new DirectedGraph();
 
-        var currentClassNode = CreateClassNode(definition);
+        var currentClassNode = CreateClassNode(currentTypeDefinition);
         
-        nodeCache[definition.FullName] = currentClassNode;
+        nodeCache[currentTypeDefinition.FullName] = currentClassNode;
         
-        foreach (var method in definition.Methods)
+        foreach (var method in currentTypeDefinition.Methods)
         {
-            nodeCache[method.FullName] = CreateMethodNode(method, definition);
+            nodeCache[method.FullName] = CreateMethodNode(method, currentTypeDefinition);
         }
 
         Node FromNodeCache(MethodReference mr)
@@ -28,7 +28,7 @@ static class Extensions
                 return cache;
             }
 
-            nodeCache[mr.FullName] = CreateMethodNode(mr, definition);
+            nodeCache[mr.FullName] = CreateMethodNode(mr, currentTypeDefinition);
 
             return nodeCache[mr.FullName];
         }
@@ -40,13 +40,13 @@ static class Extensions
                 return field;
             }
 
-            nodeCache[fr.FullName] = CreateFieldNode(fr, definition);
+            nodeCache[fr.FullName] = CreateFieldNode(fr, currentTypeDefinition);
             return nodeCache[fr.FullName];
         }
 
-        foreach (var method in definition.Methods.Where(m => m.HasBody))
+        foreach (var currentMethodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
-            foreach (var instruction in method.Body.Instructions)
+            foreach (var instruction in currentMethodDefinition.Body.Instructions)
             {
                 if (instruction.Operand is MethodReference mr)
                 {
@@ -61,25 +61,25 @@ static class Extensions
                         continue;
                     }
 
-                    if (mr.DeclaringType == definition || IsInheritedFrom(definition, mr.DeclaringType))
+                    if (mr.DeclaringType == currentTypeDefinition || IsInheritedFrom(currentTypeDefinition, mr.DeclaringType))
                     {
-                        var source = FromNodeCache(method);
-                        var target = FromNodeCache(mr);
+                        var currentMethodDefinitionNode = FromNodeCache(currentMethodDefinition);
+                        var targetMethodNode = FromNodeCache(mr);
 
                         if (md is { IsGetter: true })
                         {
                             dgml.Add(new Link
                             {
-                                Source          = source, 
-                                Target          = target,
+                                Source          = currentMethodDefinitionNode, 
+                                Target          = targetMethodNode,
                                 StrokeDashArray = "5,5"
                             });
                             continue;
                         }
 
-                        dgml.Add(new Link { Source = source, Target = target });
+                        dgml.Add(new Link { Source = currentMethodDefinitionNode, Target = targetMethodNode });
 
-                        dgml.Add(new Link { Source = currentClassNode, Target = target, Category = "Contains"});
+                        dgml.Add(new Link { Source = currentClassNode, Target = targetMethodNode, Category = "Contains"});
                     }
                 }
 
@@ -90,18 +90,18 @@ static class Extensions
                         continue;
                     }
 
-                    if (fr.DeclaringType == definition || IsInheritedFrom(definition, fr.DeclaringType))
+                    if (fr.DeclaringType == currentTypeDefinition || IsInheritedFrom(currentTypeDefinition, fr.DeclaringType))
                     {
-                        var source = FromNodeCache(method);
-                        var target = FromNodeCacheField(fr);
+                        var currentMethodDefinitionNode = FromNodeCache(currentMethodDefinition);
+                        var targetFieldNode = FromNodeCacheField(fr);
 
                         if (instruction.OpCode.Code == Code.Ldfld)
                         {
-                            dgml.Add(new Link { Source = source, Target = target, StrokeDashArray = "5,5" });
+                            dgml.Add(new Link { Source = currentMethodDefinitionNode, Target = targetFieldNode, StrokeDashArray = "5,5" });
                             continue;
                         }
 
-                        dgml.Add(new Link { Source = source, Target = target });
+                        dgml.Add(new Link { Source = currentMethodDefinitionNode, Target = targetFieldNode });
                     }
                 }
             }
