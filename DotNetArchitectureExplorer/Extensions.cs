@@ -12,12 +12,15 @@ static class Extensions
     static string IconField => Path.Combine("img", "field.png");
     static string IconMethod => Path.Combine("img", "method.png");
     static string IconClass => Path.Combine("img", "class.png");
+    static string IconNamespace=> Path.Combine("img", "namespace.png");
 
     public static void AddClass(DirectedGraph dgml, TypeDefinition currentTypeDefinition)
     {
         var currentClassNode = CreateClassNode(currentTypeDefinition);
 
         dgml.Add(currentClassNode);
+        var namesapceNode = dgml.GetNode(currentTypeDefinition.Namespace, () => CreateNamespaceNode(currentTypeDefinition.Namespace));
+        dgml.Add(new Link { Source = namesapceNode, Target = currentClassNode, Category = "Contains" });
 
         foreach (var methodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
@@ -176,7 +179,7 @@ static class Extensions
         return element;
     }
 
-    public static Node CreateFieldNode(FieldReference fieldReference, TypeDefinition typeDefinition)
+     public static Node CreateFieldNode(FieldReference fieldReference, TypeDefinition typeDefinition)
     {
         return new Node
         {
@@ -188,14 +191,25 @@ static class Extensions
         };
     }
 
-    public static Node CreateClassNode(TypeDefinition typeDefinition)
+     static Node CreateClassNode(TypeDefinition typeDefinition)
     {
         return new Node
         {
             Id    = typeDefinition.FullName,
             Label = typeDefinition.Name,
             Icon  = IconClass,
-            Group = "Expanded"
+            Group = "Collapsed"
+        };
+    }
+
+    static Node CreateNamespaceNode(string fullNameOfNamespace)
+    {
+        return new Node
+        {
+            Id    = fullNameOfNamespace,
+            Label = fullNameOfNamespace,
+            Icon  = IconNamespace,
+            Group = "Collapsed"
         };
     }
 
@@ -486,6 +500,17 @@ static class Extensions
         {
             foreach (var type in moduleDefinition.Types)
             {
+                if (type.Name == "<Module>" && type.Namespace == string.Empty)
+                {
+                    continue;
+                }
+
+                if (type.Namespace == "Microsoft.CodeAnalysis" ||
+                    type.Namespace == "System.Runtime.CompilerServices")
+                {
+                    continue;
+                }
+                
                 action(type);
             }
         }

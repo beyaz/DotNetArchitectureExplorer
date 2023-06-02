@@ -36,6 +36,17 @@ public sealed class DirectedGraph
         return nodeCache[fieldReference.FullName] = CreateFieldNode(fieldReference, callerMethodDeclaringTypeDefinition);
     }
 
+
+    public Node GetNode(string id, Func<Node> createNodeIfNewFunc)
+    {
+        if (nodeCache.TryGetValue(id, out var cache))
+        {
+            return cache;
+        }
+
+        return nodeCache[id] = createNodeIfNewFunc();
+    }
+
     public void Add(Node node)
     {
         nodeCache[node.Id] = node;
