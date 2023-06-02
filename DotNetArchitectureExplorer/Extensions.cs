@@ -68,11 +68,16 @@ static class Extensions
 
                         if (md is { IsGetter: true })
                         {
-                            dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.ReadProperty });
+                            dgml.Add(new Link
+                            {
+                                Source          = source, 
+                                Target          = target,
+                                StrokeDashArray = "5,5"
+                            });
                             continue;
                         }
 
-                        dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.None });
+                        dgml.Add(new Link { Source = source, Target = target });
 
                         dgml.Add(new Link { Source = currentClassNode, Target = target, Category = "Contains"});
                     }
@@ -92,11 +97,11 @@ static class Extensions
 
                         if (instruction.OpCode.Code == Code.Ldfld)
                         {
-                            dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.ReadProperty });
+                            dgml.Add(new Link { Source = source, Target = target, StrokeDashArray = "5,5" });
                             continue;
                         }
 
-                        dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.None });
+                        dgml.Add(new Link { Source = source, Target = target });
                     }
                 }
             }
@@ -152,11 +157,13 @@ static class Extensions
     {
         var element = new XElement(XName.Get("Link", ns), new XAttribute("Source", link.Source.Id), new XAttribute("Target", link.Target.Id));
 
-        if (link.LinkType == LinkType.ReadProperty)
-        {
-            element.Add(new XAttribute("StrokeDashArray", "5,5"));
-        }
+       
 
+        if (link.StrokeDashArray is not null)
+        {
+            element.Add(new XAttribute(nameof(link.StrokeDashArray), link.StrokeDashArray));
+        }
+        
         if (link.Category is not null)
         {
             element.Add(new XAttribute(nameof(link.Category), link.Category));

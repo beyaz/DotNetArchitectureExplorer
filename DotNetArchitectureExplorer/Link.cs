@@ -2,22 +2,15 @@
 
 namespace DotNetArchitectureExplorer;
 
-[DebuggerDisplay("{Source.Label} -{LinkType}-> {Target.Label}")]
+[DebuggerDisplay("{Source.Label} -> {Target.Label}")]
 public sealed record Link
 {
     public Node Source { get; init; }
 
     public Node Target { get; init; }
 
-    public LinkType LinkType { get; init; }
+    public string StrokeDashArray { get; init; }
 
     public string Category { get; init; }
 }
 
-public enum LinkType
-{
-    None,
-    ReadProperty,
-    True,
-    False
-}
