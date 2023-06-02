@@ -9,19 +9,17 @@ static class Extensions
 {
     public static string CreateGraph(TypeDefinition currentTypeDefinition)
     {
-        var nodeCache = new Dictionary<string, Node>();
-
         var dgml = new DirectedGraph();
 
         var currentClassNode = CreateClassNode(currentTypeDefinition);
-        
-        nodeCache[currentTypeDefinition.FullName] = currentClassNode;
+
+        dgml.Add(currentClassNode);
         
         foreach (var methodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
             var methodDefinitionNode = CreateMethodNode(methodDefinition, currentTypeDefinition);
             
-            nodeCache[methodDefinition.FullName] = methodDefinitionNode;
+            dgml.Add(methodDefinitionNode);
 
             dgml.Add(new Link { Source = currentClassNode, Target = methodDefinitionNode, Category = "Contains" });
         }
@@ -30,35 +28,17 @@ static class Extensions
         {
             var fieldDefinitionNode = CreateFieldNode(fieldDefinition, currentTypeDefinition);
 
-            nodeCache[fieldDefinition.FullName] = fieldDefinitionNode;
+            dgml.Add(fieldDefinitionNode);
 
             dgml.Add(new Link { Source = currentClassNode, Target = fieldDefinitionNode, Category = "Contains" });
         }
 
 
 
-        Node FromNodeCache(MethodReference mr)
-        {
-            if (nodeCache.TryGetValue(mr.FullName, out var cache))
-            {
-                return cache;
-            }
 
-            nodeCache[mr.FullName] = CreateMethodNode(mr, currentTypeDefinition);
 
-            return nodeCache[mr.FullName];
-        }
-
-        Node FromNodeCacheField(FieldReference fr)
-        {
-            if (nodeCache.TryGetValue(fr.FullName, out var field))
-            {
-                return field;
-            }
-
-            nodeCache[fr.FullName] = CreateFieldNode(fr, currentTypeDefinition);
-            return nodeCache[fr.FullName];
-        }
+        Node getMethodNode(MethodReference mrr) => dgml.GetMethodNode(mrr, currentTypeDefinition);
+        Node getFieldNode(FieldReference fr) => dgml.GetFieldNode(fr, currentTypeDefinition);
 
         foreach (var currentMethodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
@@ -79,8 +59,8 @@ static class Extensions
 
                     if (mr.DeclaringType == currentTypeDefinition || IsInheritedFrom(currentTypeDefinition, mr.DeclaringType))
                     {
-                        var currentMethodDefinitionNode = FromNodeCache(currentMethodDefinition);
-                        var targetMethodNode = FromNodeCache(mr);
+                        var currentMethodDefinitionNode = getMethodNode(currentMethodDefinition);
+                        var targetMethodNode = getMethodNode(mr);
 
                         if (md is { IsGetter: true })
                         {
@@ -108,8 +88,8 @@ static class Extensions
 
                     if (fr.DeclaringType == currentTypeDefinition || IsInheritedFrom(currentTypeDefinition, fr.DeclaringType))
                     {
-                        var currentMethodDefinitionNode = FromNodeCache(currentMethodDefinition);
-                        var targetFieldNode = FromNodeCacheField(fr);
+                        var currentMethodDefinitionNode = getMethodNode(currentMethodDefinition);
+                        var targetFieldNode = getFieldNode(fr);
 
                         if (instruction.OpCode.Code == Code.Ldfld)
                         {
