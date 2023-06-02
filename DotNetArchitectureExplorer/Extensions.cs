@@ -365,7 +365,25 @@ static class Extensions
         return IsInheritedFrom(definition.BaseType, baseTypeReference);
     }
 
-    public static (string exception, string dgmlContent) CreateMethodCallGraph(string assemblyFilePath, string fullTypeName)
+    public static (string exception, string dgmlContent) CreateMethodCallGraphOfAssembly(string assemblyFilePath)
+    {
+        var (exception, assemblyDefinition) = ReadAssemblyDefinition(assemblyFilePath);
+        if (exception is not null)
+        {
+            return (exception.ToString(), default);
+        }
+
+        var dgml = new DirectedGraph();
+
+        assemblyDefinition.ForEachType(x =>
+        {
+            AddClass(dgml, x);
+        });
+
+        return (default, dgml.ToDirectedGraphElement().ToString());
+    }
+
+    public static (string exception, string dgmlContent) CreateMethodCallGraphOfType(string assemblyFilePath, string fullTypeName)
     {
         var (exception, assemblyDefinition) = ReadAssemblyDefinition(assemblyFilePath);
         if (exception is not null)
