@@ -10,6 +10,8 @@ public sealed record Link
     public Node Target { get; init; }
 
     public LinkType LinkType { get; init; }
+
+    public string Category { get; init; }
 }
 
 public enum LinkType

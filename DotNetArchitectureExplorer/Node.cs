@@ -12,7 +12,10 @@ public sealed class Node
     public string StrokeDashArray { get; init; }
 
     public string Icon { get; init; }
+
+    public string Group { get; init; }
     
+
 
     public override bool Equals(object obj)
     {

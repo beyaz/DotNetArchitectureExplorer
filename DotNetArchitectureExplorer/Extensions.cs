@@ -12,6 +12,10 @@ static class Extensions
 
         var dgml = new DirectedGraph();
 
+        var currentClassNode = CreateClassNode(definition);
+        
+        nodeCache[definition.FullName] = currentClassNode;
+        
         foreach (var method in definition.Methods)
         {
             nodeCache[method.FullName] = CreateMethodNode(method, definition);
@@ -69,6 +73,8 @@ static class Extensions
                         }
 
                         dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.None });
+
+                        dgml.Add(new Link { Source = currentClassNode, Target = target, LinkType = LinkType.None, Category = "Contains"});
                     }
                 }
 
@@ -151,6 +157,11 @@ static class Extensions
             element.Add(new XAttribute("StrokeDashArray", "5,5"));
         }
 
+        if (link.Category is not null)
+        {
+            element.Add(new XAttribute(nameof(link.Category), link.Category));
+        }
+
         return element;
     }
 
@@ -167,6 +178,17 @@ static class Extensions
             StrokeDashArray = "5,5",
             Background      = "#c9cbce",
             Icon = IconField
+        };
+    }
+
+    public static Node CreateClassNode(TypeDefinition typeDefinition)
+    {
+        return new Node
+        {
+            Id    = typeDefinition.FullName,
+            Label = typeDefinition.Name,
+            Icon  = IconClass,
+            Group = "Expanded"
         };
     }
 
@@ -247,6 +269,11 @@ static class Extensions
         if (node.Icon is not null)
         {
             element.Add(new XAttribute(nameof(node.Icon), node.Icon));
+        }
+
+        if (node.Group is not null)
+        {
+            element.Add(new XAttribute(nameof(node.Group), node.Group));
         }
 
         return element;
