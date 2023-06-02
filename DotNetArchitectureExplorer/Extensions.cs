@@ -74,7 +74,7 @@ static class Extensions
 
                         dgml.Add(new Link { Source = source, Target = target, LinkType = LinkType.None });
 
-                        dgml.Add(new Link { Source = currentClassNode, Target = target, LinkType = LinkType.None, Category = "Contains"});
+                        dgml.Add(new Link { Source = currentClassNode, Target = target, Category = "Contains"});
                     }
                 }
 
