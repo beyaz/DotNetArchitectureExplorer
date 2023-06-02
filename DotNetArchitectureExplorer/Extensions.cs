@@ -16,10 +16,25 @@ static class Extensions
         
         nodeCache[currentTypeDefinition.FullName] = currentClassNode;
         
-        foreach (var method in currentTypeDefinition.Methods)
+        foreach (var methodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
-            nodeCache[method.FullName] = CreateMethodNode(method, currentTypeDefinition);
+            var methodDefinitionNode = CreateMethodNode(methodDefinition, currentTypeDefinition);
+            
+            nodeCache[methodDefinition.FullName] = methodDefinitionNode;
+
+            dgml.Add(new Link { Source = currentClassNode, Target = methodDefinitionNode, Category = "Contains" });
         }
+
+        foreach (var fieldDefinition in currentTypeDefinition.Fields)
+        {
+            var fieldDefinitionNode = CreateFieldNode(fieldDefinition, currentTypeDefinition);
+
+            nodeCache[fieldDefinition.FullName] = fieldDefinitionNode;
+
+            dgml.Add(new Link { Source = currentClassNode, Target = fieldDefinitionNode, Category = "Contains" });
+        }
+
+
 
         Node FromNodeCache(MethodReference mr)
         {
@@ -79,7 +94,7 @@ static class Extensions
 
                         dgml.Add(new Link { Source = currentMethodDefinitionNode, Target = targetMethodNode });
 
-                        dgml.Add(new Link { Source = currentClassNode, Target = targetMethodNode, Category = "Contains"});
+                        
                     }
                 }
 
