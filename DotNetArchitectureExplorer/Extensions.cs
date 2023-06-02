@@ -7,18 +7,22 @@ namespace DotNetArchitectureExplorer;
 
 static class Extensions
 {
-    public static string CreateGraph(TypeDefinition currentTypeDefinition)
-    {
-        var dgml = new DirectedGraph();
+    public static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
 
+    static string IconField => Path.Combine("img", "field.png");
+    static string IconMethod => Path.Combine("img", "method.png");
+    static string IconClass => Path.Combine("img", "class.png");
+
+    public static void AddClass(DirectedGraph dgml, TypeDefinition currentTypeDefinition)
+    {
         var currentClassNode = CreateClassNode(currentTypeDefinition);
 
         dgml.Add(currentClassNode);
-        
+
         foreach (var methodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
             var methodDefinitionNode = CreateMethodNode(methodDefinition, currentTypeDefinition);
-            
+
             dgml.Add(methodDefinitionNode);
 
             dgml.Add(new Link { Source = currentClassNode, Target = methodDefinitionNode, Category = "Contains" });
@@ -33,12 +37,15 @@ static class Extensions
             dgml.Add(new Link { Source = currentClassNode, Target = fieldDefinitionNode, Category = "Contains" });
         }
 
+        Node getMethodNode(MethodReference mrr)
+        {
+            return dgml.GetMethodNode(mrr, currentTypeDefinition);
+        }
 
-
-
-
-        Node getMethodNode(MethodReference mrr) => dgml.GetMethodNode(mrr, currentTypeDefinition);
-        Node getFieldNode(FieldReference fr) => dgml.GetFieldNode(fr, currentTypeDefinition);
+        Node getFieldNode(FieldReference fr)
+        {
+            return dgml.GetFieldNode(fr, currentTypeDefinition);
+        }
 
         foreach (var currentMethodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
@@ -66,7 +73,7 @@ static class Extensions
                         {
                             dgml.Add(new Link
                             {
-                                Source          = currentMethodDefinitionNode, 
+                                Source          = currentMethodDefinitionNode,
                                 Target          = targetMethodNode,
                                 StrokeDashArray = "5,5"
                             });
@@ -74,8 +81,6 @@ static class Extensions
                         }
 
                         dgml.Add(new Link { Source = currentMethodDefinitionNode, Target = targetMethodNode });
-
-                        
                     }
                 }
 
@@ -102,11 +107,16 @@ static class Extensions
                 }
             }
         }
+    }
+
+    public static string CreateGraph(TypeDefinition typeDefinition)
+    {
+        var dgml = new DirectedGraph();
+
+        AddClass(dgml, typeDefinition);
 
         return dgml.ToDirectedGraphElement().ToString();
     }
-    
-    public static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
 
     public static XElement ToDirectedGraphElement(this DirectedGraph directedGraph)
     {
@@ -153,13 +163,11 @@ static class Extensions
     {
         var element = new XElement(XName.Get("Link", ns), new XAttribute("Source", link.Source.Id), new XAttribute("Target", link.Target.Id));
 
-       
-
         if (link.StrokeDashArray is not null)
         {
             element.Add(new XAttribute(nameof(link.StrokeDashArray), link.StrokeDashArray));
         }
-        
+
         if (link.Category is not null)
         {
             element.Add(new XAttribute(nameof(link.Category), link.Category));
@@ -168,10 +176,6 @@ static class Extensions
         return element;
     }
 
-    static string IconField => Path.Combine("img", "field.png");
-    static string IconMethod => Path.Combine("img", "method.png");
-    static string IconClass => Path.Combine("img", "class.png");
-    
     public static Node CreateFieldNode(FieldReference fieldReference, TypeDefinition typeDefinition)
     {
         return new Node
@@ -180,7 +184,7 @@ static class Extensions
             Label           = fieldReference.Name,
             StrokeDashArray = "5,5",
             Background      = "#c9cbce",
-            Icon = IconField
+            Icon            = IconField
         };
     }
 
@@ -221,16 +225,16 @@ static class Extensions
 
     static string GetMethodNameWithParameterSignature(this MethodReference methodReference)
     {
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
 
         builder.Append(methodReference.Name);
-        
+
         builder.Append("(");
 
         if (methodReference.HasParameters)
         {
             var parameters = methodReference.Parameters;
-            for (int i = 0; i < parameters.Count; i++)
+            for (var i = 0; i < parameters.Count; i++)
             {
                 var parameter = parameters[i];
                 if (i > 0)
@@ -262,7 +266,7 @@ static class Extensions
                 label = methodReference.GetMethodNameWithParameterSignature();
             }
         }
-        
+
         var (isLocalFunction, parentMethodName, localFunctionName) = methodReference.TryGetLocalFunctionName();
         if (isLocalFunction)
         {
@@ -281,7 +285,7 @@ static class Extensions
                 Label           = label,
                 StrokeDashArray = "5,5",
                 Background      = "#f2f4f7",
-                Icon = IconField
+                Icon            = IconField
             };
         }
 
