@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Text;
+using System.Xml.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -238,12 +239,50 @@ static class Extensions
         return default;
     }
 
+    static string GetMethodNameWithParameterSignature(this MethodReference methodReference)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        builder.Append(methodReference.Name);
+        
+        builder.Append("(");
+
+        if (methodReference.HasParameters)
+        {
+            var parameters = methodReference.Parameters;
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                var parameter = parameters[i];
+                if (i > 0)
+                    builder.Append(",");
+
+                if (parameter.ParameterType.IsSentinel)
+                    builder.Append("...,");
+
+                builder.Append(parameter.ParameterType.Name);
+            }
+        }
+
+        builder.Append(")");
+
+        return builder.ToString();
+    }
+
     public static Node CreateMethodNode(MethodReference methodReference, TypeDefinition callerMethodDeclaringTypeDefinition)
     {
         var id = methodReference.FullName;
 
         var label = methodReference.Name;
 
+        if (methodReference.IsDefinition)
+        {
+            var sameNamedMethodCount = methodReference.DeclaringType.Resolve().Methods.Count(x => x.Name == methodReference.Name);
+            if (sameNamedMethodCount > 1)
+            {
+                label = methodReference.GetMethodNameWithParameterSignature();
+            }
+        }
+        
         var (isLocalFunction, parentMethodName, localFunctionName) = methodReference.TryGetLocalFunctionName();
         if (isLocalFunction)
         {
