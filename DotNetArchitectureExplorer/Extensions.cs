@@ -388,9 +388,9 @@ static class Extensions
 
         var dgml = new DirectedGraph();
 
-        var typeDefinitions = assemblyDefinition.GetTypesForAnalyze().ToList().AsReadOnly();
+        var typeDefinitions = assemblyDefinition.GetTypesForAnalyze().ToList().AsReadOnly().Take(20).ToList();
 
-        foreach (var typeDefinition in assemblyDefinition.GetTypesForAnalyze())
+        foreach (var typeDefinition in typeDefinitions)
         {
             AddType(dgml, typeDefinition, t => typeDefinitions.Contains(t));
         }
@@ -398,21 +398,7 @@ static class Extensions
         return (default, dgml.ToDirectedGraphElement().ToString());
     }
 
-    public static (bool isFound, TypeDefinition typeDefinition) FindType(AssemblyDefinition assemblyDefinition, string fullTypeName)
-    {
-        foreach (var moduleDefinition in assemblyDefinition.Modules)
-        {
-            foreach (var typeDefinition in moduleDefinition.Types)
-            {
-                if (typeDefinition.FullName == fullTypeName)
-                {
-                    return (isFound: true, typeDefinition);
-                }
-            }
-        }
-
-        return default;
-    }
+   
 
     public static (BadImageFormatException exception, AssemblyDefinition assemblyDefinition) ReadAssemblyDefinition(string filePath)
     {
