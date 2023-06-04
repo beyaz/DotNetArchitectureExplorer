@@ -30,7 +30,7 @@ static class Extensions
 
         foreach (var propertyDefinition in currentTypeDefinition.Properties)
         {
-            var node = CreatePropertyNode(propertyDefinition, currentTypeDefinition);
+            var node = CreatePropertyNode(propertyDefinition);
 
             dgml.Add(node);
 
@@ -210,7 +210,7 @@ static class Extensions
         };
     }
 
-    public static Node CreatePropertyNode(PropertyReference propertyReference, TypeDefinition typeDefinition)
+    public static Node CreatePropertyNode(PropertyReference propertyReference)
     {
         return new Node
         {
@@ -320,25 +320,13 @@ static class Extensions
 
         var methodDefinition = methodReference.Resolve();
 
-        if (methodDefinition?.IsGetter == true)
+        if (methodDefinition != null && (methodDefinition.IsGetter || methodDefinition.IsSetter))
         {
-            var propertyDefinition = methodDefinition.DeclaringType.Properties.FirstOrDefault(p => p.GetMethod == methodDefinition);
-
-            return CreatePropertyNode(propertyDefinition, propertyDefinition.DeclaringType);
-        }
-        
-        if (methodDefinition?.IsSetter == true || methodDefinition?.IsGetter == true)
-        {
-            label = methodDefinition.Name.RemoveFromStart("set_").RemoveFromStart("get_");
-
-            return new Node
+            var propertyDefinition = methodDefinition.DeclaringType.Properties.FirstOrDefault(p => p.GetMethod == methodDefinition || p.SetMethod == methodDefinition);
+            if (propertyDefinition != null)
             {
-                Id              = id,
-                Label           = label,
-                StrokeDashArray = "5,5",
-                Background      = "#f2f4f7",
-                Icon            = IconField
-            };
+                return CreatePropertyNode(propertyDefinition);
+            }
         }
 
         return new Node
