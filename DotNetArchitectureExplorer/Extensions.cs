@@ -52,7 +52,7 @@ static class Extensions
 
         foreach (var fieldDefinition in currentTypeDefinition.Fields.Where(x=> !x.IsBackingField()))
         {
-            var fieldDefinitionNode = CreateFieldNode(fieldDefinition, currentTypeDefinition);
+            var fieldDefinitionNode = CreateFieldNode(fieldDefinition);
 
             dgml.Add(fieldDefinitionNode);
 
@@ -66,7 +66,7 @@ static class Extensions
 
         Node getFieldNode(FieldReference fr)
         {
-            return dgml.GetFieldNode(fr, currentTypeDefinition);
+            return dgml.GetFieldNode(fr);
         }
 
         foreach (var currentMethodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
@@ -199,7 +199,7 @@ static class Extensions
         return element;
     }
 
-    public static Node CreateFieldNode(FieldReference fieldReference, TypeDefinition typeDefinition)
+    public static Node CreateFieldNode(FieldReference fieldReference)
     {
         return new Node
         {

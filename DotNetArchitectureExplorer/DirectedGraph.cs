@@ -26,14 +26,14 @@ public sealed class DirectedGraph
         return nodeCache[methodReference.FullName] = CreateMethodNode(methodReference);
     }
 
-    public Node GetFieldNode(FieldReference fieldReference, TypeDefinition callerMethodDeclaringTypeDefinition)
+    public Node GetFieldNode(FieldReference fieldReference)
     {
         if (nodeCache.TryGetValue(fieldReference.FullName, out var cache))
         {
             return cache;
         }
 
-        return nodeCache[fieldReference.FullName] = CreateFieldNode(fieldReference, callerMethodDeclaringTypeDefinition);
+        return nodeCache[fieldReference.FullName] = CreateFieldNode(fieldReference);
     }
 
 
