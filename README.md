@@ -2,9 +2,9 @@
 
 Extracts method call graph and type dependency to dgml file.
 
-Sample usage:
-Select any .net assembly and drag and drop on DotNetArchitectureExplorer.exe
-then dgml file automatically will be create.
+Select any .net assembly then drag and drop on DotNetArchitectureExplorer.exe
+
+Then dgml file automatically will be create.
 
 ## Screenshot
 
