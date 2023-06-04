@@ -86,7 +86,8 @@ static class Extensions
                         continue;
                     }
 
-                    if (mr.DeclaringType == currentTypeDefinition || IsInheritedFrom(currentTypeDefinition, mr.DeclaringType))
+                    // if (mr.DeclaringType == currentTypeDefinition || IsInheritedFrom(currentTypeDefinition, mr.DeclaringType))
+                    if (mr.DeclaringType.Scope == currentTypeDefinition.Scope)
                     {
                         var currentMethodDefinitionNode = getMethodNode(currentMethodDefinition);
                         var targetMethodNode = getMethodNode(mr);
