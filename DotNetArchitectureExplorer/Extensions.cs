@@ -12,6 +12,7 @@ static class Extensions
     static string IconField => Path.Combine("img", "field.png");
     static string IconMethod => Path.Combine("img", "method.png");
     static string IconClass => Path.Combine("img", "class.png");
+    static string IconInterface=> Path.Combine("img", "interface.png");
     static string IconNamespace => Path.Combine("img", "namespace.png");
 
     static bool IsBackingField(this FieldReference fieldReference)
@@ -21,7 +22,7 @@ static class Extensions
 
     public static void AddType(DirectedGraph dgml, TypeDefinition currentTypeDefinition, Func<TypeReference, bool> isInAnalyse)
     {
-        var currentClassNode = CreateClassNode(currentTypeDefinition);
+        var currentClassNode = CreateTypeNode(currentTypeDefinition);
 
         dgml.Add(new Link { Source = CreateNamespaceNode(currentTypeDefinition.Namespace), Target = currentClassNode, Category = "Contains" });
 
@@ -223,13 +224,13 @@ static class Extensions
         };
     }
 
-    static Node CreateClassNode(TypeDefinition typeDefinition)
+    static Node CreateTypeNode(TypeDefinition typeDefinition)
     {
         return new Node
         {
             Id    = typeDefinition.FullName,
             Label = typeDefinition.Name,
-            Icon  = IconClass,
+            Icon  = typeDefinition.IsInterface ? IconInterface : IconClass,
             Group = "Collapsed"
         };
     }
