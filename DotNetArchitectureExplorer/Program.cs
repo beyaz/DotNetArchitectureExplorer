@@ -1,6 +1,6 @@
 ﻿
-//var assemblyFilePath = @"C:\github\DotNetArchitectureExplorer\DotNetArchitectureExplorer\bin\Debug\net6.0\DotNetArchitectureExplorer.dll";
-var assemblyFilePath = @"C:\github\ReactWithDotNet\ReactWithDotNet\bin\Debug\net6.0\ReactWithDotNet.dll";
+var assemblyFilePath = @"C:\github\DotNetArchitectureExplorer\DotNetArchitectureExplorer\bin\Debug\net6.0\DotNetArchitectureExplorer.dll";
+//var assemblyFilePath = @"C:\github\ReactWithDotNet\ReactWithDotNet\bin\Debug\net6.0\ReactWithDotNet.dll";
 //var assemblyFilePath = @"C:\github\DotNetArchitectureExplorer\DotNetArchitectureExplorer\bin\Debug\net6.0\Mono.Cecil.dll";
 var (exception, dgmlContent) = CreateMethodCallGraphOfAssembly(assemblyFilePath);
 if (exception is null)
