@@ -19,12 +19,11 @@ static class Extensions
         return fieldReference.Name.EndsWith(">k__BackingField");
     }
 
-    public static void AddClass(DirectedGraph dgml, TypeDefinition currentTypeDefinition)
+    public static void AddType(DirectedGraph dgml, TypeDefinition currentTypeDefinition, Func<TypeReference, bool> isInAnalyse)
     {
         var currentClassNode = CreateClassNode(currentTypeDefinition);
 
-        var namesapceNode = CreateNamespaceNode(currentTypeDefinition.Namespace);
-        dgml.Add(new Link { Source = namesapceNode, Target = currentClassNode, Category = "Contains" });
+        dgml.Add(new Link { Source = CreateNamespaceNode(currentTypeDefinition.Namespace), Target = currentClassNode, Category = "Contains" });
 
         foreach (var propertyDefinition in currentTypeDefinition.Properties)
         {
@@ -33,7 +32,7 @@ static class Extensions
             dgml.Add(new Link { Source = currentClassNode, Target = node, Category = "Contains" });
         }
 
-        foreach (var methodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
+        foreach (var methodDefinition in currentTypeDefinition.Methods)
         {
             if (methodDefinition.IsGetter || methodDefinition.IsSetter)
             {
@@ -77,6 +76,11 @@ static class Extensions
                             continue;
                         }
 
+                        if (isInAnalyse(mr.DeclaringType) == false)
+                        {
+                            continue;
+                        }
+
                         var currentMethodDefinitionNode = CreateMethodNode(currentMethodDefinition);
                         var targetMethodNode = CreateMethodNode(mr);
 
@@ -109,6 +113,11 @@ static class Extensions
                             continue;
                         }
 
+                        if (isInAnalyse(fr.DeclaringType) == false)
+                        {
+                            continue;
+                        }
+
                         var currentMethodDefinitionNode = CreateMethodNode(currentMethodDefinition);
                         var targetFieldNode = CreateFieldNode(fr);
 
@@ -123,15 +132,6 @@ static class Extensions
                 }
             }
         }
-    }
-
-    public static string CreateGraph(TypeDefinition typeDefinition)
-    {
-        var dgml = new DirectedGraph();
-
-        AddClass(dgml, typeDefinition);
-
-        return dgml.ToDirectedGraphElement().ToString();
     }
 
     public static XElement ToDirectedGraphElement(this DirectedGraph directedGraph)
@@ -388,29 +388,15 @@ static class Extensions
 
         var dgml = new DirectedGraph();
 
-        var count = 0;
+        var typeDefinitions = assemblyDefinition.GetTypesForAnalyze().ToList().AsReadOnly();
 
-        assemblyDefinition.ForEachType(x =>
+        foreach (var typeDefinition in assemblyDefinition.GetTypesForAnalyze())
         {
-            if (count > 17)
-            {
-                return;
-            }
-
-            count++;
-
-            if (x.Namespace != "Mono.Cecil")
-            {
-                return;
-            }
-
-            AddClass(dgml, x);
-        });
+            AddType(dgml, typeDefinition, t => typeDefinitions.Contains(t));
+        }
 
         return (default, dgml.ToDirectedGraphElement().ToString());
     }
-
-  
 
     public static (bool isFound, TypeDefinition typeDefinition) FindType(AssemblyDefinition assemblyDefinition, string fullTypeName)
     {
@@ -510,13 +496,13 @@ static class Extensions
         return data;
     }
 
-    public static void ForEachType(this AssemblyDefinition assemblyDefinition, Action<TypeDefinition> action)
+    static IEnumerable<TypeDefinition> GetTypesForAnalyze(this AssemblyDefinition assemblyDefinition)
     {
         foreach (var moduleDefinition in assemblyDefinition.Modules)
         {
             foreach (var type in moduleDefinition.Types)
             {
-                if (type.Name == "<Module>" && type.Namespace == string.Empty)
+                if (type.Name == "<Module>" || type.Name == "<PrivateImplementationDetails>")
                 {
                     continue;
                 }
@@ -527,7 +513,7 @@ static class Extensions
                     continue;
                 }
 
-                action(type);
+                yield return type;
             }
         }
     }
