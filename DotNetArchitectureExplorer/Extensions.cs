@@ -24,7 +24,7 @@ static class Extensions
         var currentClassNode = CreateClassNode(currentTypeDefinition);
 
         dgml.Add(currentClassNode);
-        var namesapceNode = dgml.GetNode(currentTypeDefinition.Namespace, () => CreateNamespaceNode(currentTypeDefinition.Namespace));
+        var namesapceNode = CreateNamespaceNode(currentTypeDefinition.Namespace);
         dgml.Add(new Link { Source = namesapceNode, Target = currentClassNode, Category = "Contains" });
 
 
@@ -59,15 +59,8 @@ static class Extensions
             dgml.Add(new Link { Source = currentClassNode, Target = fieldDefinitionNode, Category = "Contains" });
         }
 
-        Node getMethodNode(MethodReference mrr)
-        {
-            return dgml.GetMethodNode(mrr);
-        }
+       
 
-        Node getFieldNode(FieldReference fr)
-        {
-            return dgml.GetNode(fr.FullName, () => CreateFieldNode(fr));
-        }
 
         foreach (var currentMethodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
@@ -89,8 +82,8 @@ static class Extensions
                     // if (mr.DeclaringType == currentTypeDefinition || IsInheritedFrom(currentTypeDefinition, mr.DeclaringType))
                     if (mr.DeclaringType.Scope == currentTypeDefinition.Scope)
                     {
-                        var currentMethodDefinitionNode = getMethodNode(currentMethodDefinition);
-                        var targetMethodNode = getMethodNode(mr);
+                        var currentMethodDefinitionNode = CreateMethodNode(currentMethodDefinition);
+                        var targetMethodNode = CreateMethodNode(mr);
 
                         if (md is { IsGetter: true })
                         {
@@ -116,8 +109,8 @@ static class Extensions
 
                     if (fr.DeclaringType == currentTypeDefinition || IsInheritedFrom(currentTypeDefinition, fr.DeclaringType))
                     {
-                        var currentMethodDefinitionNode = getMethodNode(currentMethodDefinition);
-                        var targetFieldNode = getFieldNode(fr);
+                        var currentMethodDefinitionNode = CreateMethodNode(currentMethodDefinition);
+                        var targetFieldNode = CreateFieldNode(fr);
 
                         if (instruction.OpCode.Code == Code.Ldfld)
                         {

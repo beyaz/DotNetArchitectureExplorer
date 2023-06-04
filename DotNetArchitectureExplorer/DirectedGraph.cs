@@ -25,6 +25,6 @@ public sealed class DirectedGraph
 
     public void Add(Node node)
     {
-        nodeCache[node.Id] = node;
+        //nodeCache[node.Id] = node;
     }
 }
