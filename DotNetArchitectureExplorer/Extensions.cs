@@ -12,55 +12,45 @@ static class Extensions
     static string IconField => Path.Combine("img", "field.png");
     static string IconMethod => Path.Combine("img", "method.png");
     static string IconClass => Path.Combine("img", "class.png");
-    static string IconNamespace=> Path.Combine("img", "namespace.png");
+    static string IconNamespace => Path.Combine("img", "namespace.png");
 
     static bool IsBackingField(this FieldReference fieldReference)
     {
         return fieldReference.Name.EndsWith(">k__BackingField");
     }
-    
+
     public static void AddClass(DirectedGraph dgml, TypeDefinition currentTypeDefinition)
     {
         var currentClassNode = CreateClassNode(currentTypeDefinition);
 
-        dgml.Add(currentClassNode);
         var namesapceNode = CreateNamespaceNode(currentTypeDefinition.Namespace);
         dgml.Add(new Link { Source = namesapceNode, Target = currentClassNode, Category = "Contains" });
-
 
         foreach (var propertyDefinition in currentTypeDefinition.Properties)
         {
             var node = CreatePropertyNode(propertyDefinition);
 
-            dgml.Add(node);
-
             dgml.Add(new Link { Source = currentClassNode, Target = node, Category = "Contains" });
         }
-        
+
         foreach (var methodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
             if (methodDefinition.IsGetter || methodDefinition.IsSetter)
             {
                 continue;
             }
-            var methodDefinitionNode = CreateMethodNode(methodDefinition);
 
-            dgml.Add(methodDefinitionNode);
+            var methodDefinitionNode = CreateMethodNode(methodDefinition);
 
             dgml.Add(new Link { Source = currentClassNode, Target = methodDefinitionNode, Category = "Contains" });
         }
 
-        foreach (var fieldDefinition in currentTypeDefinition.Fields.Where(x=> !x.IsBackingField()))
+        foreach (var fieldDefinition in currentTypeDefinition.Fields.Where(x => !x.IsBackingField()))
         {
             var fieldDefinitionNode = CreateFieldNode(fieldDefinition);
 
-            dgml.Add(fieldDefinitionNode);
-
             dgml.Add(new Link { Source = currentClassNode, Target = fieldDefinitionNode, Category = "Contains" });
         }
-
-       
-
 
         foreach (var currentMethodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
@@ -409,10 +399,7 @@ static class Extensions
 
         var dgml = new DirectedGraph();
 
-        assemblyDefinition.ForEachType(x =>
-        {
-            AddClass(dgml, x);
-        });
+        assemblyDefinition.ForEachType(x => { AddClass(dgml, x); });
 
         return (default, dgml.ToDirectedGraphElement().ToString());
     }
@@ -516,7 +503,6 @@ static class Extensions
         return mainString;
     }
 
-    
     /// <summary>
     ///     Removes value from start of str
     /// </summary>
@@ -551,7 +537,7 @@ static class Extensions
                 {
                     continue;
                 }
-                
+
                 action(type);
             }
         }
