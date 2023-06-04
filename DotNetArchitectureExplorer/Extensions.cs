@@ -5,22 +5,29 @@ using Mono.Cecil.Cil;
 
 namespace DotNetArchitectureExplorer;
 
-static class Extensions
+static partial class Program
 {
-    public static readonly string ns = "http://schemas.microsoft.com/vs/2009/dgml";
+    const string ns = "http://schemas.microsoft.com/vs/2009/dgml";
 
-    static string IconField => Path.Combine("img", "field.png");
-    static string IconMethod => Path.Combine("img", "method.png");
-    static string IconClass => Path.Combine("img", "class.png");
-    static string IconInterface=> Path.Combine("img", "interface.png");
-    static string IconNamespace => Path.Combine("img", "namespace.png");
+    static string Image(string fileName)
+    {
+        var workingDirectory = Directory.GetParent(typeof(Program).Assembly.Location)?.FullName;
+
+        return Path.Combine(workingDirectory ?? string.Empty, "img", fileName);
+
+    }
+    static string IconField => Image("field.png");
+    static string IconMethod => Image("method.png");
+    static string IconClass => Image("class.png");
+    static string IconInterface => Image("interface.png");
+    static string IconNamespace => Image("namespace.png");
 
     static bool IsBackingField(this FieldReference fieldReference)
     {
         return fieldReference.Name.EndsWith(">k__BackingField");
     }
 
-    public static void AddType(DirectedGraph dgml, TypeDefinition currentTypeDefinition, Func<TypeReference, bool> isInAnalyse)
+    static void AddType(DirectedGraph dgml, TypeDefinition currentTypeDefinition, Func<TypeReference, bool> isInAnalyse)
     {
         var currentClassNode = CreateTypeNode(currentTypeDefinition);
 
@@ -135,7 +142,7 @@ static class Extensions
         }
     }
 
-    public static XElement ToDirectedGraphElement(this DirectedGraph directedGraph)
+    static XElement ToDirectedGraphElement(this DirectedGraph directedGraph)
     {
         var links = directedGraph.Links;
 
@@ -166,7 +173,7 @@ static class Extensions
         }
     }
 
-    public static XElement ToDgml(this Link link)
+    static XElement ToDgml(this Link link)
     {
         var element = new XElement(XName.Get("Link", ns), new XAttribute("Source", link.Source.Id), new XAttribute("Target", link.Target.Id));
 
@@ -188,7 +195,7 @@ static class Extensions
         return element;
     }
 
-    public static Node CreateFieldNode(FieldReference fieldReference)
+    static Node CreateFieldNode(FieldReference fieldReference)
     {
         return new Node
         {
@@ -201,7 +208,7 @@ static class Extensions
         };
     }
 
-    public static Node CreatePropertyNode(PropertyReference propertyReference)
+    static Node CreatePropertyNode(PropertyReference propertyReference)
     {
         return new Node
         {
@@ -289,7 +296,7 @@ static class Extensions
         return builder.ToString();
     }
 
-    public static Node CreateMethodNode(MethodReference methodReference)
+    static Node CreateMethodNode(MethodReference methodReference)
     {
         var id = methodReference.FullName;
 
@@ -337,7 +344,7 @@ static class Extensions
         };
     }
 
-    public static XElement ToDgml(this Node node)
+    static XElement ToDgml(this Node node)
     {
         var element = new XElement(XName.Get("Node", ns), new XAttribute("Label", node.Label), new XAttribute("Id", node.Id));
 
@@ -389,9 +396,7 @@ static class Extensions
         return (default, dgml.ToDirectedGraphElement().ToString());
     }
 
-   
-
-    public static (BadImageFormatException exception, AssemblyDefinition assemblyDefinition) ReadAssemblyDefinition(string filePath)
+    static (BadImageFormatException exception, AssemblyDefinition assemblyDefinition) ReadAssemblyDefinition(string filePath)
     {
         return Try<BadImageFormatException, AssemblyDefinition>(() =>
         {
@@ -403,19 +408,7 @@ static class Extensions
         });
     }
 
-    public static (Exception exception, T value) Try<T>(Func<T> func)
-    {
-        try
-        {
-            return (default, func());
-        }
-        catch (Exception exception)
-        {
-            return (exception, default);
-        }
-    }
-
-    public static (TException exception, T value) Try<TException, T>(Func<T> func) where TException : Exception
+    static (TException exception, T value) Try<TException, T>(Func<T> func) where TException : Exception
     {
         try
         {
@@ -425,52 +418,6 @@ static class Extensions
         {
             return (exception, default);
         }
-    }
-
-    /// <summary>
-    ///     Removes value from start of str
-    /// </summary>
-    public static string RemoveFromStart(this string data, string value)
-    {
-        return RemoveFromStart(data, value, StringComparison.OrdinalIgnoreCase);
-    }
-
-    public static string RemoveFromEnd(this string mainString, string stringToRemove)
-    {
-        if (mainString == null)
-        {
-            throw new ArgumentNullException(nameof(mainString));
-        }
-
-        if (stringToRemove == null)
-        {
-            throw new ArgumentNullException(nameof(stringToRemove));
-        }
-
-        if (mainString.EndsWith(stringToRemove))
-        {
-            return mainString.Substring(0, mainString.Length - stringToRemove.Length);
-        }
-
-        return mainString;
-    }
-
-    /// <summary>
-    ///     Removes value from start of str
-    /// </summary>
-    public static string RemoveFromStart(this string data, string value, StringComparison comparison)
-    {
-        if (data == null)
-        {
-            return null;
-        }
-
-        if (data.StartsWith(value, comparison))
-        {
-            return data.Substring(value.Length, data.Length - value.Length);
-        }
-
-        return data;
     }
 
     static IEnumerable<TypeDefinition> GetTypesForAnalyze(this AssemblyDefinition assemblyDefinition)
@@ -493,21 +440,5 @@ static class Extensions
                 yield return type;
             }
         }
-    }
-
-    public static TypeDefinition FindType(this AssemblyDefinition assemblyDefinition, Func<TypeDefinition, bool> action)
-    {
-        foreach (var moduleDefinition in assemblyDefinition.Modules)
-        {
-            foreach (var type in moduleDefinition.Types)
-            {
-                if (action(type))
-                {
-                    return type;
-                }
-            }
-        }
-
-        return null;
     }
 }
