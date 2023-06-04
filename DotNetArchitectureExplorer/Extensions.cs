@@ -388,7 +388,7 @@ static class Extensions
 
         var dgml = new DirectedGraph();
 
-        var typeDefinitions = assemblyDefinition.GetTypesForAnalyze().ToList().AsReadOnly().Take(20).ToList();
+        var typeDefinitions = assemblyDefinition.GetTypesForAnalyze().ToList().AsReadOnly().Take(300).ToList();
 
         foreach (var typeDefinition in typeDefinitions)
         {
