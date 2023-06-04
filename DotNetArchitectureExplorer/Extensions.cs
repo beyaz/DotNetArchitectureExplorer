@@ -27,8 +27,22 @@ static class Extensions
         var namesapceNode = dgml.GetNode(currentTypeDefinition.Namespace, () => CreateNamespaceNode(currentTypeDefinition.Namespace));
         dgml.Add(new Link { Source = namesapceNode, Target = currentClassNode, Category = "Contains" });
 
+
+        foreach (var propertyDefinition in currentTypeDefinition.Properties)
+        {
+            var node = CreatePropertyNode(propertyDefinition, currentTypeDefinition);
+
+            dgml.Add(node);
+
+            dgml.Add(new Link { Source = currentClassNode, Target = node, Category = "Contains" });
+        }
+        
         foreach (var methodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
+            if (methodDefinition.IsGetter || methodDefinition.IsSetter)
+            {
+                continue;
+            }
             var methodDefinitionNode = CreateMethodNode(methodDefinition, currentTypeDefinition);
 
             dgml.Add(methodDefinitionNode);
@@ -184,7 +198,7 @@ static class Extensions
         return element;
     }
 
-     public static Node CreateFieldNode(FieldReference fieldReference, TypeDefinition typeDefinition)
+    public static Node CreateFieldNode(FieldReference fieldReference, TypeDefinition typeDefinition)
     {
         return new Node
         {
@@ -196,7 +210,19 @@ static class Extensions
         };
     }
 
-     static Node CreateClassNode(TypeDefinition typeDefinition)
+    public static Node CreatePropertyNode(PropertyReference propertyReference, TypeDefinition typeDefinition)
+    {
+        return new Node
+        {
+            Id              = propertyReference.FullName,
+            Label           = propertyReference.Name,
+            StrokeDashArray = "5,5",
+            Background      = "#c9cbce",
+            Icon            = IconField
+        };
+    }
+
+    static Node CreateClassNode(TypeDefinition typeDefinition)
     {
         return new Node
         {
@@ -294,6 +320,13 @@ static class Extensions
 
         var methodDefinition = methodReference.Resolve();
 
+        if (methodDefinition?.IsGetter == true)
+        {
+            var propertyDefinition = methodDefinition.DeclaringType.Properties.FirstOrDefault(p => p.GetMethod == methodDefinition);
+
+            return CreatePropertyNode(propertyDefinition, propertyDefinition.DeclaringType);
+        }
+        
         if (methodDefinition?.IsSetter == true || methodDefinition?.IsGetter == true)
         {
             label = methodDefinition.Name.RemoveFromStart("set_").RemoveFromStart("get_");
@@ -481,6 +514,27 @@ static class Extensions
         return RemoveFromStart(data, value, StringComparison.OrdinalIgnoreCase);
     }
 
+    public static string RemoveFromEnd(this string mainString, string stringToRemove)
+    {
+        if (mainString == null)
+        {
+            throw new ArgumentNullException(nameof(mainString));
+        }
+
+        if (stringToRemove == null)
+        {
+            throw new ArgumentNullException(nameof(stringToRemove));
+        }
+
+        if (mainString.EndsWith(stringToRemove))
+        {
+            return mainString.Substring(0, mainString.Length - stringToRemove.Length);
+        }
+
+        return mainString;
+    }
+
+    
     /// <summary>
     ///     Removes value from start of str
     /// </summary>

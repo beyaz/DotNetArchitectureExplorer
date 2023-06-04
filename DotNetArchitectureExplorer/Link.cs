@@ -13,4 +13,3 @@ public sealed record Link
 
     public string Category { get; init; }
 }
-
