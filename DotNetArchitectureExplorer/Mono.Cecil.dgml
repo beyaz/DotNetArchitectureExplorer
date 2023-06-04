@@ -47,23 +47,8 @@
     <Node Label="items" Id="T[] Mono.Collections.Generic.Collection`1::items" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
     <Node Label="size" Id="System.Int32 Mono.Collections.Generic.Collection`1::size" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
     <Node Label="version" Id="System.Int32 Mono.Collections.Generic.Collection`1::version" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
-    <Node Label="CheckIndex" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::CheckIndex(System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::CheckIndex(System.Int32)" />
-    <Node Label="OnSet" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnSet(T,System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnSet(T,System.Int32)" />
-    <Node Label="Resize" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Resize(System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Resize(System.Int32)" />
-    <Node Label="Grow" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Grow(System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Grow(System.Int32)" />
-    <Node Label="OnAdd" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnAdd(T,System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnAdd(T,System.Int32)" />
-    <Node Label="IndexOf" Id="System.Int32 Mono.Collections.Generic.Collection`1&lt;T&gt;::IndexOf(T)" Icon="img\method.png" Description="System.Int32 Mono.Collections.Generic.Collection`1&lt;T&gt;::IndexOf(T)" />
-    <Node Label="OnInsert" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnInsert(T,System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnInsert(T,System.Int32)" />
-    <Node Label="Shift" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Shift(System.Int32,System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Shift(System.Int32,System.Int32)" />
-    <Node Label="OnRemove" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnRemove(T,System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnRemove(T,System.Int32)" />
-    <Node Label="OnClear" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnClear()" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnClear()" />
     <Node Label="Resize" Id="T[] Mono.Cecil.Mixin::Resize(T[],System.Int32)" Icon="img\method.png" Description="T[] Mono.Cecil.Mixin::Resize(T[],System.Int32)" />
-    <Node Label="Add" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Add(T)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Add(T)" />
-    <Node Label="Clear" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Clear()" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Clear()" />
-    <Node Label="Insert" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Insert(System.Int32,T)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Insert(System.Int32,T)" />
-    <Node Label="Remove" Id="System.Boolean Mono.Collections.Generic.Collection`1&lt;T&gt;::Remove(T)" Icon="img\method.png" Description="System.Boolean Mono.Collections.Generic.Collection`1&lt;T&gt;::Remove(T)" />
-    <Node Label="RemoveAt" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::RemoveAt(System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::RemoveAt(System.Int32)" />
-    <Node Label=".ctor" Id="System.Void Mono.Collections.Generic.Collection`1/Enumerator&lt;T&gt;::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1/Enumerator&lt;T&gt;::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" />
+    <Node Label=".ctor" Id="System.Void Mono.Collections.Generic.Collection`1/Enumerator::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1/Enumerator&lt;T&gt;::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" />
     <Node Label="ReadOnlyCollection`1" Id="Mono.Collections.Generic.ReadOnlyCollection`1" Icon="img\class.png" Group="Collapsed" />
     <Node Label="Empty" Id="Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt; Mono.Collections.Generic.ReadOnlyCollection`1::Empty()" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
     <Node Label="System.Collections.Generic.ICollection&lt;T&gt;.IsReadOnly" Id="System.Boolean Mono.Collections.Generic.ReadOnlyCollection`1::System.Collections.Generic.ICollection&lt;T&gt;.IsReadOnly()" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
@@ -80,9 +65,6 @@
     <Node Label="OnRemove" Id="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::OnRemove(T,System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::OnRemove(T,System.Int32)" />
     <Node Label="OnSet" Id="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::OnSet(T,System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::OnSet(T,System.Int32)" />
     <Node Label="empty" Id="Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt; Mono.Collections.Generic.ReadOnlyCollection`1::empty" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
-    <Node Label=".ctor" Id="System.Void Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt;::.ctor()" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt;::.ctor()" />
-    <Node Label=".ctor" Id="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::.ctor()" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::.ctor()" />
-    <Node Label="Initialize" Id="System.Void Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt;::Initialize(T[],System.Int32)" Icon="img\method.png" Description="System.Void Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt;::Initialize(T[],System.Int32)" />
   </Nodes>
   <Links>
     <Link Source="Mono.Collections.Generic" Target="Mono.Collections.Generic.Collection`1" Category="Contains" />
@@ -131,38 +113,38 @@
     <Link Source="Mono.Collections.Generic.Collection`1" Target="T[] Mono.Collections.Generic.Collection`1::items" Category="Contains" />
     <Link Source="Mono.Collections.Generic.Collection`1" Target="System.Int32 Mono.Collections.Generic.Collection`1::size" Category="Contains" />
     <Link Source="Mono.Collections.Generic.Collection`1" Target="System.Int32 Mono.Collections.Generic.Collection`1::version" Category="Contains" />
-    <Link Source="T Mono.Collections.Generic.Collection`1::Item(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::CheckIndex(System.Int32)" />
-    <Link Source="T Mono.Collections.Generic.Collection`1::Item(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnSet(T,System.Int32)" />
-    <Link Source="System.Int32 Mono.Collections.Generic.Collection`1::Capacity()" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Resize(System.Int32)" />
+    <Link Source="T Mono.Collections.Generic.Collection`1::Item(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1::CheckIndex(System.Int32)" />
+    <Link Source="T Mono.Collections.Generic.Collection`1::Item(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1::OnSet(T,System.Int32)" />
+    <Link Source="System.Int32 Mono.Collections.Generic.Collection`1::Capacity()" Target="System.Void Mono.Collections.Generic.Collection`1::Resize(System.Int32)" />
     <Link Source="System.Object Mono.Collections.Generic.Collection`1::System.Collections.IList.Item(System.Int32)" Target="T Mono.Collections.Generic.Collection`1::Item(System.Int32)" />
-    <Link Source="System.Object Mono.Collections.Generic.Collection`1::System.Collections.IList.Item(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::CheckIndex(System.Int32)" />
+    <Link Source="System.Object Mono.Collections.Generic.Collection`1::System.Collections.IList.Item(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1::CheckIndex(System.Int32)" />
     <Link Source="System.Object Mono.Collections.Generic.Collection`1::System.Collections.IList.Item(System.Int32)" Target="T Mono.Collections.Generic.Collection`1::Item(System.Int32)" />
     <Link Source="System.Int32 Mono.Collections.Generic.Collection`1::System.Collections.ICollection.Count()" Target="System.Int32 Mono.Collections.Generic.Collection`1::Count()" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Add(T)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Grow(System.Int32)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Add(T)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnAdd(T,System.Int32)" />
-    <Link Source="System.Boolean Mono.Collections.Generic.Collection`1::Contains(T)" Target="System.Int32 Mono.Collections.Generic.Collection`1&lt;T&gt;::IndexOf(T)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Insert(System.Int32,T)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::CheckIndex(System.Int32)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Insert(System.Int32,T)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Grow(System.Int32)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Insert(System.Int32,T)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnInsert(T,System.Int32)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Insert(System.Int32,T)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Shift(System.Int32,System.Int32)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::RemoveAt(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnRemove(T,System.Int32)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::RemoveAt(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Shift(System.Int32,System.Int32)" />
-    <Link Source="System.Boolean Mono.Collections.Generic.Collection`1::Remove(T)" Target="System.Int32 Mono.Collections.Generic.Collection`1&lt;T&gt;::IndexOf(T)" />
-    <Link Source="System.Boolean Mono.Collections.Generic.Collection`1::Remove(T)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnRemove(T,System.Int32)" />
-    <Link Source="System.Boolean Mono.Collections.Generic.Collection`1::Remove(T)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Shift(System.Int32,System.Int32)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Clear()" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::OnClear()" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Grow(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Resize(System.Int32)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Add(T)" Target="System.Void Mono.Collections.Generic.Collection`1::Grow(System.Int32)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Add(T)" Target="System.Void Mono.Collections.Generic.Collection`1::OnAdd(T,System.Int32)" />
+    <Link Source="System.Boolean Mono.Collections.Generic.Collection`1::Contains(T)" Target="System.Int32 Mono.Collections.Generic.Collection`1::IndexOf(T)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Insert(System.Int32,T)" Target="System.Void Mono.Collections.Generic.Collection`1::CheckIndex(System.Int32)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Insert(System.Int32,T)" Target="System.Void Mono.Collections.Generic.Collection`1::Grow(System.Int32)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Insert(System.Int32,T)" Target="System.Void Mono.Collections.Generic.Collection`1::OnInsert(T,System.Int32)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Insert(System.Int32,T)" Target="System.Void Mono.Collections.Generic.Collection`1::Shift(System.Int32,System.Int32)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::RemoveAt(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1::OnRemove(T,System.Int32)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::RemoveAt(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1::Shift(System.Int32,System.Int32)" />
+    <Link Source="System.Boolean Mono.Collections.Generic.Collection`1::Remove(T)" Target="System.Int32 Mono.Collections.Generic.Collection`1::IndexOf(T)" />
+    <Link Source="System.Boolean Mono.Collections.Generic.Collection`1::Remove(T)" Target="System.Void Mono.Collections.Generic.Collection`1::OnRemove(T,System.Int32)" />
+    <Link Source="System.Boolean Mono.Collections.Generic.Collection`1::Remove(T)" Target="System.Void Mono.Collections.Generic.Collection`1::Shift(System.Int32,System.Int32)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Clear()" Target="System.Void Mono.Collections.Generic.Collection`1::OnClear()" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::Grow(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1::Resize(System.Int32)" />
     <Link Source="System.Void Mono.Collections.Generic.Collection`1::Resize(System.Int32)" Target="T[] Mono.Cecil.Mixin::Resize(T[],System.Int32)" />
-    <Link Source="System.Int32 Mono.Collections.Generic.Collection`1::System.Collections.IList.Add(System.Object)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Add(T)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::System.Collections.IList.Clear()" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Clear()" />
-    <Link Source="System.Int32 Mono.Collections.Generic.Collection`1::System.Collections.IList.IndexOf(System.Object)" Target="System.Int32 Mono.Collections.Generic.Collection`1&lt;T&gt;::IndexOf(T)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::System.Collections.IList.Insert(System.Int32,System.Object)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::CheckIndex(System.Int32)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::System.Collections.IList.Insert(System.Int32,System.Object)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::Insert(System.Int32,T)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::System.Collections.IList.Remove(System.Object)" Target="System.Boolean Mono.Collections.Generic.Collection`1&lt;T&gt;::Remove(T)" />
-    <Link Source="System.Void Mono.Collections.Generic.Collection`1::System.Collections.IList.RemoveAt(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::RemoveAt(System.Int32)" />
-    <Link Source="Mono.Collections.Generic.Collection`1/Enumerator&lt;T&gt; Mono.Collections.Generic.Collection`1::GetEnumerator()" Target="System.Void Mono.Collections.Generic.Collection`1/Enumerator&lt;T&gt;::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" />
-    <Link Source="System.Collections.IEnumerator Mono.Collections.Generic.Collection`1::System.Collections.IEnumerable.GetEnumerator()" Target="System.Void Mono.Collections.Generic.Collection`1/Enumerator&lt;T&gt;::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" />
-    <Link Source="System.Collections.Generic.IEnumerator`1&lt;T&gt; Mono.Collections.Generic.Collection`1::System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator()" Target="System.Void Mono.Collections.Generic.Collection`1/Enumerator&lt;T&gt;::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" />
+    <Link Source="System.Int32 Mono.Collections.Generic.Collection`1::System.Collections.IList.Add(System.Object)" Target="System.Void Mono.Collections.Generic.Collection`1::Add(T)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::System.Collections.IList.Clear()" Target="System.Void Mono.Collections.Generic.Collection`1::Clear()" />
+    <Link Source="System.Int32 Mono.Collections.Generic.Collection`1::System.Collections.IList.IndexOf(System.Object)" Target="System.Int32 Mono.Collections.Generic.Collection`1::IndexOf(T)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::System.Collections.IList.Insert(System.Int32,System.Object)" Target="System.Void Mono.Collections.Generic.Collection`1::CheckIndex(System.Int32)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::System.Collections.IList.Insert(System.Int32,System.Object)" Target="System.Void Mono.Collections.Generic.Collection`1::Insert(System.Int32,T)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::System.Collections.IList.Remove(System.Object)" Target="System.Boolean Mono.Collections.Generic.Collection`1::Remove(T)" />
+    <Link Source="System.Void Mono.Collections.Generic.Collection`1::System.Collections.IList.RemoveAt(System.Int32)" Target="System.Void Mono.Collections.Generic.Collection`1::RemoveAt(System.Int32)" />
+    <Link Source="Mono.Collections.Generic.Collection`1/Enumerator&lt;T&gt; Mono.Collections.Generic.Collection`1::GetEnumerator()" Target="System.Void Mono.Collections.Generic.Collection`1/Enumerator::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" />
+    <Link Source="System.Collections.IEnumerator Mono.Collections.Generic.Collection`1::System.Collections.IEnumerable.GetEnumerator()" Target="System.Void Mono.Collections.Generic.Collection`1/Enumerator::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" />
+    <Link Source="System.Collections.Generic.IEnumerator`1&lt;T&gt; Mono.Collections.Generic.Collection`1::System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator()" Target="System.Void Mono.Collections.Generic.Collection`1/Enumerator::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" />
     <Link Source="Mono.Collections.Generic" Target="Mono.Collections.Generic.ReadOnlyCollection`1" Category="Contains" />
     <Link Source="Mono.Collections.Generic.ReadOnlyCollection`1" Target="Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt; Mono.Collections.Generic.ReadOnlyCollection`1::Empty()" Category="Contains" />
     <Link Source="Mono.Collections.Generic.ReadOnlyCollection`1" Target="System.Boolean Mono.Collections.Generic.ReadOnlyCollection`1::System.Collections.Generic.ICollection&lt;T&gt;.IsReadOnly()" Category="Contains" />
@@ -179,11 +161,11 @@
     <Link Source="Mono.Collections.Generic.ReadOnlyCollection`1" Target="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::OnRemove(T,System.Int32)" Category="Contains" />
     <Link Source="Mono.Collections.Generic.ReadOnlyCollection`1" Target="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::OnSet(T,System.Int32)" Category="Contains" />
     <Link Source="Mono.Collections.Generic.ReadOnlyCollection`1" Target="Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt; Mono.Collections.Generic.ReadOnlyCollection`1::empty" Category="Contains" />
-    <Link Source="Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt; Mono.Collections.Generic.ReadOnlyCollection`1::Empty()" Target="System.Void Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt;::.ctor()" />
-    <Link Source="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::.ctor()" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::.ctor()" />
-    <Link Source="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::.ctor(T[])" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::.ctor()" />
-    <Link Source="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::.ctor(T[])" Target="System.Void Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt;::Initialize(T[],System.Int32)" />
-    <Link Source="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" Target="System.Void Mono.Collections.Generic.Collection`1&lt;T&gt;::.ctor()" />
-    <Link Source="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" Target="System.Void Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt;::Initialize(T[],System.Int32)" />
+    <Link Source="Mono.Collections.Generic.ReadOnlyCollection`1&lt;T&gt; Mono.Collections.Generic.ReadOnlyCollection`1::Empty()" Target="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::.ctor()" />
+    <Link Source="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::.ctor()" Target="System.Void Mono.Collections.Generic.Collection`1::.ctor()" />
+    <Link Source="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::.ctor(T[])" Target="System.Void Mono.Collections.Generic.Collection`1::.ctor()" />
+    <Link Source="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::.ctor(T[])" Target="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::Initialize(T[],System.Int32)" />
+    <Link Source="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" Target="System.Void Mono.Collections.Generic.Collection`1::.ctor()" />
+    <Link Source="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::.ctor(Mono.Collections.Generic.Collection`1&lt;T&gt;)" Target="System.Void Mono.Collections.Generic.ReadOnlyCollection`1::Initialize(T[],System.Int32)" />
   </Links>
 </DirectedGraph>

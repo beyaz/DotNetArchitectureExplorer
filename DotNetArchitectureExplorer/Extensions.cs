@@ -329,8 +329,13 @@ static class Extensions
                 return CreatePropertyNode(propertyDefinition);
             }
         }
+        
+        if (methodReference.DeclaringType.ContainsGenericParameter)
+        {
+            var elementType = methodReference.DeclaringType.GetElementType();
 
-       
+            id = id.Replace(methodReference.DeclaringType.FullName, elementType.FullName);
+        }
         
         return new Node
         {
