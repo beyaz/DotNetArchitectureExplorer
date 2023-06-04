@@ -66,7 +66,7 @@ static class Extensions
 
         Node getFieldNode(FieldReference fr)
         {
-            return dgml.GetFieldNode(fr);
+            return dgml.GetNode(fr.FullName, () => CreateFieldNode(fr));
         }
 
         foreach (var currentMethodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))

@@ -1,10 +1,10 @@
-﻿using Mono.Cecil;
-
-namespace DotNetArchitectureExplorer;
+﻿namespace DotNetArchitectureExplorer;
 
 public sealed class DirectedGraph
 {
     readonly List<Link> links = new();
+
+    readonly Dictionary<string, Node> nodeCache = new();
 
     public IReadOnlyList<Link> Links => links;
 
@@ -12,30 +12,6 @@ public sealed class DirectedGraph
     {
         links.Add(link);
     }
-
-    readonly Dictionary<string, Node> nodeCache = new();
-
-
-    public Node GetMethodNode(MethodReference methodReference)
-    {
-        if (nodeCache.TryGetValue(methodReference.FullName, out var cache))
-        {
-            return cache;
-        }
-
-        return nodeCache[methodReference.FullName] = CreateMethodNode(methodReference);
-    }
-
-    public Node GetFieldNode(FieldReference fieldReference)
-    {
-        if (nodeCache.TryGetValue(fieldReference.FullName, out var cache))
-        {
-            return cache;
-        }
-
-        return nodeCache[fieldReference.FullName] = CreateFieldNode(fieldReference);
-    }
-
 
     public Node GetNode(string id, Func<Node> createNodeIfNewFunc)
     {
@@ -51,5 +27,4 @@ public sealed class DirectedGraph
     {
         nodeCache[node.Id] = node;
     }
-
 }
