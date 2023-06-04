@@ -20,6 +20,7 @@
     <Node Label="IconMethod" Id="System.String DotNetArchitectureExplorer.Extensions::get_IconMethod()" StrokeDashArray="5,5" Background="#f2f4f7" Icon="img\field.png" />
     <Node Label="IconClass" Id="System.String DotNetArchitectureExplorer.Extensions::get_IconClass()" StrokeDashArray="5,5" Background="#f2f4f7" Icon="img\field.png" />
     <Node Label="IconNamespace" Id="System.String DotNetArchitectureExplorer.Extensions::get_IconNamespace()" StrokeDashArray="5,5" Background="#f2f4f7" Icon="img\field.png" />
+    <Node Label="IsBackingField" Id="System.Boolean DotNetArchitectureExplorer.Extensions::IsBackingField(Mono.Cecil.FieldReference)" Icon="img\method.png" />
     <Node Label="AddClass" Id="System.Void DotNetArchitectureExplorer.Extensions::AddClass(DotNetArchitectureExplorer.DirectedGraph,Mono.Cecil.TypeDefinition)" Icon="img\method.png" />
     <Node Label="CreateGraph" Id="System.String DotNetArchitectureExplorer.Extensions::CreateGraph(Mono.Cecil.TypeDefinition)" Icon="img\method.png" />
     <Node Label="ToDirectedGraphElement" Id="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDirectedGraphElement(DotNetArchitectureExplorer.DirectedGraph)" Icon="img\method.png" />
@@ -43,8 +44,8 @@
     <Node Label="ForEachType" Id="System.Void DotNetArchitectureExplorer.Extensions::ForEachType(Mono.Cecil.AssemblyDefinition,System.Action`1&lt;Mono.Cecil.TypeDefinition&gt;)" Icon="img\method.png" />
     <Node Label="FindType(AssemblyDefinition,Func`2)" Id="Mono.Cecil.TypeDefinition DotNetArchitectureExplorer.Extensions::FindType(Mono.Cecil.AssemblyDefinition,System.Func`2&lt;Mono.Cecil.TypeDefinition,System.Boolean&gt;)" Icon="img\method.png" />
     <Node Label=".cctor" Id="System.Void DotNetArchitectureExplorer.Extensions::.cctor()" Icon="img\method.png" />
-    <Node Label="ToDirectedGraphElement.createDirectedGraphElement" Id="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|11_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Icon="img\method.png" />
-    <Node Label="ToDirectedGraphElement.ConnectedNodes" Id="System.Collections.Generic.IEnumerable`1&lt;DotNetArchitectureExplorer.Node&gt; DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__ConnectedNodes|11_3(System.Collections.Generic.IReadOnlyList`1&lt;DotNetArchitectureExplorer.Link&gt;)" Icon="img\method.png" />
+    <Node Label="ToDirectedGraphElement.createDirectedGraphElement" Id="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|12_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Icon="img\method.png" />
+    <Node Label="ToDirectedGraphElement.ConnectedNodes" Id="System.Collections.Generic.IEnumerable`1&lt;DotNetArchitectureExplorer.Node&gt; DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__ConnectedNodes|12_3(System.Collections.Generic.IReadOnlyList`1&lt;DotNetArchitectureExplorer.Link&gt;)" Icon="img\method.png" />
     <Node Label="ns" Id="System.String DotNetArchitectureExplorer.Extensions::ns" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
     <Node Label="Link" Id="DotNetArchitectureExplorer.Link" Icon="img\class.png" Group="Collapsed" />
     <Node Label="EqualityContract" Id="System.Type DotNetArchitectureExplorer.Link::get_EqualityContract()" StrokeDashArray="5,5" Background="#f2f4f7" Icon="img\field.png" />
@@ -66,10 +67,6 @@
     <Node Label="&lt;Clone&gt;$" Id="DotNetArchitectureExplorer.Link DotNetArchitectureExplorer.Link::&lt;Clone&gt;$()" Icon="img\method.png" />
     <Node Label=".ctor(Link)" Id="System.Void DotNetArchitectureExplorer.Link::.ctor(DotNetArchitectureExplorer.Link)" Icon="img\method.png" />
     <Node Label=".ctor()" Id="System.Void DotNetArchitectureExplorer.Link::.ctor()" Icon="img\method.png" />
-    <Node Label="&lt;Source&gt;k__BackingField" Id="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Link::&lt;Source&gt;k__BackingField" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
-    <Node Label="&lt;Target&gt;k__BackingField" Id="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Link::&lt;Target&gt;k__BackingField" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
-    <Node Label="&lt;StrokeDashArray&gt;k__BackingField" Id="System.String DotNetArchitectureExplorer.Link::&lt;StrokeDashArray&gt;k__BackingField" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
-    <Node Label="&lt;Category&gt;k__BackingField" Id="System.String DotNetArchitectureExplorer.Link::&lt;Category&gt;k__BackingField" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
     <Node Label="Node" Id="DotNetArchitectureExplorer.Node" Icon="img\class.png" Group="Collapsed" />
     <Node Label="Id" Id="System.String DotNetArchitectureExplorer.Node::get_Id()" StrokeDashArray="5,5" Background="#f2f4f7" Icon="img\field.png" />
     <Node Label="Id" Id="System.Void modreq(System.Runtime.CompilerServices.IsExternalInit) DotNetArchitectureExplorer.Node::set_Id(System.String)" StrokeDashArray="5,5" Background="#f2f4f7" Icon="img\field.png" />
@@ -86,12 +83,6 @@
     <Node Label="Equals" Id="System.Boolean DotNetArchitectureExplorer.Node::Equals(System.Object)" Icon="img\method.png" />
     <Node Label="GetHashCode" Id="System.Int32 DotNetArchitectureExplorer.Node::GetHashCode()" Icon="img\method.png" />
     <Node Label=".ctor" Id="System.Void DotNetArchitectureExplorer.Node::.ctor()" Icon="img\method.png" />
-    <Node Label="&lt;Id&gt;k__BackingField" Id="System.String DotNetArchitectureExplorer.Node::&lt;Id&gt;k__BackingField" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
-    <Node Label="&lt;Label&gt;k__BackingField" Id="System.String DotNetArchitectureExplorer.Node::&lt;Label&gt;k__BackingField" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
-    <Node Label="&lt;Background&gt;k__BackingField" Id="System.String DotNetArchitectureExplorer.Node::&lt;Background&gt;k__BackingField" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
-    <Node Label="&lt;StrokeDashArray&gt;k__BackingField" Id="System.String DotNetArchitectureExplorer.Node::&lt;StrokeDashArray&gt;k__BackingField" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
-    <Node Label="&lt;Icon&gt;k__BackingField" Id="System.String DotNetArchitectureExplorer.Node::&lt;Icon&gt;k__BackingField" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
-    <Node Label="&lt;Group&gt;k__BackingField" Id="System.String DotNetArchitectureExplorer.Node::&lt;Group&gt;k__BackingField" StrokeDashArray="5,5" Background="#c9cbce" Icon="img\field.png" />
   </Nodes>
   <Links>
     <Link Source="" Target="Program" Category="Contains" />
@@ -123,6 +114,7 @@
     <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.String DotNetArchitectureExplorer.Extensions::get_IconMethod()" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.String DotNetArchitectureExplorer.Extensions::get_IconClass()" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.String DotNetArchitectureExplorer.Extensions::get_IconNamespace()" Category="Contains" />
+    <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.Boolean DotNetArchitectureExplorer.Extensions::IsBackingField(Mono.Cecil.FieldReference)" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.Void DotNetArchitectureExplorer.Extensions::AddClass(DotNetArchitectureExplorer.DirectedGraph,Mono.Cecil.TypeDefinition)" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.String DotNetArchitectureExplorer.Extensions::CreateGraph(Mono.Cecil.TypeDefinition)" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDirectedGraphElement(DotNetArchitectureExplorer.DirectedGraph)" Category="Contains" />
@@ -146,8 +138,8 @@
     <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.Void DotNetArchitectureExplorer.Extensions::ForEachType(Mono.Cecil.AssemblyDefinition,System.Action`1&lt;Mono.Cecil.TypeDefinition&gt;)" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Extensions" Target="Mono.Cecil.TypeDefinition DotNetArchitectureExplorer.Extensions::FindType(Mono.Cecil.AssemblyDefinition,System.Func`2&lt;Mono.Cecil.TypeDefinition,System.Boolean&gt;)" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.Void DotNetArchitectureExplorer.Extensions::.cctor()" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|11_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.Collections.Generic.IEnumerable`1&lt;DotNetArchitectureExplorer.Node&gt; DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__ConnectedNodes|11_3(System.Collections.Generic.IReadOnlyList`1&lt;DotNetArchitectureExplorer.Link&gt;)" Category="Contains" />
+    <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|12_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Category="Contains" />
+    <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.Collections.Generic.IEnumerable`1&lt;DotNetArchitectureExplorer.Node&gt; DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__ConnectedNodes|12_3(System.Collections.Generic.IReadOnlyList`1&lt;DotNetArchitectureExplorer.Link&gt;)" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Extensions" Target="System.String DotNetArchitectureExplorer.Extensions::ns" Category="Contains" />
     <Link Source="System.Void DotNetArchitectureExplorer.Extensions::AddClass(DotNetArchitectureExplorer.DirectedGraph,Mono.Cecil.TypeDefinition)" Target="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Extensions::CreateClassNode(Mono.Cecil.TypeDefinition)" />
     <Link Source="System.Void DotNetArchitectureExplorer.Extensions::AddClass(DotNetArchitectureExplorer.DirectedGraph,Mono.Cecil.TypeDefinition)" Target="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Extensions::CreateMethodNode(Mono.Cecil.MethodReference,Mono.Cecil.TypeDefinition)" />
@@ -156,8 +148,8 @@
     <Link Source="System.Void DotNetArchitectureExplorer.Extensions::AddClass(DotNetArchitectureExplorer.DirectedGraph,Mono.Cecil.TypeDefinition)" Target="System.Boolean DotNetArchitectureExplorer.Extensions::IsInheritedFrom(Mono.Cecil.TypeReference,Mono.Cecil.TypeReference)" />
     <Link Source="System.String DotNetArchitectureExplorer.Extensions::CreateGraph(Mono.Cecil.TypeDefinition)" Target="System.Void DotNetArchitectureExplorer.Extensions::AddClass(DotNetArchitectureExplorer.DirectedGraph,Mono.Cecil.TypeDefinition)" />
     <Link Source="System.String DotNetArchitectureExplorer.Extensions::CreateGraph(Mono.Cecil.TypeDefinition)" Target="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDirectedGraphElement(DotNetArchitectureExplorer.DirectedGraph)" />
-    <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDirectedGraphElement(DotNetArchitectureExplorer.DirectedGraph)" Target="System.Collections.Generic.IEnumerable`1&lt;DotNetArchitectureExplorer.Node&gt; DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__ConnectedNodes|11_3(System.Collections.Generic.IReadOnlyList`1&lt;DotNetArchitectureExplorer.Link&gt;)" />
-    <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDirectedGraphElement(DotNetArchitectureExplorer.DirectedGraph)" Target="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|11_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" />
+    <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDirectedGraphElement(DotNetArchitectureExplorer.DirectedGraph)" Target="System.Collections.Generic.IEnumerable`1&lt;DotNetArchitectureExplorer.Node&gt; DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__ConnectedNodes|12_3(System.Collections.Generic.IReadOnlyList`1&lt;DotNetArchitectureExplorer.Link&gt;)" />
+    <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDirectedGraphElement(DotNetArchitectureExplorer.DirectedGraph)" Target="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|12_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" />
     <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::ToDgml(DotNetArchitectureExplorer.Link)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
     <Link Source="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Extensions::CreateFieldNode(Mono.Cecil.FieldReference,Mono.Cecil.TypeDefinition)" Target="System.String DotNetArchitectureExplorer.Extensions::get_IconField()" StrokeDashArray="5,5" />
     <Link Source="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Extensions::CreateClassNode(Mono.Cecil.TypeDefinition)" Target="System.String DotNetArchitectureExplorer.Extensions::get_IconClass()" StrokeDashArray="5,5" />
@@ -179,9 +171,9 @@
     <Link Source="System.ValueTuple`2&lt;System.BadImageFormatException,Mono.Cecil.AssemblyDefinition&gt; DotNetArchitectureExplorer.Extensions::ReadAssemblyDefinition(System.String)" Target="System.ValueTuple`2&lt;TException,T&gt; DotNetArchitectureExplorer.Extensions::Try(System.Func`1&lt;T&gt;)" />
     <Link Source="System.String DotNetArchitectureExplorer.Extensions::RemoveFromStart(System.String,System.String)" Target="System.String DotNetArchitectureExplorer.Extensions::RemoveFromStart(System.String,System.String,System.StringComparison)" />
     <Link Source="System.Void DotNetArchitectureExplorer.Extensions::.cctor()" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
-    <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|11_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
-    <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|11_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
-    <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|11_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
+    <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|12_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
+    <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|12_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
+    <Link Source="System.Xml.Linq.XElement DotNetArchitectureExplorer.Extensions::&lt;ToDirectedGraphElement&gt;g__createDirectedGraphElement|12_2(System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;,System.Collections.Generic.IEnumerable`1&lt;System.Xml.Linq.XElement&gt;)" Target="System.String DotNetArchitectureExplorer.Extensions::ns" />
     <Link Source="DotNetArchitectureExplorer" Target="DotNetArchitectureExplorer.Link" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Link" Target="System.Type DotNetArchitectureExplorer.Link::get_EqualityContract()" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Link" Target="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Link::get_Source()" Category="Contains" />
@@ -202,10 +194,6 @@
     <Link Source="DotNetArchitectureExplorer.Link" Target="DotNetArchitectureExplorer.Link DotNetArchitectureExplorer.Link::&lt;Clone&gt;$()" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Link" Target="System.Void DotNetArchitectureExplorer.Link::.ctor(DotNetArchitectureExplorer.Link)" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Link" Target="System.Void DotNetArchitectureExplorer.Link::.ctor()" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Link" Target="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Link::&lt;Source&gt;k__BackingField" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Link" Target="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Link::&lt;Target&gt;k__BackingField" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Link" Target="System.String DotNetArchitectureExplorer.Link::&lt;StrokeDashArray&gt;k__BackingField" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Link" Target="System.String DotNetArchitectureExplorer.Link::&lt;Category&gt;k__BackingField" Category="Contains" />
     <Link Source="System.String DotNetArchitectureExplorer.Link::ToString()" Target="System.Boolean DotNetArchitectureExplorer.Link::PrintMembers(System.Text.StringBuilder)" />
     <Link Source="System.Boolean DotNetArchitectureExplorer.Link::PrintMembers(System.Text.StringBuilder)" Target="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Link::get_Source()" StrokeDashArray="5,5" />
     <Link Source="System.Boolean DotNetArchitectureExplorer.Link::PrintMembers(System.Text.StringBuilder)" Target="DotNetArchitectureExplorer.Node DotNetArchitectureExplorer.Link::get_Target()" StrokeDashArray="5,5" />
@@ -234,12 +222,6 @@
     <Link Source="DotNetArchitectureExplorer.Node" Target="System.Boolean DotNetArchitectureExplorer.Node::Equals(System.Object)" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Node" Target="System.Int32 DotNetArchitectureExplorer.Node::GetHashCode()" Category="Contains" />
     <Link Source="DotNetArchitectureExplorer.Node" Target="System.Void DotNetArchitectureExplorer.Node::.ctor()" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Node" Target="System.String DotNetArchitectureExplorer.Node::&lt;Id&gt;k__BackingField" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Node" Target="System.String DotNetArchitectureExplorer.Node::&lt;Label&gt;k__BackingField" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Node" Target="System.String DotNetArchitectureExplorer.Node::&lt;Background&gt;k__BackingField" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Node" Target="System.String DotNetArchitectureExplorer.Node::&lt;StrokeDashArray&gt;k__BackingField" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Node" Target="System.String DotNetArchitectureExplorer.Node::&lt;Icon&gt;k__BackingField" Category="Contains" />
-    <Link Source="DotNetArchitectureExplorer.Node" Target="System.String DotNetArchitectureExplorer.Node::&lt;Group&gt;k__BackingField" Category="Contains" />
     <Link Source="System.Int32 DotNetArchitectureExplorer.Node::GetHashCode()" Target="System.String DotNetArchitectureExplorer.Node::get_Id()" StrokeDashArray="5,5" />
   </Links>
 </DirectedGraph>

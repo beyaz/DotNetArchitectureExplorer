@@ -14,6 +14,11 @@ static class Extensions
     static string IconClass => Path.Combine("img", "class.png");
     static string IconNamespace=> Path.Combine("img", "namespace.png");
 
+    static bool IsBackingField(this FieldReference fieldReference)
+    {
+        return fieldReference.Name.EndsWith(">k__BackingField");
+    }
+    
     public static void AddClass(DirectedGraph dgml, TypeDefinition currentTypeDefinition)
     {
         var currentClassNode = CreateClassNode(currentTypeDefinition);
@@ -31,7 +36,7 @@ static class Extensions
             dgml.Add(new Link { Source = currentClassNode, Target = methodDefinitionNode, Category = "Contains" });
         }
 
-        foreach (var fieldDefinition in currentTypeDefinition.Fields)
+        foreach (var fieldDefinition in currentTypeDefinition.Fields.Where(x=> !x.IsBackingField()))
         {
             var fieldDefinitionNode = CreateFieldNode(fieldDefinition, currentTypeDefinition);
 
@@ -89,7 +94,7 @@ static class Extensions
 
                 if (instruction.Operand is FieldDefinition fr)
                 {
-                    if (fr.Name?.EndsWith(">k__BackingField") == true)
+                    if (fr.IsBackingField())
                     {
                         continue;
                     }
