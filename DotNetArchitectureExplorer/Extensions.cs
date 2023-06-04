@@ -129,7 +129,7 @@ static partial class Program
                         var currentMethodDefinitionNode = CreateMethodNode(currentMethodDefinition);
                         var targetFieldNode = CreateFieldNode(fr);
 
-                        if (instruction.OpCode.Code == Code.Ldfld)
+                        if (instruction.OpCode.Code == Code.Ldfld || instruction.OpCode.Code == Code.Ldsfld)
                         {
                             dgml.Add(new Link { Source = currentMethodDefinitionNode, Target = targetFieldNode, StrokeDashArray = "5,5", Description = "read" });
                             continue;
