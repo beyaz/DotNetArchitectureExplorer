@@ -43,7 +43,7 @@ static class Extensions
             {
                 continue;
             }
-            var methodDefinitionNode = CreateMethodNode(methodDefinition, currentTypeDefinition);
+            var methodDefinitionNode = CreateMethodNode(methodDefinition);
 
             dgml.Add(methodDefinitionNode);
 
@@ -61,7 +61,7 @@ static class Extensions
 
         Node getMethodNode(MethodReference mrr)
         {
-            return dgml.GetMethodNode(mrr, currentTypeDefinition);
+            return dgml.GetMethodNode(mrr);
         }
 
         Node getFieldNode(FieldReference fr)
@@ -298,7 +298,7 @@ static class Extensions
         return builder.ToString();
     }
 
-    public static Node CreateMethodNode(MethodReference methodReference, TypeDefinition callerMethodDeclaringTypeDefinition)
+    public static Node CreateMethodNode(MethodReference methodReference)
     {
         var id = methodReference.FullName;
 

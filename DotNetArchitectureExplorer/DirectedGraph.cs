@@ -16,14 +16,14 @@ public sealed class DirectedGraph
     readonly Dictionary<string, Node> nodeCache = new();
 
 
-    public Node GetMethodNode(MethodReference methodReference, TypeDefinition callerMethodDeclaringTypeDefinition)
+    public Node GetMethodNode(MethodReference methodReference)
     {
         if (nodeCache.TryGetValue(methodReference.FullName, out var cache))
         {
             return cache;
         }
 
-        return nodeCache[methodReference.FullName] = CreateMethodNode(methodReference, callerMethodDeclaringTypeDefinition);
+        return nodeCache[methodReference.FullName] = CreateMethodNode(methodReference);
     }
 
     public Node GetFieldNode(FieldReference fieldReference, TypeDefinition callerMethodDeclaringTypeDefinition)
