@@ -32,8 +32,6 @@ static class Extensions
 
             dgml.Add(new Link { Source = currentClassNode, Target = node, Category = "Contains" });
         }
-        
-        
 
         foreach (var methodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
@@ -41,7 +39,7 @@ static class Extensions
             {
                 continue;
             }
-            
+
             var methodDefinitionNode = CreateMethodNode(methodDefinition);
 
             dgml.Add(new Link { Source = currentClassNode, Target = methodDefinitionNode, Category = "Contains" });
@@ -207,7 +205,8 @@ static class Extensions
             Label           = fieldReference.Name,
             StrokeDashArray = "5,5",
             Background      = "#c9cbce",
-            Icon            = IconField
+            Icon            = IconField,
+            Description     = fieldReference.FullName
         };
     }
 
@@ -219,7 +218,8 @@ static class Extensions
             Label           = propertyReference.Name,
             StrokeDashArray = "5,5",
             Background      = "#c9cbce",
-            Icon            = IconField
+            Icon            = IconField,
+            Description     = propertyReference.FullName
         };
     }
 
@@ -329,19 +329,19 @@ static class Extensions
                 return CreatePropertyNode(propertyDefinition);
             }
         }
-        
+
         if (methodReference.DeclaringType.ContainsGenericParameter)
         {
             var elementType = methodReference.DeclaringType.GetElementType();
 
             id = id.Replace(methodReference.DeclaringType.FullName, elementType.FullName);
         }
-        
+
         return new Node
         {
-            Id    = id,
-            Label = label,
-            Icon  = IconMethod,
+            Id          = id,
+            Label       = label,
+            Icon        = IconMethod,
             Description = methodReference.FullName
         };
     }
@@ -374,49 +374,8 @@ static class Extensions
         {
             element.Add(new XAttribute(nameof(node.Description), node.Description));
         }
-        
+
         return element;
-    }
-
-    static bool IsInheritedFrom(TypeReference derived, TypeReference baseTypeReference)
-    {
-        if (derived == null)
-        {
-            return false;
-        }
-
-        if (derived == baseTypeReference)
-        {
-            return true;
-        }
-
-        if (baseTypeReference is GenericInstanceType)
-        {
-            baseTypeReference = baseTypeReference.GetElementType();
-        }
-
-        if (derived == baseTypeReference)
-        {
-            return true;
-        }
-
-        if (derived is GenericInstanceType)
-        {
-            derived = derived.GetElementType();
-        }
-
-        if (derived == baseTypeReference)
-        {
-            return true;
-        }
-
-        var definition = derived.Resolve();
-        if (definition == null)
-        {
-            return false;
-        }
-
-        return IsInheritedFrom(definition.BaseType, baseTypeReference);
     }
 
     public static (string exception, string dgmlContent) CreateMethodCallGraphOfAssembly(string assemblyFilePath)
@@ -430,45 +389,28 @@ static class Extensions
         var dgml = new DirectedGraph();
 
         var count = 0;
-        
+
         assemblyDefinition.ForEachType(x =>
         {
-            if (count > 36)
+            if (count > 17)
             {
                 return;
             }
 
             count++;
 
-            //if (x.Namespace != "Mono.Collections.Generic")
-            //{
-            //    return;
-            //}
-                
+            if (x.Namespace != "Mono.Cecil")
+            {
+                return;
+            }
+
             AddClass(dgml, x);
         });
 
         return (default, dgml.ToDirectedGraphElement().ToString());
     }
 
-    public static (string exception, string dgmlContent) CreateMethodCallGraphOfType(string assemblyFilePath, string fullTypeName)
-    {
-        var (exception, assemblyDefinition) = ReadAssemblyDefinition(assemblyFilePath);
-        if (exception is not null)
-        {
-            return (exception.ToString(), default);
-        }
-
-        var (isFound, typeDefinition) = FindType(assemblyDefinition, fullTypeName);
-        if (!isFound)
-        {
-            return ($"Type not found. type: {fullTypeName}", default);
-        }
-
-        var dgml = CreateGraph(typeDefinition);
-
-        return (default, dgml);
-    }
+  
 
     public static (bool isFound, TypeDefinition typeDefinition) FindType(AssemblyDefinition assemblyDefinition, string fullTypeName)
     {
