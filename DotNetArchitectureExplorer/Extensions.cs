@@ -139,13 +139,9 @@ static class Extensions
     {
         var links = directedGraph.Links;
 
-        var nodeElements =
-            from n in ConnectedNodes(links)
-            select n.ToDgml();
+        var nodeElements = from n in ConnectedNodes(links) select n.ToDgml();
 
-        var linkElements =
-            from v in links
-            select v.ToDgml();
+        var linkElements = from v in links select v.ToDgml();
 
         return createDirectedGraphElement(nodeElements, linkElements);
 

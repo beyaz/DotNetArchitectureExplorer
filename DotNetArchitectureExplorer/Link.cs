@@ -3,7 +3,7 @@
 namespace DotNetArchitectureExplorer;
 
 [DebuggerDisplay("{Source.Label} -> {Target.Label}")]
-public sealed record Link
+public sealed class Link
 {
     public Node Source { get; init; }
 
