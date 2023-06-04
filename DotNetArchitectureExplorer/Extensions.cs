@@ -433,17 +433,17 @@ static class Extensions
         
         assemblyDefinition.ForEachType(x =>
         {
-            if (count > 3600)
+            if (count > 36)
             {
                 return;
             }
 
             count++;
 
-            if (x.Namespace != "Mono.Collections.Generic")
-            {
-                return;
-            }
+            //if (x.Namespace != "Mono.Collections.Generic")
+            //{
+            //    return;
+            //}
                 
             AddClass(dgml, x);
         });
