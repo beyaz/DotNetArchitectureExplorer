@@ -69,6 +69,11 @@ static class Extensions
                         continue;
                     }
 
+                    if (mr.DeclaringType.Resolve()?.IsNestedPrivate == true)
+                    {
+                        continue;
+                    }
+
                     // if (mr.DeclaringType == currentTypeDefinition || IsInheritedFrom(currentTypeDefinition, mr.DeclaringType))
                     if (mr.DeclaringType.Scope == currentTypeDefinition.Scope)
                     {
@@ -97,14 +102,19 @@ static class Extensions
                         continue;
                     }
 
-                    if (fr.DeclaringType == currentTypeDefinition || IsInheritedFrom(currentTypeDefinition, fr.DeclaringType))
+                    if (fr.DeclaringType.Resolve()?.IsNestedPrivate == true)
+                    {
+                        continue;
+                    }
+
+                    if (fr.DeclaringType.Scope == currentTypeDefinition.Scope)
                     {
                         var currentMethodDefinitionNode = CreateMethodNode(currentMethodDefinition);
                         var targetFieldNode = CreateFieldNode(fr);
 
                         if (instruction.OpCode.Code == Code.Ldfld)
                         {
-                            dgml.Add(new Link { Source = currentMethodDefinitionNode, Target = targetFieldNode, StrokeDashArray = "5,5" });
+                            dgml.Add(new Link { Source = currentMethodDefinitionNode, Target = targetFieldNode, StrokeDashArray = "5,5", Description = "read"});
                             continue;
                         }
 
@@ -177,6 +187,11 @@ static class Extensions
         if (link.Category is not null)
         {
             element.Add(new XAttribute(nameof(link.Category), link.Category));
+        }
+
+        if (link.Description is not null)
+        {
+            element.Add(new XAttribute(nameof(link.Description), link.Description));
         }
 
         return element;
@@ -312,7 +327,7 @@ static class Extensions
                 return CreatePropertyNode(propertyDefinition);
             }
         }
-
+        
         return new Node
         {
             Id    = id,

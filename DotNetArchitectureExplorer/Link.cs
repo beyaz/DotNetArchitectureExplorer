@@ -12,4 +12,6 @@ public sealed record Link
     public string StrokeDashArray { get; init; }
 
     public string Category { get; init; }
+
+    public string Description { get; init; }
 }
