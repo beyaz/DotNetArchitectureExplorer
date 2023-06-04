@@ -163,12 +163,10 @@ static class Extensions
         static IEnumerable<Node> ConnectedNodes(IReadOnlyList<Link> links)
         {
             return links.SelectMany(v => new[]
-                {
-                    v.Source,
-                    v.Target
-                })
-                .Distinct()
-                .ToList();
+            {
+                v.Source,
+                v.Target
+            }).Distinct();
         }
     }
 
