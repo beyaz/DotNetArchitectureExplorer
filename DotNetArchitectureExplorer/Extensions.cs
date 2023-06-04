@@ -32,6 +32,8 @@ static class Extensions
 
             dgml.Add(new Link { Source = currentClassNode, Target = node, Category = "Contains" });
         }
+        
+        
 
         foreach (var methodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))
         {
@@ -39,7 +41,7 @@ static class Extensions
             {
                 continue;
             }
-
+            
             var methodDefinitionNode = CreateMethodNode(methodDefinition);
 
             dgml.Add(new Link { Source = currentClassNode, Target = methodDefinitionNode, Category = "Contains" });
@@ -328,11 +330,14 @@ static class Extensions
             }
         }
 
+       
+        
         return new Node
         {
             Id    = id,
             Label = label,
-            Icon  = IconMethod
+            Icon  = IconMethod,
+            Description = methodReference.FullName
         };
     }
 
@@ -360,6 +365,11 @@ static class Extensions
             element.Add(new XAttribute(nameof(node.Group), node.Group));
         }
 
+        if (node.Description is not null)
+        {
+            element.Add(new XAttribute(nameof(node.Description), node.Description));
+        }
+        
         return element;
     }
 
@@ -414,7 +424,24 @@ static class Extensions
 
         var dgml = new DirectedGraph();
 
-        assemblyDefinition.ForEachType(x => { AddClass(dgml, x); });
+        var count = 0;
+        
+        assemblyDefinition.ForEachType(x =>
+        {
+            if (count > 3600)
+            {
+                return;
+            }
+
+            count++;
+
+            if (x.Namespace != "Mono.Collections.Generic")
+            {
+                return;
+            }
+                
+            AddClass(dgml, x);
+        });
 
         return (default, dgml.ToDirectedGraphElement().ToString());
     }
