@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Immutable;
+using System.Text;
 using System.Xml.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -386,7 +387,7 @@ static partial class Program
 
         var dgml = new DirectedGraph();
 
-        var typeDefinitions = assemblyDefinition.GetTypesForAnalyze().ToList().AsReadOnly().Take(300).ToList();
+        var typeDefinitions = assemblyDefinition.GetTypesForAnalyze().ToImmutableList();
 
         foreach (var typeDefinition in typeDefinitions)
         {

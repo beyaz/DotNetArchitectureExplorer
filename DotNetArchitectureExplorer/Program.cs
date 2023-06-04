@@ -1,31 +1,28 @@
-﻿
-namespace DotNetArchitectureExplorer;
+﻿namespace DotNetArchitectureExplorer;
 
 static partial class Program
 {
-    public static void Main()
+    
+
+    [STAThread]
+    public static void Main(string[] args)
     {
-        var assemblyFilePath = @"C:\github\DotNetArchitectureExplorer\DotNetArchitectureExplorer\bin\Debug\net6.0\DotNetArchitectureExplorer.dll";
-        //var assemblyFilePath = @"C:\github\ReactWithDotNet\ReactWithDotNet\bin\Debug\net6.0\ReactWithDotNet.dll";
-        //var assemblyFilePath = @"C:\github\DotNetArchitectureExplorer\DotNetArchitectureExplorer\bin\Debug\net6.0\Mono.Cecil.dll";
+        if (args == null || args.Length == 0)
+        {
+            args = new[] { typeof(Program).Assembly.Location };
+        }
+
+        ExportMethodCallGraphOfAssembly(args[0]);
+    }
+
+    static void ExportMethodCallGraphOfAssembly(string assemblyFilePath)
+    {
         var (exception, dgmlContent) = CreateMethodCallGraphOfAssembly(assemblyFilePath);
         if (exception is null)
         {
-            File.WriteAllText($@"C:\github\DotNetArchitectureExplorer\DotNetArchitectureExplorer\{Path.GetFileNameWithoutExtension(assemblyFilePath)}.dgml", dgmlContent);
+            var dgmlFilePath = Path.ChangeExtension(assemblyFilePath, "dgml");
+
+            File.WriteAllText(dgmlFilePath, dgmlContent);
         }
-
-        //var fullTypeName = "DotNetArchitectureExplorer.Extensions";
-
-        //var assemblyFilePath = @"C:\github\ReactWithDotNet\ReactWithDotNet\bin\Debug\net6.0\ReactWithDotNet.dll";
-
-        // var fullTypeName = "ReactWithDotNet.ElementSerializer";
-
-        //var fullTypeName = "ReactWithDotNet.ElementSerializer";
-
-        //var (exception, dgmlContent) = CreateMethodCallGraphOfType(assemblyFilePath, fullTypeName);
-        //if (exception is null)
-        //{
-        //    File.WriteAllText($@"C:\github\DotNetArchitectureExplorer\DotNetArchitectureExplorer\{fullTypeName}.dgml", dgmlContent);
-        //}
     }
 }
