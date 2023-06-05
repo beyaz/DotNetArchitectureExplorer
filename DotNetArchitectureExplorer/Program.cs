@@ -9,8 +9,10 @@ static partial class Program
         {
             args = new[] { typeof(Program).Assembly.Location };
         }
-
-        ExportMethodCallGraphOfAssembly(args[0]);
+        foreach (var assemblyFilePath in args)
+        {
+            ExportMethodCallGraphOfAssembly(assemblyFilePath);
+        }
     }
 
     static void ExportMethodCallGraphOfAssembly(string assemblyFilePath)
