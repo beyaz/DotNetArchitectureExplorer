@@ -84,7 +84,6 @@ static partial class Program
                         continue;
                     }
 
-                    // if (mr.DeclaringType == currentTypeDefinition || IsInheritedFrom(currentTypeDefinition, mr.DeclaringType))
                     if (mr.DeclaringType.Scope == currentTypeDefinition.Scope)
                     {
                         if (mr.DeclaringType.Resolve()?.IsNestedPrivate == true)
