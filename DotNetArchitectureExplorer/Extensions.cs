@@ -9,23 +9,30 @@ namespace DotNetArchitectureExplorer;
 static partial class Program
 {
     const string ns = "http://schemas.microsoft.com/vs/2009/dgml";
-
-    static string Image(string fileName)
-    {
-        var workingDirectory = Directory.GetParent(typeof(Program).Assembly.Location)?.FullName;
-
-        return Path.Combine(workingDirectory ?? string.Empty, "img", fileName);
-
-    }
-    static string IconField => Image("field.png");
-    static string IconMethod => Image("method.png");
     static string IconClass => Image("class.png");
+    static string IconField => Image("field.png");
     static string IconInterface => Image("interface.png");
+    static string IconMethod => Image("method.png");
     static string IconNamespace => Image("namespace.png");
 
-    static bool IsBackingField(this FieldReference fieldReference)
+    public static (string exception, string dgmlContent) CreateMethodCallGraphOfAssembly(string assemblyFilePath)
     {
-        return fieldReference.Name.EndsWith(">k__BackingField");
+        var (exception, assemblyDefinition) = ReadAssemblyDefinition(assemblyFilePath);
+        if (exception is not null)
+        {
+            return (exception.ToString(), default);
+        }
+
+        var dgml = new DirectedGraph();
+
+        var typeDefinitions = assemblyDefinition.GetTypesForAnalyze().ToImmutableList();
+
+        foreach (var typeDefinition in typeDefinitions)
+        {
+            AddType(dgml, typeDefinition, t => typeDefinitions.Contains(t));
+        }
+
+        return (default, dgml.ToDirectedGraphElement().ToString());
     }
 
     static void AddType(DirectedGraph dgml, TypeDefinition currentTypeDefinition, Func<TypeReference, bool> isInAnalyse)
@@ -143,59 +150,6 @@ static partial class Program
         }
     }
 
-    static XElement ToDirectedGraphElement(this DirectedGraph directedGraph)
-    {
-        var links = directedGraph.Links;
-
-        return createDirectedGraphElement(ConnectedNodes(links).Select(ToDgml), links.Select(ToDgml));
-
-        static XElement createDirectedGraphElement(IEnumerable<XElement> nodes, IEnumerable<XElement> links)
-        {
-            var root = new XElement(XName.Get("DirectedGraph", ns));
-            var rootForNodes = new XElement(XName.Get("Nodes", ns));
-            var rootForLinks = new XElement(XName.Get("Links", ns));
-
-            rootForNodes.Add(nodes.Cast<object>().ToArray());
-            rootForLinks.Add(links.Cast<object>().ToArray());
-
-            root.Add(rootForNodes);
-            root.Add(rootForLinks);
-
-            return root;
-        }
-
-        static IEnumerable<Node> ConnectedNodes(IReadOnlyList<Link> links)
-        {
-            return links.SelectMany(v => new[]
-            {
-                v.Source,
-                v.Target
-            }).Distinct();
-        }
-    }
-
-    static XElement ToDgml(this Link link)
-    {
-        var element = new XElement(XName.Get("Link", ns), new XAttribute("Source", link.Source.Id), new XAttribute("Target", link.Target.Id));
-
-        if (link.StrokeDashArray is not null)
-        {
-            element.Add(new XAttribute(nameof(link.StrokeDashArray), link.StrokeDashArray));
-        }
-
-        if (link.Category is not null)
-        {
-            element.Add(new XAttribute(nameof(link.Category), link.Category));
-        }
-
-        if (link.Description is not null)
-        {
-            element.Add(new XAttribute(nameof(link.Description), link.Description));
-        }
-
-        return element;
-    }
-
     static Node CreateFieldNode(FieldReference fieldReference)
     {
         return new Node
@@ -207,94 +161,6 @@ static partial class Program
             Icon            = IconField,
             Description     = fieldReference.FullName
         };
-    }
-
-    static Node CreatePropertyNode(PropertyReference propertyReference)
-    {
-        return new Node
-        {
-            Id              = propertyReference.FullName,
-            Label           = propertyReference.Name,
-            StrokeDashArray = "5,5",
-            Background      = "#c9cbce",
-            Icon            = IconField,
-            Description     = propertyReference.FullName
-        };
-    }
-
-    static Node CreateTypeNode(TypeDefinition typeDefinition)
-    {
-        return new Node
-        {
-            Id    = typeDefinition.FullName,
-            Label = typeDefinition.Name,
-            Icon  = typeDefinition.IsInterface ? IconInterface : IconClass,
-            Group = "Collapsed"
-        };
-    }
-
-    static Node CreateNamespaceNode(string fullNameOfNamespace)
-    {
-        return new Node
-        {
-            Id    = fullNameOfNamespace,
-            Label = fullNameOfNamespace,
-            Icon  = IconNamespace,
-            Group = "Collapsed"
-        };
-    }
-
-    static (bool isLocalFunction, string parentMethodName, string localFunctionName) TryGetLocalFunctionName(this MethodReference methodReference)
-    {
-        // sample name: <ToDirectedGraphElement>g__CreateGraph|1_2
-        var methodName = methodReference.Name;
-
-        if (methodName[0] == '<')
-        {
-            var i = methodName.IndexOf(">g__", StringComparison.OrdinalIgnoreCase);
-            if (i > 0)
-            {
-                var j = methodName.IndexOf('|', i);
-                if (j > 0)
-                {
-                    var localFunctionName = methodName.Substring(i + ">g__".Length, j - (i + ">g__".Length));
-                    var parentMethodName = methodName.Substring(1, i - 1);
-
-                    return (true, parentMethodName, localFunctionName);
-                }
-            }
-        }
-
-        return default;
-    }
-
-    static string GetMethodNameWithParameterSignature(this MethodReference methodReference)
-    {
-        var builder = new StringBuilder();
-
-        builder.Append(methodReference.Name);
-
-        builder.Append("(");
-
-        if (methodReference.HasParameters)
-        {
-            var parameters = methodReference.Parameters;
-            for (var i = 0; i < parameters.Count; i++)
-            {
-                var parameter = parameters[i];
-                if (i > 0)
-                    builder.Append(",");
-
-                if (parameter.ParameterType.IsSentinel)
-                    builder.Append("...,");
-
-                builder.Append(parameter.ParameterType.Name);
-            }
-        }
-
-        builder.Append(")");
-
-        return builder.ToString();
     }
 
     static Node CreateMethodNode(MethodReference methodReference)
@@ -345,6 +211,138 @@ static partial class Program
         };
     }
 
+    static Node CreateNamespaceNode(string fullNameOfNamespace)
+    {
+        return new Node
+        {
+            Id    = fullNameOfNamespace,
+            Label = fullNameOfNamespace,
+            Icon  = IconNamespace,
+            Group = "Collapsed"
+        };
+    }
+
+    static Node CreatePropertyNode(PropertyReference propertyReference)
+    {
+        return new Node
+        {
+            Id              = propertyReference.FullName,
+            Label           = propertyReference.Name,
+            StrokeDashArray = "5,5",
+            Background      = "#c9cbce",
+            Icon            = IconField,
+            Description     = propertyReference.FullName
+        };
+    }
+
+    static Node CreateTypeNode(TypeDefinition typeDefinition)
+    {
+        return new Node
+        {
+            Id    = typeDefinition.FullName,
+            Label = typeDefinition.Name,
+            Icon  = typeDefinition.IsInterface ? IconInterface : IconClass,
+            Group = "Collapsed"
+        };
+    }
+
+    static string GetMethodNameWithParameterSignature(this MethodReference methodReference)
+    {
+        var builder = new StringBuilder();
+
+        builder.Append(methodReference.Name);
+
+        builder.Append("(");
+
+        if (methodReference.HasParameters)
+        {
+            var parameters = methodReference.Parameters;
+            for (var i = 0; i < parameters.Count; i++)
+            {
+                var parameter = parameters[i];
+                if (i > 0)
+                    builder.Append(",");
+
+                if (parameter.ParameterType.IsSentinel)
+                    builder.Append("...,");
+
+                builder.Append(parameter.ParameterType.Name);
+            }
+        }
+
+        builder.Append(")");
+
+        return builder.ToString();
+    }
+
+    static IEnumerable<TypeDefinition> GetTypesForAnalyze(this AssemblyDefinition assemblyDefinition)
+    {
+        foreach (var moduleDefinition in assemblyDefinition.Modules)
+        {
+            foreach (var type in moduleDefinition.Types)
+            {
+                if (type.Name == "<Module>" || type.Name == "<PrivateImplementationDetails>")
+                {
+                    continue;
+                }
+
+                if (type.Namespace == "Microsoft.CodeAnalysis" ||
+                    type.Namespace == "System.Runtime.CompilerServices")
+                {
+                    continue;
+                }
+
+                yield return type;
+            }
+        }
+    }
+
+    static string Image(string fileName)
+    {
+        var workingDirectory = Directory.GetParent(typeof(Program).Assembly.Location)?.FullName;
+
+        return Path.Combine(workingDirectory ?? string.Empty, "img", fileName);
+    }
+
+    static bool IsBackingField(this FieldReference fieldReference)
+    {
+        return fieldReference.Name.EndsWith(">k__BackingField");
+    }
+
+    static (BadImageFormatException exception, AssemblyDefinition assemblyDefinition) ReadAssemblyDefinition(string filePath)
+    {
+        return Try<BadImageFormatException, AssemblyDefinition>(() =>
+        {
+            var resolver = new DefaultAssemblyResolver();
+
+            resolver.AddSearchDirectory(Path.GetDirectoryName(filePath));
+
+            return AssemblyDefinition.ReadAssembly(filePath, new ReaderParameters { AssemblyResolver = resolver });
+        });
+    }
+
+    static XElement ToDgml(this Link link)
+    {
+        var element = new XElement(XName.Get("Link", ns), new XAttribute("Source", link.Source.Id), new XAttribute("Target", link.Target.Id));
+
+        if (link.StrokeDashArray is not null)
+        {
+            element.Add(new XAttribute(nameof(link.StrokeDashArray), link.StrokeDashArray));
+        }
+
+        if (link.Category is not null)
+        {
+            element.Add(new XAttribute(nameof(link.Category), link.Category));
+        }
+
+        if (link.Description is not null)
+        {
+            element.Add(new XAttribute(nameof(link.Description), link.Description));
+        }
+
+        return element;
+    }
+
     static XElement ToDgml(this Node node)
     {
         var element = new XElement(XName.Get("Node", ns), new XAttribute("Label", node.Label), new XAttribute("Id", node.Id));
@@ -377,36 +375,35 @@ static partial class Program
         return element;
     }
 
-    public static (string exception, string dgmlContent) CreateMethodCallGraphOfAssembly(string assemblyFilePath)
+    static XElement ToDirectedGraphElement(this DirectedGraph directedGraph)
     {
-        var (exception, assemblyDefinition) = ReadAssemblyDefinition(assemblyFilePath);
-        if (exception is not null)
+        var links = directedGraph.Links;
+
+        return createDirectedGraphElement(ConnectedNodes(links).Select(ToDgml), links.Select(ToDgml));
+
+        static XElement createDirectedGraphElement(IEnumerable<XElement> nodes, IEnumerable<XElement> links)
         {
-            return (exception.ToString(), default);
+            var root = new XElement(XName.Get("DirectedGraph", ns));
+            var rootForNodes = new XElement(XName.Get("Nodes", ns));
+            var rootForLinks = new XElement(XName.Get("Links", ns));
+
+            rootForNodes.Add(nodes.Cast<object>().ToArray());
+            rootForLinks.Add(links.Cast<object>().ToArray());
+
+            root.Add(rootForNodes);
+            root.Add(rootForLinks);
+
+            return root;
         }
 
-        var dgml = new DirectedGraph();
-
-        var typeDefinitions = assemblyDefinition.GetTypesForAnalyze().ToImmutableList();
-
-        foreach (var typeDefinition in typeDefinitions)
+        static IEnumerable<Node> ConnectedNodes(IReadOnlyList<Link> links)
         {
-            AddType(dgml, typeDefinition, t => typeDefinitions.Contains(t));
+            return links.SelectMany(v => new[]
+            {
+                v.Source,
+                v.Target
+            }).Distinct();
         }
-
-        return (default, dgml.ToDirectedGraphElement().ToString());
-    }
-
-    static (BadImageFormatException exception, AssemblyDefinition assemblyDefinition) ReadAssemblyDefinition(string filePath)
-    {
-        return Try<BadImageFormatException, AssemblyDefinition>(() =>
-        {
-            var resolver = new DefaultAssemblyResolver();
-
-            resolver.AddSearchDirectory(Path.GetDirectoryName(filePath));
-
-            return AssemblyDefinition.ReadAssembly(filePath, new ReaderParameters { AssemblyResolver = resolver });
-        });
     }
 
     static (TException exception, T value) Try<TException, T>(Func<T> func) where TException : Exception
@@ -421,25 +418,27 @@ static partial class Program
         }
     }
 
-    static IEnumerable<TypeDefinition> GetTypesForAnalyze(this AssemblyDefinition assemblyDefinition)
+    static (bool isLocalFunction, string parentMethodName, string localFunctionName) TryGetLocalFunctionName(this MethodReference methodReference)
     {
-        foreach (var moduleDefinition in assemblyDefinition.Modules)
+        // sample name: <ToDirectedGraphElement>g__CreateGraph|1_2
+        var methodName = methodReference.Name;
+
+        if (methodName[0] == '<')
         {
-            foreach (var type in moduleDefinition.Types)
+            var i = methodName.IndexOf(">g__", StringComparison.OrdinalIgnoreCase);
+            if (i > 0)
             {
-                if (type.Name == "<Module>" || type.Name == "<PrivateImplementationDetails>")
+                var j = methodName.IndexOf('|', i);
+                if (j > 0)
                 {
-                    continue;
-                }
+                    var localFunctionName = methodName.Substring(i + ">g__".Length, j - (i + ">g__".Length));
+                    var parentMethodName = methodName.Substring(1, i - 1);
 
-                if (type.Namespace == "Microsoft.CodeAnalysis" ||
-                    type.Namespace == "System.Runtime.CompilerServices")
-                {
-                    continue;
+                    return (true, parentMethodName, localFunctionName);
                 }
-
-                yield return type;
             }
         }
+
+        return default;
     }
 }
