@@ -9,7 +9,7 @@ static partial class Program
         {
             args = new[] { typeof(Program).Assembly.Location };
         }
-        
+
         foreach (var assemblyFilePath in args)
         {
             ExportMethodCallGraphOfAssembly(assemblyFilePath);
@@ -22,12 +22,12 @@ static partial class Program
         if (exception is not null)
         {
             Console.WriteLine(exception);
-            
+
             Console.Read();
-            
+
             return;
         }
-        
+
         var dgmlFilePath = Path.ChangeExtension(assemblyFilePath, "dgml");
 
         File.WriteAllText(dgmlFilePath, dgmlContent);
