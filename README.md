@@ -1,4 +1,4 @@
-# DotNet Architecture Explorer
+# DotNet Architecture Explorer [Download](/DotNetArchitectureExplorer.7z)
 
 Extracts method call graph and type dependency to dgml file.
 
