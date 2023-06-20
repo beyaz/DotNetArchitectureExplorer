@@ -393,7 +393,7 @@ static partial class Program
     {
         var links = directedGraph.Links;
         
-        var nodes = ConnectedNodes(links);
+        var nodes = ConnectedNodes(links).ToList();
         
         return createDirectedGraphElement(nodes.Select(ToDgml), links.Select(ToDgml));
         
