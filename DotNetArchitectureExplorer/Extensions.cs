@@ -156,7 +156,7 @@ static partial class Program
             Id              = fieldReference.FullName,
             Label           = fieldReference.Name,
             StrokeDashArray = "5,5",
-            Background      = "#c9cbce",
+            Background      = "#e5e9ee",
             Icon            = IconField,
             Description     = fieldReference.FullName
         };
@@ -227,8 +227,7 @@ static partial class Program
         {
             Id              = propertyReference.FullName,
             Label           = propertyReference.Name,
-            StrokeDashArray = "5,5",
-            Background      = "#c9cbce",
+            Background      = "#e5e9ee",
             Icon            = IconField,
             Description     = propertyReference.FullName
         };
