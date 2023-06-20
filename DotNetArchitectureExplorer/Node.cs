@@ -7,10 +7,12 @@ public sealed class Node
 {
     public string Background { get; init; }
     public string Description { get; init; }
+    public int FontSize { get; init; }
     public string Group { get; init; }
     public string Icon { get; init; }
     public string Id { get; init; }
     public string Label { get; init; }
+    public int NodeRadius { get; init; }
     public string StrokeDashArray { get; init; }
 
     public override bool Equals(object obj)

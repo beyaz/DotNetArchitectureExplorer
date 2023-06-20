@@ -375,6 +375,16 @@ static partial class Program
         {
             element.Add(new XAttribute(nameof(node.Description), node.Description));
         }
+        
+        if (node.FontSize > 0)
+        {
+            element.Add(new XAttribute(nameof(node.FontSize), node.FontSize.ToString()));
+        }
+        
+        if (node.NodeRadius > 0)
+        {
+            element.Add(new XAttribute(nameof(node.NodeRadius), node.NodeRadius.ToString()));
+        }
 
         return element;
     }
