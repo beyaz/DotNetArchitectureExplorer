@@ -398,6 +398,7 @@ static partial class Program
         static XElement createDirectedGraphElement(IEnumerable<XElement> nodes, IEnumerable<XElement> links)
         {
             var root = new XElement(XName.Get("DirectedGraph", ns));
+            
             var rootForNodes = new XElement(XName.Get("Nodes", ns));
             var rootForLinks = new XElement(XName.Get("Links", ns));
 
