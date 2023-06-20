@@ -284,6 +284,11 @@ static partial class Program
                 {
                     continue;
                 }
+                
+                if (type.Name?.StartsWith("<>f__AnonymousType") is true)
+                {
+                    continue;
+                }
 
                 if (type.Namespace == "Microsoft.CodeAnalysis" ||
                     type.Namespace == "System.Runtime.CompilerServices")
