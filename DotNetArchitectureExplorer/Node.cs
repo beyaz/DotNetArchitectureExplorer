@@ -7,7 +7,7 @@ public sealed class Node
 {
     public string Background { get; init; }
     public string Description { get; init; }
-    public int FontSize { get; init; }
+    public double FontSize { get; init; }
     public string Group { get; init; }
     public string Icon { get; init; }
     public string Id { get; init; }

@@ -284,7 +284,7 @@ static partial class Program
                 {
                     continue;
                 }
-                
+
                 if (type.Name?.StartsWith("<>f__AnonymousType") is true)
                 {
                     continue;
@@ -375,12 +375,12 @@ static partial class Program
         {
             element.Add(new XAttribute(nameof(node.Description), node.Description));
         }
-        
+
         if (node.FontSize > 0)
         {
-            element.Add(new XAttribute(nameof(node.FontSize), node.FontSize.ToString()));
+            element.Add(new XAttribute(nameof(node.FontSize), node.FontSize.ToString("F")));
         }
-        
+
         if (node.NodeRadius > 0)
         {
             element.Add(new XAttribute(nameof(node.NodeRadius), node.NodeRadius.ToString()));
@@ -392,16 +392,53 @@ static partial class Program
     static XElement ToDirectedGraphElement(this DirectedGraph directedGraph)
     {
         var links = directedGraph.Links;
-        
+
         var nodes = ConnectedNodes(links).ToList();
-        
-        return createDirectedGraphElement(nodes.Select(ToDgml), links.Select(ToDgml));
-        
+
+        return createDirectedGraphElement(nodes.Select(arrangeNode).Select(ToDgml), links.Select(ToDgml));
+
+        Node arrangeNode(Node node)
+        {
+            var outgoingLinkCount = links.Count(l => l.Source.Id == node.Id);
+
+            var fontSize = calculateFontSize();
+
+            return new Node
+            {
+                Background      = node.Background,
+                Description     = node.Description,
+                FontSize        = fontSize,
+                Group           = node.Group,
+                Icon            = node.Icon,
+                Id              = node.Id,
+                Label           = node.Label,
+                NodeRadius      = node.NodeRadius,
+                StrokeDashArray = node.StrokeDashArray
+            };
+
+            double calculateFontSize()
+            {
+                if (node.Group is null)
+                {
+                    if (outgoingLinkCount > 30)
+                    {
+                        return 25;
+                    }
+
+                    if (outgoingLinkCount > 3)
+                    {
+                        return 13 + outgoingLinkCount / 3.0;
+                    }
+                }
+
+                return 0;
+            }
+        }
 
         static XElement createDirectedGraphElement(IEnumerable<XElement> nodes, IEnumerable<XElement> links)
         {
             var root = new XElement(XName.Get("DirectedGraph", ns));
-            
+
             var rootForNodes = new XElement(XName.Get("Nodes", ns));
             var rootForLinks = new XElement(XName.Get("Links", ns));
 
