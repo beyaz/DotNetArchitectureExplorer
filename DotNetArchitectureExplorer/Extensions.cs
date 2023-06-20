@@ -392,8 +392,11 @@ static partial class Program
     static XElement ToDirectedGraphElement(this DirectedGraph directedGraph)
     {
         var links = directedGraph.Links;
-
-        return createDirectedGraphElement(ConnectedNodes(links).Select(ToDgml), links.Select(ToDgml));
+        
+        var nodes = ConnectedNodes(links);
+        
+        return createDirectedGraphElement(nodes.Select(ToDgml), links.Select(ToDgml));
+        
 
         static XElement createDirectedGraphElement(IEnumerable<XElement> nodes, IEnumerable<XElement> links)
         {
