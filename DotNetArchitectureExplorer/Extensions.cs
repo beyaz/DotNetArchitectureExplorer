@@ -39,9 +39,11 @@ static partial class Program
     {
         var currentClassNode = CreateTypeNode(currentTypeDefinition);
 
+        var namespaceName = currentTypeDefinition.Namespace;
+        
         dgml.Add(new Link
         {
-            Source   = CreateNamespaceNode(currentTypeDefinition.Namespace),
+            Source   = CreateNamespaceNode(namespaceName,namespaceName),
             Target   = currentClassNode,
             Category = "Contains"
         });
@@ -215,12 +217,12 @@ static partial class Program
         };
     }
 
-    static Node CreateNamespaceNode(string fullNameOfNamespace)
+    static Node CreateNamespaceNode(string id, string label)
     {
         return new Node
         {
-            Id    = fullNameOfNamespace,
-            Label = fullNameOfNamespace,
+            Id    = id,
+            Label = label,
             Icon  = IconNamespace,
             Group = "Collapsed"
         };
