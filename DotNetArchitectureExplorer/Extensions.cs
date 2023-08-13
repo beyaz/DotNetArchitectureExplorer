@@ -349,7 +349,8 @@ static partial class Program
                 }
 
                 if (type.Namespace == "Microsoft.CodeAnalysis" ||
-                    type.Namespace == "System.Runtime.CompilerServices")
+                    type.Namespace == "System.Runtime.CompilerServices" ||
+                    string.IsNullOrWhiteSpace(type.Namespace))
                 {
                     continue;
                 }
