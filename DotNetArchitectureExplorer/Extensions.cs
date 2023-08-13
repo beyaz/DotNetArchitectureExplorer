@@ -41,6 +41,8 @@ static partial class Program
 
         var namespaceName = currentTypeDefinition.Namespace;
 
+        var nameListInNamesapceName = namespaceName.Split('.').ToList();
+
         dgml.Add(new Link
         {
             Source   = CreateNamespaceNode(namespaceName, namespaceName),
