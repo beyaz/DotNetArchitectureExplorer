@@ -43,9 +43,45 @@ static partial class Program
 
         var nameListInNamesapceName = namespaceName.Split('.').ToList();
 
+        Node parentNamespaceNode = null, currentNamespaceNode = null;
+
+        string namespaceId = null;
+        
+        for (var i = 0; i < nameListInNamesapceName.Count; i++)
+        {
+            var name = nameListInNamesapceName[i];
+
+            if (namespaceId == null)
+            {
+                namespaceId = name;
+            }
+            else
+            {
+                namespaceId += "." + name;
+            }
+            
+
+            currentNamespaceNode = CreateNamespaceNode(namespaceId, name);
+            
+            if (parentNamespaceNode == null)
+            {
+                parentNamespaceNode = currentNamespaceNode;
+                continue;
+            }
+            
+            dgml.Add(new Link
+            {
+                Source   = parentNamespaceNode,
+                Target   = currentNamespaceNode,
+                Category = "Contains"
+            });
+            
+            parentNamespaceNode = currentNamespaceNode;
+        }
+
         dgml.Add(new Link
         {
-            Source   = CreateNamespaceNode(namespaceName, namespaceName),
+            Source   = currentNamespaceNode,
             Target   = currentClassNode,
             Category = "Contains"
         });
@@ -123,7 +159,7 @@ static partial class Program
                     }
                 }
 
-                if (instruction.Operand is FieldDefinition fr)
+                else if (instruction.Operand is FieldDefinition fr)
                 {
                     if (fr.IsBackingField())
                     {
@@ -153,6 +189,22 @@ static partial class Program
 
                         dgml.Add(new Link { Source = currentMethodDefinitionNode, Target = targetFieldNode });
                     }
+                }
+                
+                else if (instruction.Operand is TypeDefinition td && td.FullName != currentTypeDefinition.FullName)
+                {
+                    dgml.Add(new Link { Source = currentClassNode, Target = CreateTypeNode(td) });
+                }
+                
+                else if (instruction.Operand is TypeReference tr && tr.Scope == currentTypeDefinition.Scope)
+                {
+                    var td2 = tr.Resolve();
+                    if (td2 is not null &&  td2.FullName != currentTypeDefinition.FullName)
+                    {
+                        dgml.Add(new Link { Source = currentClassNode, Target = CreateTypeNode(td2) });
+                    }
+
+                    
                 }
             }
         }
