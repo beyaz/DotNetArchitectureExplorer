@@ -40,10 +40,10 @@ static partial class Program
         var currentClassNode = CreateTypeNode(currentTypeDefinition);
 
         var namespaceName = currentTypeDefinition.Namespace;
-        
+
         dgml.Add(new Link
         {
-            Source   = CreateNamespaceNode(namespaceName,namespaceName),
+            Source   = CreateNamespaceNode(namespaceName, namespaceName),
             Target   = currentClassNode,
             Category = "Contains"
         });
@@ -232,11 +232,11 @@ static partial class Program
     {
         return new Node
         {
-            Id              = propertyReference.FullName,
-            Label           = propertyReference.Name,
-            Background      = "#e5e9ee",
-            Icon            = IconField,
-            Description     = propertyReference.FullName
+            Id          = propertyReference.FullName,
+            Label       = propertyReference.Name,
+            Background  = "#e5e9ee",
+            Icon        = IconField,
+            Description = propertyReference.FullName
         };
     }
 
