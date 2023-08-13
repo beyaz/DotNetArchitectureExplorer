@@ -39,51 +39,52 @@ static partial class Program
     {
         var currentClassNode = CreateTypeNode(currentTypeDefinition);
 
-        var namespaceName = currentTypeDefinition.Namespace;
-
-        var nameListInNamesapceName = namespaceName.Split('.').ToList();
-
-        Node parentNamespaceNode = null, currentNamespaceNode = null;
-
-        string namespaceId = null;
-
-        for (var i = 0; i < nameListInNamesapceName.Count; i++)
+        // arrange namespace
         {
-            var name = nameListInNamesapceName[i];
+            var namespaceName = currentTypeDefinition.Namespace;
 
-            if (namespaceId == null)
-            {
-                namespaceId = name;
-            }
-            else
-            {
-                namespaceId += "." + name;
-            }
+            var nameListInNamesapceName = namespaceName.Split('.').ToList();
 
-            currentNamespaceNode = CreateNamespaceNode(namespaceId, name);
+            Node parentNamespaceNode = null, currentNamespaceNode = null;
 
-            if (parentNamespaceNode == null)
+            string namespaceId = null;
+
+            foreach (var name in nameListInNamesapceName)
             {
+                if (namespaceId == null)
+                {
+                    namespaceId = name;
+                }
+                else
+                {
+                    namespaceId += "." + name;
+                }
+
+                currentNamespaceNode = CreateNamespaceNode(namespaceId, name);
+
+                if (parentNamespaceNode == null)
+                {
+                    parentNamespaceNode = currentNamespaceNode;
+                    continue;
+                }
+
+                dgml.Add(new Link
+                {
+                    Source   = parentNamespaceNode,
+                    Target   = currentNamespaceNode,
+                    Category = "Contains"
+                });
+
                 parentNamespaceNode = currentNamespaceNode;
-                continue;
             }
 
             dgml.Add(new Link
             {
-                Source   = parentNamespaceNode,
-                Target   = currentNamespaceNode,
+                Source   = currentNamespaceNode,
+                Target   = currentClassNode,
                 Category = "Contains"
             });
-
-            parentNamespaceNode = currentNamespaceNode;
         }
-
-        dgml.Add(new Link
-        {
-            Source   = currentNamespaceNode,
-            Target   = currentClassNode,
-            Category = "Contains"
-        });
 
         foreach (var propertyDefinition in currentTypeDefinition.Properties)
         {
