@@ -191,7 +191,7 @@ static partial class Program
                     }
                 }
 
-                else if (instruction.Operand is TypeDefinition td && td.FullName != currentTypeDefinition.FullName)
+                else if (instruction.Operand is TypeDefinition td && td.FullName != currentTypeDefinition.FullName && CanExport(td))
                 {
                     dgml.Add(new Link { Source = currentClassNode, Target = CreateTypeNode(td) });
                 }
@@ -199,13 +199,35 @@ static partial class Program
                 else if (instruction.Operand is TypeReference tr && tr.Scope == currentTypeDefinition.Scope)
                 {
                     var td2 = tr.Resolve();
-                    if (td2 is not null && td2.FullName != currentTypeDefinition.FullName)
+                    if (td2 is not null && td2.FullName != currentTypeDefinition.FullName && CanExport(td2))
                     {
                         dgml.Add(new Link { Source = currentClassNode, Target = CreateTypeNode(td2) });
                     }
                 }
             }
         }
+    }
+
+    static bool CanExport(TypeDefinition type)
+    {
+        if (type.Name == "<Module>" || type.Name == "<PrivateImplementationDetails>")
+        {
+            return false;
+        }
+
+        if (type.Name?.StartsWith("<>f__AnonymousType") is true)
+        {
+            return false;
+        }
+
+        if (type.Namespace == "Microsoft.CodeAnalysis" ||
+            type.Namespace == "System.Runtime.CompilerServices" ||
+            string.IsNullOrWhiteSpace(type.Namespace))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     static Node CreateFieldNode(FieldReference fieldReference)
@@ -338,19 +360,7 @@ static partial class Program
         {
             foreach (var type in moduleDefinition.Types)
             {
-                if (type.Name == "<Module>" || type.Name == "<PrivateImplementationDetails>")
-                {
-                    continue;
-                }
-
-                if (type.Name?.StartsWith("<>f__AnonymousType") is true)
-                {
-                    continue;
-                }
-
-                if (type.Namespace == "Microsoft.CodeAnalysis" ||
-                    type.Namespace == "System.Runtime.CompilerServices" ||
-                    string.IsNullOrWhiteSpace(type.Namespace))
+                if (!CanExport(type))
                 {
                     continue;
                 }
