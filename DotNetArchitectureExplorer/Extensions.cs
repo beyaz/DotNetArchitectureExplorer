@@ -39,7 +39,12 @@ static partial class Program
     {
         var currentClassNode = CreateTypeNode(currentTypeDefinition);
 
-        dgml.Add(new Link { Source = CreateNamespaceNode(currentTypeDefinition.Namespace), Target = currentClassNode, Category = "Contains" });
+        dgml.Add(new Link
+        {
+            Source   = CreateNamespaceNode(currentTypeDefinition.Namespace),
+            Target   = currentClassNode,
+            Category = "Contains"
+        });
 
         foreach (var propertyDefinition in currentTypeDefinition.Properties)
         {
