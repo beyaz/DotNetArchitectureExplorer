@@ -227,8 +227,18 @@ static partial class Program
             return false;
         }
 
+        foreach (var name in Config?.ExportOnlyNamespaceNameContains ?? Enumerable.Empty<string>())
+        {
+            if (!string.IsNullOrWhiteSpace(name) &&  type.Namespace?.Contains(name) == false)
+            {
+                return false;
+            }
+        }
+        
         return true;
     }
+    
+    static readonly Config Config = ConfigReader.TryReadConfig();
 
     static Node CreateFieldNode(FieldReference fieldReference)
     {
