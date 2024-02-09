@@ -13,7 +13,10 @@ static class ConfigReader
     {
         if (File.Exists(filePath))
         {
-            var config = JsonSerializer.Deserialize<Config>(File.ReadAllText(filePath));
+            var config = JsonSerializer.Deserialize<Config>(File.ReadAllText(filePath), new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
 
             return (true, config, default);
         }
