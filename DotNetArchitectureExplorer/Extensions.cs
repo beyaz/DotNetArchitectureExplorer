@@ -227,12 +227,30 @@ static partial class Program
             return false;
         }
 
+        var hasExportOnlyNamespaceNameContainsRule = false;
+        var hasMatchWithExportOnlyNamespaceContains = false;
+        
         foreach (var name in Config?.ExportOnlyNamespaceNameContains ?? Enumerable.Empty<string>())
         {
-            if (!string.IsNullOrWhiteSpace(name) &&  type.Namespace?.Contains(name) == false)
+            if (!string.IsNullOrWhiteSpace(name))
             {
-                return false;
+                hasExportOnlyNamespaceNameContainsRule = true;
+                if (type.Namespace?.Contains(name,StringComparison.OrdinalIgnoreCase) == true)
+                {
+                    hasMatchWithExportOnlyNamespaceContains = true;
+                    break;
+                }
             }
+        }
+
+        if (hasExportOnlyNamespaceNameContainsRule)
+        {
+            if (hasMatchWithExportOnlyNamespaceContains)
+            {
+                return true;
+            }
+
+            return false;
         }
         
         return true;
