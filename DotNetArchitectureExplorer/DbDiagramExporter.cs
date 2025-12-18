@@ -108,31 +108,34 @@ static class DbDiagramExporter
     {
         public static IReadOnlyList<ColumnInfo> LoadColumns()
         {
-            const string sql = @"
-SELECT
-    s.name              AS SchemaName,
-    t.name              AS TableName,
-    c.name              AS ColumnName,
-    ty.name             AS TypeName,
-    c.max_length,
-    c.precision,
-    c.scale,
-    c.is_nullable,
-    -- PK tespiti
-    CASE WHEN kc.type = 'PK' THEN 1 ELSE 0 END AS IsPrimaryKey
-FROM sys.schemas s
-JOIN sys.tables t           ON t.schema_id = s.schema_id
-JOIN sys.columns c          ON c.object_id = t.object_id
-JOIN sys.types ty           ON ty.user_type_id = c.user_type_id
-LEFT JOIN sys.index_columns ic
-    ON ic.object_id = t.object_id AND ic.column_id = c.column_id
-LEFT JOIN sys.key_constraints kc
-    ON kc.parent_object_id = t.object_id
-   AND kc.unique_index_id  = ic.index_id
-   AND kc.type = 'PK'
-WHERE t.is_ms_shipped = 0
-  AND s.name NOT IN ('sys', 'INFORMATION_SCHEMA')
-ORDER BY s.name, t.name, c.column_id;";
+            const string sql
+                = """
+
+                  SELECT
+                      s.name              AS SchemaName,
+                      t.name              AS TableName,
+                      c.name              AS ColumnName,
+                      ty.name             AS TypeName,
+                      c.max_length,
+                      c.precision,
+                      c.scale,
+                      c.is_nullable,
+                      -- PK tespiti
+                      CASE WHEN kc.type = 'PK' THEN 1 ELSE 0 END AS IsPrimaryKey
+                  FROM sys.schemas s
+                  JOIN sys.tables t           ON t.schema_id = s.schema_id
+                  JOIN sys.columns c          ON c.object_id = t.object_id
+                  JOIN sys.types ty           ON ty.user_type_id = c.user_type_id
+                  LEFT JOIN sys.index_columns ic
+                      ON ic.object_id = t.object_id AND ic.column_id = c.column_id
+                  LEFT JOIN sys.key_constraints kc
+                      ON kc.parent_object_id = t.object_id
+                     AND kc.unique_index_id  = ic.index_id
+                     AND kc.type = 'PK'
+                  WHERE t.is_ms_shipped = 0
+                    AND s.name NOT IN ('sys', 'INFORMATION_SCHEMA')
+                  ORDER BY s.name, t.name, c.column_id;
+                  """;
 
             var list = new List<ColumnInfo>();
 
