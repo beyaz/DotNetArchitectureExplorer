@@ -1,0 +1,6 @@
+﻿namespace DotNetArchitectureExplorer;
+
+class DbDiagramExporter
+{
+    
+}
