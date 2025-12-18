@@ -7,34 +7,44 @@ namespace DotNetArchitectureExplorer;
 
 
 
-
-
-// Not: Aşağıdaki üç sınıfın sende zaten tanımlı olduğunu belirttin.
-// Burada tekrar yazmıyorum: Node, Link, DirectedGraph.
-
-// Yardımcı modeller
- sealed class ColumnInfo
+sealed record ColumnInfo
 {
+    //@formatter:off
+    
     public string Schema { get; init; }
+    
     public string Table { get; init; }
+    
     public string Column { get; init; }
+    
     public string DataType { get; init; }
+    
     public bool   IsPrimaryKey { get; init; }
 
     public string TableKey => $"{Schema}.{Table}";
+    
     public string ColumnKey => $"{Schema}.{Table}.{Column}";
+    
+    //@formatter:on
 }
 
  sealed class TableInfo
 {
+    //@formatter:off
+    
     public string Schema { get; init; }
+    
     public string Table { get; init; }
 
     public Node TableNode { get; init; }
+    
     public List<ColumnInfo> Columns { get; } = new();
+    
     public IReadOnlyList<ColumnInfo> PrimaryKeys => Columns.Where(c => c.IsPrimaryKey).ToList();
 
     public string Key => $"{Schema}.{Table}";
+    
+    //@formatter:on
 }
 
  public static class DbDiagramExporter
@@ -103,10 +113,10 @@ namespace DotNetArchitectureExplorer;
          return ToDgml(nodes, graph);
      }
 
-     // SQL Server'dan kolonlar + PK bilgisi + veri tipi detayını getirir
-     private static List<ColumnInfo> LoadColumns()
+   
+     static IReadOnlyList<ColumnInfo> LoadColumns()
      {
-         var sql = @"
+         const string sql = @"
 SELECT
     s.name              AS SchemaName,
     t.name              AS TableName,
@@ -135,7 +145,8 @@ ORDER BY s.name, t.name, c.column_id;";
          var list = new List<ColumnInfo>();
 
          using var conn = new SqlConnection(ConnectionString);
-         using var cmd = new SqlCommand(sql, conn) { CommandType = CommandType.Text };
+         using var cmd = new SqlCommand(sql, conn);
+         cmd.CommandType = CommandType.Text;
          conn.Open();
          using var rdr = cmd.ExecuteReader();
          while (rdr.Read())
@@ -199,7 +210,7 @@ ORDER BY s.name, t.name, c.column_id;";
      }
 
      // Tabloları sözlüğe çeker ve Table Node'larını hazırlar
-     private static Dictionary<string, TableInfo> BuildTables(List<ColumnInfo> columns, HashSet<Node> nodes)
+     private static Dictionary<string, TableInfo> BuildTables(IReadOnlyList<ColumnInfo> columns, HashSet<Node> nodes)
      {
          var tables = new Dictionary<string, TableInfo>(StringComparer.OrdinalIgnoreCase);
 
