@@ -71,7 +71,7 @@ static partial class Program
                 {
                     Source   = parentNamespaceNode,
                     Target   = currentNamespaceNode,
-                    Category = "Contains"
+                    Category = Contains
                 });
 
                 parentNamespaceNode = currentNamespaceNode;
@@ -81,7 +81,7 @@ static partial class Program
             {
                 Source   = currentNamespaceNode,
                 Target   = currentClassNode,
-                Category = "Contains"
+                Category = Contains
             });
         }
 
@@ -89,7 +89,7 @@ static partial class Program
         {
             var node = CreatePropertyNode(propertyDefinition);
 
-            dgml.Add(new Link { Source = currentClassNode, Target = node, Category = "Contains" });
+            dgml.Add(new Link { Source = currentClassNode, Target = node, Category = Contains });
         }
 
         foreach (var methodDefinition in currentTypeDefinition.Methods)
@@ -101,14 +101,14 @@ static partial class Program
 
             var methodDefinitionNode = CreateMethodNode(methodDefinition);
 
-            dgml.Add(new Link { Source = currentClassNode, Target = methodDefinitionNode, Category = "Contains" });
+            dgml.Add(new Link { Source = currentClassNode, Target = methodDefinitionNode, Category = Contains });
         }
 
         foreach (var fieldDefinition in currentTypeDefinition.Fields.Where(x => !x.IsBackingField()))
         {
             var fieldDefinitionNode = CreateFieldNode(fieldDefinition);
 
-            dgml.Add(new Link { Source = currentClassNode, Target = fieldDefinitionNode, Category = "Contains" });
+            dgml.Add(new Link { Source = currentClassNode, Target = fieldDefinitionNode, Category = Contains });
         }
 
         foreach (var currentMethodDefinition in currentTypeDefinition.Methods.Where(m => m.HasBody))

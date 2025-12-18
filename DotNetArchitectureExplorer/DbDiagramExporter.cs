@@ -79,7 +79,7 @@ sealed record ColumnInfo
             };
             
             
-            dgml.Add(new Link { Source = tableNode, Target = columnNode, Category = "Contains" });
+            dgml.Add(new Link { Source = tableNode, Target = columnNode, Category = Contains });
             
             
         }
