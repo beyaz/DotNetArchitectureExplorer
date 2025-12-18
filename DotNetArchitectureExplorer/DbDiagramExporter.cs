@@ -56,76 +56,37 @@ sealed record ColumnInfo
          
          
          
-         // 1) Veriyi topla
          var columns = Db.LoadColumns();
          
          var dgml = new DirectedGraph();
-         
-         //foreach (var schemaName in columns.DistinctBy(x=>x.Schema).Select(x=>x.Schema))
-         //{
-         //    new Node
-         //    {
-         //        Id = schemaName,
-         //        Label = schemaName,
-         //        Icon = 
-         //    }
-         //}
-         
-         
 
-         // 2) Tablo/kolon Node'ları ve Contains/ForeignKey Link'leri oluştur
-         var nodes = new HashSet<Node>();
-         var graph = new DirectedGraph();
+        foreach (var column in columns)
+        {
+            var tableNode = new Node
+            {
+                Id    = $"{column.Schema}.{column.Table}",
+                Label =  $"{column.Schema}.{column.Table}",
+                Icon  = IconClass,
+                Group = "Collapsed"
+            };
+            
+            var columnNode = new Node
+            {
+                Id         = $"{column.Schema}.{column.Table}.{column.Column}",
+                Label      =  $"{column.Column}({column.DataType})",
+                Icon       = IconField,
+                Background = "#e5e9ee"
+            };
+            
+            
+            dgml.Add(new Link { Source = tableNode, Target = columnNode, Category = "Contains" });
+            
+            
+        }
 
-         // Tablo sözlüğü
-         var tables = BuildTables(columns, nodes);
 
-         // Contains linkleri (Table -> Column)
-         foreach (var t in tables.Values)
-         {
-             foreach (var col in t.Columns)
-             {
-                 var tableNode = t.TableNode;
-                 var columnNode = MakeColumnNode(col);
-                 nodes.Add(columnNode);
+        return dgml.ToDirectedGraphElement().ToString();
 
-                 graph.Add(new Link
-                 {
-                     Category    = "Contains",
-                     Source      = tableNode,
-                     Target      = columnNode,
-                     Description = $"{t.Schema}.{t.Table} contains {col.Column}"
-                 });
-             }
-         }
-
-         // ForeignKey linkleri (Column -> Referenced PK Column) - isim kuralına göre tahmini
-         foreach (var t in tables.Values)
-         {
-             foreach (var col in t.Columns)
-             {
-                 var fkTarget = ResolveForeignKeyTarget(tables, col);
-                 if (fkTarget is null) continue;
-
-                 var sourceColumnNode = MakeColumnNode(col);
-                 var targetColumnNode = MakeColumnNode(fkTarget);
-
-                 nodes.Add(sourceColumnNode);
-                 nodes.Add(targetColumnNode);
-
-                 graph.Add(new Link
-                 {
-                     Category        = "ForeignKey",
-                     Source          = sourceColumnNode,
-                     Target          = targetColumnNode,
-                     Description     = $"{t.Schema}.{t.Table}.{col.Column} → {fkTarget.Schema}.{fkTarget.Table}.{fkTarget.Column}",
-                     StrokeDashArray = "2,2"
-                 });
-             }
-         }
-
-         // 3) DGML string üret
-         return ToDgml(nodes, graph);
      }
 
 

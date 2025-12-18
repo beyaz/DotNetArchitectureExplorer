@@ -5,7 +5,7 @@ static partial class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        DbDiagramExporter.BuildDatabaseDgml();
+        File.WriteAllText("d:\\a.dgml", DbDiagramExporter.BuildDatabaseDgml());
         
         if (args == null || args.Length == 0)
         {

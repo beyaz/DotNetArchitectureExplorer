@@ -6,21 +6,13 @@ using Mono.Cecil.Cil;
 
 namespace DotNetArchitectureExplorer;
 
-class Icon
-{
-    
-}
 static partial class Program
 {
     const string ns = "http://schemas.microsoft.com/vs/2009/dgml";
 
     static readonly Config Config = ConfigReader.TryReadConfig();
     
-    public static string IconClass => Image("class.png");
-    public static string IconField => Image("field.png");
-    public static string IconInterface => Image("interface.png");
-    public static string IconMethod => Image("method.png");
-    public static string IconNamespace => Image("namespace.png");
+ 
 
     public static (string exception, string dgmlContent) CreateMethodCallGraphOfAssembly(string assemblyFilePath)
     {
@@ -407,12 +399,7 @@ static partial class Program
         }
     }
 
-    static string Image(string fileName)
-    {
-        var workingDirectory = Directory.GetParent(typeof(Program).Assembly.Location)?.FullName;
-
-        return Path.Combine(workingDirectory ?? string.Empty, "img", fileName);
-    }
+ 
 
     static bool IsBackingField(this FieldReference fieldReference)
     {
@@ -495,7 +482,7 @@ static partial class Program
         return element;
     }
 
-    static XElement ToDirectedGraphElement(this DirectedGraph directedGraph)
+    public static XElement ToDirectedGraphElement(this DirectedGraph directedGraph)
     {
         var links = directedGraph.Links;
 
