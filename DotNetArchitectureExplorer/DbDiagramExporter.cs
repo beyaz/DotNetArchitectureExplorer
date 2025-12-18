@@ -1,74 +1,39 @@
 ﻿using System.Data;
-using System.Text;
-using System.Text.RegularExpressions;
 using Microsoft.Data.SqlClient;
 
 namespace DotNetArchitectureExplorer;
 
-
-
 sealed record ColumnInfo
 {
     //@formatter:off
-    
-    public string Schema { get; init; }
-    
-    public string Table { get; init; }
-    
-    public string Column { get; init; }
-    
-    public string DataType { get; init; }
-    
-    public bool   IsPrimaryKey { get; init; }
 
-    public string TableKey => $"{Schema}.{Table}";
-    
-    public string ColumnKey => $"{Schema}.{Table}.{Column}";
-    
+    public string SchemaName { get; init; }
+
+    public string TableName { get; init; }
+
+    public string ColumName { get; init; }
+
+    public string DataType { get; init; }
+
+    public bool IsPrimaryKey { get; init; }
+
     //@formatter:on
 }
 
+static class DbDiagramExporter
+{
+    public static string BuildDatabaseDgml()
+    {
+        var columns = Db.LoadColumns();
 
- static class DbDiagramExporter
- {
+        var dgml = new DirectedGraph();
 
-     extension(ColumnInfo column)
-     {
-         public Node AsTableNode => new Node
-         {
-             Id    = $"{column.Schema}.{column.Table}",
-             Label =  $"{column.Schema}.{column.Table}",
-             Icon  = IconClass,
-             Group = Collapsed
-         };
-         
-         public Node AsColumnNode => new Node
-         {
-             Id         = $"{column.Schema}.{column.Table}.{column.Column}",
-             Label      = $"{column.Column}({column.DataType})",
-             Icon       = IconField,
-             Background = "#e5e9ee"
-         };
-         
-        
-     }
-    
-     public static string BuildDatabaseDgml()
-     {
-         
-         
-         
-         var columns = Db.LoadColumns();
-         
-         var dgml = new DirectedGraph();
-
-        foreach (var column in from x in columns  select x)
+        foreach (var column in from x in columns select x)
         {
-
             dgml.Add(new Link
             {
-                Source = column.AsTableNode,
-                Target = column.AsColumnNode,
+                Source   = column.AsTableNode,
+                Target   = column.AsColumnNode,
                 Category = Contains
             });
 
@@ -81,9 +46,7 @@ sealed record ColumnInfo
                     Target = foreignKeyColumn.AsColumnNode
                 });
             }
-           
         }
-
 
         return dgml.ToDirectedGraphElement().ToString();
 
@@ -94,73 +57,58 @@ sealed record ColumnInfo
                 return null;
             }
 
-            if (!column.Column.EndsWith("Id"))
+            if (!column.ColumName.EndsWith("Id"))
             {
                 return null;
             }
 
-            if (column.Table + "Id" == column.Column)
+            if (column.TableName + "Id" == column.ColumName)
             {
                 return null;
             }
 
-
-
-            static bool IsForeignKey(IReadOnlyList<ColumnInfo> allColumns, ColumnInfo a, ColumnInfo maybeForeignKeyColumnOfA)
-            {
-                if (a.Table == maybeForeignKeyColumnOfA.Table)
-                {
-                    return false;
-                }
-
-                if (a.Column != maybeForeignKeyColumnOfA.Column)
-                {
-                    return false;
-                }
-                
-                var primaryKeysInTable = (from x in allColumns where x.Table == maybeForeignKeyColumnOfA.Table && x.IsPrimaryKey select x).ToList();
-                
-                return primaryKeysInTable.Count == 1 && primaryKeysInTable[0].Column == maybeForeignKeyColumnOfA.Column;
-                
-            }
-                
             var foreignKeyColumns = (from x in allColumns where IsForeignKey(allColumns, column, x) select x).ToList();
             if (foreignKeyColumns.Count == 0)
             {
                 return null;
             }
-            
+
             if (foreignKeyColumns.Count == 1)
             {
                 return foreignKeyColumns[0];
             }
 
-            if (column.Column == "UserId")
+            if (column.ColumName == "UserId")
             {
-                return (from x in allColumns where x.Schema == "INT" && x.Table == "WebUser" && x.Column == "UserId" select x).FirstOrDefault();
+                return (from x in allColumns where x.SchemaName == "INT" && x.TableName == "WebUser" && x.ColumName == "UserId" select x).FirstOrDefault();
             }
-            //foreignKeyColumns = foreignKeyColumns.Where(x => column.Column.Contains(x.Table,StringComparison.OrdinalIgnoreCase)).ToList();
-            //if (foreignKeyColumns.Count == 0)
-            //{
-            //    return null;
-            //}
-            
-            //if (foreignKeyColumns.Count == 1)
-            //{
-            //    return foreignKeyColumns[0];
-            //}
-            
+
             return null;
+
+            static bool IsForeignKey(IReadOnlyList<ColumnInfo> allColumns, ColumnInfo a, ColumnInfo maybeForeignKeyColumnOfA)
+            {
+                if (a.TableName == maybeForeignKeyColumnOfA.TableName)
+                {
+                    return false;
+                }
+
+                if (a.ColumName != maybeForeignKeyColumnOfA.ColumName)
+                {
+                    return false;
+                }
+
+                var primaryKeysInTable = (from x in allColumns where x.TableName == maybeForeignKeyColumnOfA.TableName && x.IsPrimaryKey select x).ToList();
+
+                return primaryKeysInTable.Count == 1 && primaryKeysInTable[0].ColumName == maybeForeignKeyColumnOfA.ColumName;
+            }
         }
+    }
 
-     }
-
-
-     class Db
-     {
-           public static IReadOnlyList<ColumnInfo> LoadColumns()
-     {
-         const string sql = @"
+    class Db
+    {
+        public static IReadOnlyList<ColumnInfo> LoadColumns()
+        {
+            const string sql = @"
 SELECT
     s.name              AS SchemaName,
     t.name              AS TableName,
@@ -186,83 +134,96 @@ WHERE t.is_ms_shipped = 0
   AND s.name NOT IN ('sys', 'INFORMATION_SCHEMA')
 ORDER BY s.name, t.name, c.column_id;";
 
-         var list = new List<ColumnInfo>();
+            var list = new List<ColumnInfo>();
 
-      string ConnectionString =
-             "Data Source=srvtest\\atlas;Initial Catalog=BOA;Integrated Security=True;TrustServerCertificate=True";
+            var ConnectionString =
+                "Data Source=srvtest\\atlas;Initial Catalog=BOA;Integrated Security=True;TrustServerCertificate=True";
 
-         
-         using var conn = new SqlConnection(ConnectionString);
-         using var cmd = new SqlCommand(sql, conn);
-         cmd.CommandType = CommandType.Text;
-         conn.Open();
-         using var rdr = cmd.ExecuteReader();
-         while (rdr.Read())
-         {
-             var schema = rdr.GetString(rdr.GetOrdinal("SchemaName"));
-             var table = rdr.GetString(rdr.GetOrdinal("TableName"));
-             var column = rdr.GetString(rdr.GetOrdinal("ColumnName"));
+            using var conn = new SqlConnection(ConnectionString);
+            using var cmd = new SqlCommand(sql, conn);
+            cmd.CommandType = CommandType.Text;
+            conn.Open();
+            using var rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                var schema = rdr.GetString(rdr.GetOrdinal("SchemaName"));
+                var table = rdr.GetString(rdr.GetOrdinal("TableName"));
+                var column = rdr.GetString(rdr.GetOrdinal("ColumnName"));
 
-             var typeName = rdr.GetString(rdr.GetOrdinal("TypeName"));
-             var maxLength = rdr.GetInt16(rdr.GetOrdinal("max_length")); // smallint
-             var precision = rdr.GetByte(rdr.GetOrdinal("precision"));
-             var scale = rdr.GetByte(rdr.GetOrdinal("scale"));
-             var isNullable = rdr.GetBoolean(rdr.GetOrdinal("is_nullable"));
-             var isPk = rdr.GetInt32(rdr.GetOrdinal("IsPrimaryKey")) == 1;
+                var typeName = rdr.GetString(rdr.GetOrdinal("TypeName"));
+                var maxLength = rdr.GetInt16(rdr.GetOrdinal("max_length")); // smallint
+                var precision = rdr.GetByte(rdr.GetOrdinal("precision"));
+                var scale = rdr.GetByte(rdr.GetOrdinal("scale"));
+                var isNullable = rdr.GetBoolean(rdr.GetOrdinal("is_nullable"));
+                var isPk = rdr.GetInt32(rdr.GetOrdinal("IsPrimaryKey")) == 1;
 
-             var dataType = FormatSqlType(typeName, maxLength, precision, scale);
+                var dataType = FormatSqlType(typeName, maxLength, precision, scale);
 
-             list.Add(new ColumnInfo
-             {
-                 Schema       = schema,
-                 Table        = table,
-                 Column       = column,
-                 DataType     = dataType + (isNullable ? "?" : ""),
-                 IsPrimaryKey = isPk
-             });
-         }
+                list.Add(new ColumnInfo
+                {
+                    SchemaName   = schema,
+                    TableName    = table,
+                    ColumName    = column,
+                    DataType     = dataType + (isNullable ? "?" : ""),
+                    IsPrimaryKey = isPk
+                });
+            }
 
-         return list;
-     }
-           
-     static string FormatSqlType(string typeName, short maxLength, byte precision, byte scale)
-     {
-         var t = typeName.ToLowerInvariant();
-         switch (t)
-         {
-             case "varchar":
-             case "char":
-             case "varbinary":
-             case "binary":
-                 return maxLength == -1 ? $"{typeName}(MAX)" : $"{typeName}({maxLength})";
+            return list;
+        }
 
-             case "nvarchar":
-             case "nchar":
-                 if (maxLength == -1) return $"{typeName}(MAX)";
-                 // nvarchar/nchar byte cinsinden tutulur, karakter sayısı = maxLength / 2
-                 return $"{typeName}({maxLength / 2})";
+        static string FormatSqlType(string typeName, short maxLength, byte precision, byte scale)
+        {
+            var t = typeName.ToLowerInvariant();
+            switch (t)
+            {
+                case "varchar":
+                case "char":
+                case "varbinary":
+                case "binary":
+                    return maxLength == -1 ? $"{typeName}(MAX)" : $"{typeName}({maxLength})";
 
-             case "decimal":
-             case "numeric":
-                 return $"{typeName}({precision},{scale})";
+                case "nvarchar":
+                case "nchar":
+                    if (maxLength == -1)
+                    {
+                        return $"{typeName}(MAX)";
+                    }
 
-             case "datetime2":
-             case "time":
-             case "datetimeoffset":
-                 return $"{typeName}({scale})";
+                    // nvarchar/nchar byte cinsinden tutulur, karakter sayısı = maxLength / 2
+                    return $"{typeName}({maxLength / 2})";
 
-             default:
-                 return typeName;
-         }
-     }
+                case "decimal":
+                case "numeric":
+                    return $"{typeName}({precision},{scale})";
 
+                case "datetime2":
+                case "time":
+                case "datetimeoffset":
+                    return $"{typeName}({scale})";
 
-     }
-     
-   
+                default:
+                    return typeName;
+            }
+        }
+    }
 
-  
+    extension(ColumnInfo column)
+    {
+        public Node AsTableNode => new()
+        {
+            Id    = $"{column.SchemaName}.{column.TableName}",
+            Label = $"{column.SchemaName}.{column.TableName}",
+            Icon  = IconClass,
+            Group = Collapsed
+        };
 
-
-
- }
+        public Node AsColumnNode => new()
+        {
+            Id         = $"{column.SchemaName}.{column.TableName}.{column.ColumName}",
+            Label      = $"{column.ColumName}({column.DataType})",
+            Icon       = IconField,
+            Background = "#e5e9ee"
+        };
+    }
+}
