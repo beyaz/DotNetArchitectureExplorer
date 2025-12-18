@@ -11,6 +11,7 @@ static partial class Program
     const string ns = "http://schemas.microsoft.com/vs/2009/dgml";
 
     static readonly Config Config = ConfigReader.TryReadConfig();
+    
     static string IconClass => Image("class.png");
     static string IconField => Image("field.png");
     static string IconInterface => Image("interface.png");
