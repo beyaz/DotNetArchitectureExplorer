@@ -28,24 +28,6 @@ sealed record ColumnInfo
     //@formatter:on
 }
 
- sealed class TableInfo
-{
-    //@formatter:off
-    
-    public string Schema { get; init; }
-    
-    public string Table { get; init; }
-
-    public Node TableNode { get; init; }
-    
-    public List<ColumnInfo> Columns { get; } = new();
-    
-    public IReadOnlyList<ColumnInfo> PrimaryKeys => Columns.Where(c => c.IsPrimaryKey).ToList();
-
-    public string Key => $"{Schema}.{Table}";
-    
-    //@formatter:on
-}
 
  static class DbDiagramExporter
  {
@@ -90,38 +72,63 @@ sealed record ColumnInfo
                 Category = Contains
             });
 
-            // is foreign key
-            if (!column.IsPrimaryKey && column.Column.EndsWith("Id") && column.Table + "Id" != column.Column)
+            var foreignKeyColumn = FindForeignKeyColumn(columns, column);
+            if (foreignKeyColumn is not null)
             {
-
-                var foreignKeyColumns = (from c in columns 
-                                        where c.Column == column.Column && c.Table != column.Table
-                                         && c.IsPrimaryKey
-                                        select c).ToList();
-                
-                
-                if (foreignKeyColumns.Count == 1)
+                dgml.Add(new Link
                 {
-                    dgml.Add(new Link
-                    {
-                        Source = column.AsColumnNode,
-                        Target = foreignKeyColumns[0].AsColumnNode
-                    });
-                    
-                    continue;
-                }
-
-                if (foreignKeyColumns.Count > 1)
-                {
-                    ;
-                }
-                
-      
+                    Source = column.AsColumnNode,
+                    Target = foreignKeyColumn.AsColumnNode
+                });
             }
+           
         }
 
 
         return dgml.ToDirectedGraphElement().ToString();
+
+        static ColumnInfo FindForeignKeyColumn(IReadOnlyList<ColumnInfo> allColumns, ColumnInfo column)
+        {
+            if (column.IsPrimaryKey)
+            {
+                return null;
+            }
+
+            if (!column.Column.EndsWith("Id"))
+            {
+                return null;
+            }
+
+            if (column.Table + "Id" == column.Column)
+            {
+                return null;
+            }
+            
+            foreach (var (schemaName, columnsInSchema) in allColumns.GroupBy(x=>x.Schema).Select(x=>(schemaName: x.Key, columnsInSchema: x.ToList())))
+            {
+                foreach (var (tableName, columnsInTable) in columnsInSchema.GroupBy(x=>x.Table).Select(x=>(tableName: x.Key, columnsInTable: x.ToList())))
+                {
+                    if (tableName == column.Table)
+                    {
+                        continue;
+                    }
+
+                    if (columnsInTable.Count(x=>x.IsPrimaryKey) > 1)
+                    {
+                        continue;
+                    }
+                    
+                    var foreignKeyColumn = columnsInTable.FirstOrDefault(c => c.IsPrimaryKey && c.Column == column.Column && columnsInTable.Count(x=>x.IsPrimaryKey) == 1);
+                    if (foreignKeyColumn is not null)
+                    {
+                        return foreignKeyColumn;
+                    }
+                
+                }
+            }
+            
+            return null;
+        }
 
      }
 
