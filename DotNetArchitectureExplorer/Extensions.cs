@@ -6,17 +6,21 @@ using Mono.Cecil.Cil;
 
 namespace DotNetArchitectureExplorer;
 
+class Icon
+{
+    
+}
 static partial class Program
 {
     const string ns = "http://schemas.microsoft.com/vs/2009/dgml";
 
     static readonly Config Config = ConfigReader.TryReadConfig();
     
-    static string IconClass => Image("class.png");
-    static string IconField => Image("field.png");
-    static string IconInterface => Image("interface.png");
-    static string IconMethod => Image("method.png");
-    static string IconNamespace => Image("namespace.png");
+    public static string IconClass => Image("class.png");
+    public static string IconField => Image("field.png");
+    public static string IconInterface => Image("interface.png");
+    public static string IconMethod => Image("method.png");
+    public static string IconNamespace => Image("namespace.png");
 
     public static (string exception, string dgmlContent) CreateMethodCallGraphOfAssembly(string assemblyFilePath)
     {

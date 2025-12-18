@@ -53,8 +53,25 @@ sealed record ColumnInfo
     
      public static string BuildDatabaseDgml()
      {
+         
+         
+         
          // 1) Veriyi topla
          var columns = Db.LoadColumns();
+         
+         var dgml = new DirectedGraph();
+         
+         //foreach (var schemaName in columns.DistinctBy(x=>x.Schema).Select(x=>x.Schema))
+         //{
+         //    new Node
+         //    {
+         //        Id = schemaName,
+         //        Label = schemaName,
+         //        Icon = 
+         //    }
+         //}
+         
+         
 
          // 2) Tablo/kolon Node'ları ve Contains/ForeignKey Link'leri oluştur
          var nodes = new HashSet<Node>();
