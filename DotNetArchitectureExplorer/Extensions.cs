@@ -9,6 +9,8 @@ namespace DotNetArchitectureExplorer;
 static partial class Program
 {
     const string ns = "http://schemas.microsoft.com/vs/2009/dgml";
+
+    static readonly Config Config = ConfigReader.TryReadConfig();
     static string IconClass => Image("class.png");
     static string IconField => Image("field.png");
     static string IconInterface => Image("interface.png");
@@ -136,7 +138,7 @@ static partial class Program
                             continue;
                         }
 
-                        if (isInAnalyse(mr.DeclaringType) == false)
+                        if (!isInAnalyse(mr.DeclaringType))
                         {
                             continue;
                         }
@@ -173,7 +175,7 @@ static partial class Program
                             continue;
                         }
 
-                        if (isInAnalyse(fr.DeclaringType) == false)
+                        if (!isInAnalyse(fr.DeclaringType))
                         {
                             continue;
                         }
@@ -229,13 +231,13 @@ static partial class Program
 
         var hasExportOnlyNamespaceNameContainsRule = false;
         var hasMatchWithExportOnlyNamespaceContains = false;
-        
+
         foreach (var name in Config?.ExportOnlyNamespaceNameContains ?? Enumerable.Empty<string>())
         {
             if (!string.IsNullOrWhiteSpace(name))
             {
                 hasExportOnlyNamespaceNameContainsRule = true;
-                if (type.Namespace?.Contains(name,StringComparison.OrdinalIgnoreCase) == true)
+                if (type.Namespace?.Contains(name, StringComparison.OrdinalIgnoreCase) == true)
                 {
                     hasMatchWithExportOnlyNamespaceContains = true;
                     break;
@@ -252,11 +254,9 @@ static partial class Program
 
             return false;
         }
-        
+
         return true;
     }
-    
-    static readonly Config Config = ConfigReader.TryReadConfig();
 
     static Node CreateFieldNode(FieldReference fieldReference)
     {
@@ -368,10 +368,14 @@ static partial class Program
             {
                 var parameter = parameters[i];
                 if (i > 0)
+                {
                     builder.Append(",");
+                }
 
                 if (parameter.ParameterType.IsSentinel)
+                {
                     builder.Append("...,");
+                }
 
                 builder.Append(parameter.ParameterType.Name);
             }
