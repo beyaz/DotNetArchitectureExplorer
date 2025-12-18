@@ -20,7 +20,7 @@ static partial class Program
         var (exception, assemblyDefinition) = ReadAssemblyDefinition(assemblyFilePath);
         if (exception is not null)
         {
-            return (exception.ToString(), default);
+            return (exception.ToString(), null);
         }
 
         var dgml = new DirectedGraph();
@@ -32,7 +32,7 @@ static partial class Program
             AddType(dgml, typeDefinition, t => typeDefinitions.Contains(t));
         }
 
-        return (default, dgml.ToDirectedGraphElement().ToString());
+        return (null, dgml.ToDirectedGraphElement().ToString());
     }
 
     static void AddType(DirectedGraph dgml, TypeDefinition currentTypeDefinition, Func<TypeReference, bool> isInAnalyse)
@@ -43,13 +43,13 @@ static partial class Program
         {
             var namespaceName = currentTypeDefinition.Namespace;
 
-            var nameListInNamesapceName = namespaceName.Split('.').ToList();
+            var nameListInNamespaceName = namespaceName.Split('.').ToList();
 
             Node parentNamespaceNode = null, currentNamespaceNode = null;
 
             string namespaceId = null;
 
-            foreach (var name in nameListInNamesapceName)
+            foreach (var name in nameListInNamespaceName)
             {
                 if (namespaceId == null)
                 {
@@ -562,7 +562,7 @@ static partial class Program
     {
         try
         {
-            return (default, func());
+            return (null, func());
         }
         catch (TException exception)
         {
