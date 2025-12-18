@@ -5,8 +5,6 @@ static partial class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        File.WriteAllText("d:\\a.dgml", DbDiagramExporter.BuildDatabaseDgml());
-        
         if (args == null || args.Length == 0)
         {
             args = new[] { typeof(Program).Assembly.Location };
