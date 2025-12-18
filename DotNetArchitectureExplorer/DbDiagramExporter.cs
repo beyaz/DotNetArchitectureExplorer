@@ -49,14 +49,12 @@ sealed record ColumnInfo
 
  public static class DbDiagramExporter
  {
-     // Bağlantı bilgisini buradan veriyoruz. Initial Catalog'u doldurmalısın.
-     private const string ConnectionString =
-         "Data Source=srvtest\\atlas;Initial Catalog=BOAWeb;Integrated Security=True;TrustServerCertificate=True";
-
+     
+    
      public static string BuildDatabaseDgml()
      {
          // 1) Veriyi topla
-         var columns = LoadColumns();
+         var columns = Db.LoadColumns();
 
          // 2) Tablo/kolon Node'ları ve Contains/ForeignKey Link'leri oluştur
          var nodes = new HashSet<Node>();
@@ -113,8 +111,10 @@ sealed record ColumnInfo
          return ToDgml(nodes, graph);
      }
 
-   
-     static IReadOnlyList<ColumnInfo> LoadColumns()
+
+     class Db
+     {
+           public static IReadOnlyList<ColumnInfo> LoadColumns()
      {
          const string sql = @"
 SELECT
@@ -144,6 +144,10 @@ ORDER BY s.name, t.name, c.column_id;";
 
          var list = new List<ColumnInfo>();
 
+      string ConnectionString =
+             "Data Source=srvtest\\atlas;Initial Catalog=BOAWeb;Integrated Security=True;TrustServerCertificate=True";
+
+         
          using var conn = new SqlConnection(ConnectionString);
          using var cmd = new SqlCommand(sql, conn);
          cmd.CommandType = CommandType.Text;
@@ -176,9 +180,8 @@ ORDER BY s.name, t.name, c.column_id;";
 
          return list;
      }
-
-     // SQL tipi formatlayıcı (nvarchar/varbinary MAX vb. dahil)
-     private static string FormatSqlType(string typeName, short maxLength, byte precision, byte scale)
+           
+     static string FormatSqlType(string typeName, short maxLength, byte precision, byte scale)
      {
          var t = typeName.ToLowerInvariant();
          switch (t)
@@ -209,7 +212,12 @@ ORDER BY s.name, t.name, c.column_id;";
          }
      }
 
-     // Tabloları sözlüğe çeker ve Table Node'larını hazırlar
+
+     }
+     
+   
+
+      // Tabloları sözlüğe çeker ve Table Node'larını hazırlar
      private static Dictionary<string, TableInfo> BuildTables(IReadOnlyList<ColumnInfo> columns, HashSet<Node> nodes)
      {
          var tables = new Dictionary<string, TableInfo>(StringComparer.OrdinalIgnoreCase);
