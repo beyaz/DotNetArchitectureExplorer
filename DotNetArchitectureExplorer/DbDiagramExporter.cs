@@ -62,12 +62,12 @@ sealed record ColumnInfo
          
          var dgml = new DirectedGraph();
 
-        foreach (var column in from x in columns where x.Schema == "INT" select x)
+        foreach (var column in from x in columns  select x)
         {
-            
+
             dgml.Add(new Link
             {
-                Source = column.AsTableNode, 
+                Source = column.AsTableNode,
                 Target = column.AsColumnNode,
                 Category = Contains
             });
@@ -103,29 +103,52 @@ sealed record ColumnInfo
             {
                 return null;
             }
-            
-            foreach (var (schemaName, columnsInSchema) in allColumns.GroupBy(x=>x.Schema).Select(x=>(schemaName: x.Key, columnsInSchema: x.ToList())))
-            {
-                foreach (var (tableName, columnsInTable) in columnsInSchema.GroupBy(x=>x.Table).Select(x=>(tableName: x.Key, columnsInTable: x.ToList())))
-                {
-                    if (tableName == column.Table)
-                    {
-                        continue;
-                    }
 
-                    if (columnsInTable.Count(x=>x.IsPrimaryKey) > 1)
-                    {
-                        continue;
-                    }
-                    
-                    var foreignKeyColumn = columnsInTable.FirstOrDefault(c => c.IsPrimaryKey && c.Column == column.Column && columnsInTable.Count(x=>x.IsPrimaryKey) == 1);
-                    if (foreignKeyColumn is not null)
-                    {
-                        return foreignKeyColumn;
-                    }
-                
+
+
+            static bool IsForeignKey(IReadOnlyList<ColumnInfo> allColumns, ColumnInfo a, ColumnInfo maybeForeignKeyColumnOfA)
+            {
+                if (a.Table == maybeForeignKeyColumnOfA.Table)
+                {
+                    return false;
                 }
+
+                if (a.Column != maybeForeignKeyColumnOfA.Column)
+                {
+                    return false;
+                }
+                
+                var primaryKeysInTable = (from x in allColumns where x.Table == maybeForeignKeyColumnOfA.Table && x.IsPrimaryKey select x).ToList();
+                
+                return primaryKeysInTable.Count == 1 && primaryKeysInTable[0].Column == maybeForeignKeyColumnOfA.Column;
+                
             }
+                
+            var foreignKeyColumns = (from x in allColumns where IsForeignKey(allColumns, column, x) select x).ToList();
+            if (foreignKeyColumns.Count == 0)
+            {
+                return null;
+            }
+            
+            if (foreignKeyColumns.Count == 1)
+            {
+                return foreignKeyColumns[0];
+            }
+
+            if (column.Column == "UserId")
+            {
+                return (from x in allColumns where x.Schema == "INT" && x.Table == "WebUser" && x.Column == "UserId" select x).FirstOrDefault();
+            }
+            //foreignKeyColumns = foreignKeyColumns.Where(x => column.Column.Contains(x.Table,StringComparison.OrdinalIgnoreCase)).ToList();
+            //if (foreignKeyColumns.Count == 0)
+            //{
+            //    return null;
+            //}
+            
+            //if (foreignKeyColumns.Count == 1)
+            //{
+            //    return foreignKeyColumns[0];
+            //}
             
             return null;
         }
@@ -166,7 +189,7 @@ ORDER BY s.name, t.name, c.column_id;";
          var list = new List<ColumnInfo>();
 
       string ConnectionString =
-             "Data Source=srvtest\\atlas;Initial Catalog=BOAWeb;Integrated Security=True;TrustServerCertificate=True";
+             "Data Source=srvtest\\atlas;Initial Catalog=BOA;Integrated Security=True;TrustServerCertificate=True";
 
          
          using var conn = new SqlConnection(ConnectionString);
