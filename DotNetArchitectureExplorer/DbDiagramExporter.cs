@@ -67,7 +67,7 @@ sealed record ColumnInfo
                 Id    = $"{column.Schema}.{column.Table}",
                 Label =  $"{column.Schema}.{column.Table}",
                 Icon  = IconClass,
-                Group = "Collapsed"
+                Group = Collapsed
             };
             
             var columnNode = new Node
@@ -207,7 +207,7 @@ ORDER BY s.name, t.name, c.column_id;";
              {
                  Id         = first.TableKey,
                  Label      = $"{first.Schema}.{first.Table}",
-                 Group      = "Expanded",
+                 Group      = Expanded,
                  Icon       = "Table",
                  Background = "#FFE9F5FF",
                  NodeRadius = 5,

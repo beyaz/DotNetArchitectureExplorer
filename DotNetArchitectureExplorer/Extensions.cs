@@ -323,7 +323,7 @@ static partial class Program
             Id    = id,
             Label = label,
             Icon  = IconNamespace,
-            Group = "Collapsed"
+            Group = Collapsed
         };
     }
 
@@ -346,7 +346,7 @@ static partial class Program
             Id    = typeDefinition.FullName,
             Label = typeDefinition.Name,
             Icon  = typeDefinition.IsInterface ? IconInterface : IconClass,
-            Group = "Collapsed"
+            Group = Collapsed
         };
     }
 
